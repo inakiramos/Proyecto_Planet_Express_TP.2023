@@ -3,8 +3,8 @@ import java.util.Scanner;
 /**
  * Description of the class
  *
- * @author
- * @author
+ * @author Iñaki Ramos Iturria
+ * @author Cristiana Velislavova Tsekova
  * @version     1.0
  */
 public class Utilidades {
@@ -20,7 +20,10 @@ public class Utilidades {
     public static int leerNumero(Scanner teclado, String mensaje, int minimo, int maximo) {
         int numero;
 
-
+        do {
+            System.out.println(mensaje);
+            numero = Integer.parseInt(teclado.nextLine());
+        }while (numero < minimo || numero > maximo);
         return numero;
     }
 
@@ -35,7 +38,10 @@ public class Utilidades {
     public static long leerNumero(Scanner teclado, String mensaje, long minimo, long maximo) {
         long numero;
 
-
+        do {
+            System.out.println(mensaje);
+            numero = Long.parseLong(teclado.nextLine());
+        }while(numero < minimo || numero > maximo);
         return numero;
     }
 
@@ -50,6 +56,10 @@ public class Utilidades {
     public static double leerNumero(Scanner teclado, String mensaje, double minimo, double maximo) {
         double numero;
 
+        do {
+            System.out.println(mensaje);
+            numero = Double.parseDouble(teclado.nextLine().replace(',', '.'));
+        }while (numero < minimo || numero > maximo);
         return numero;
     }
 
@@ -64,11 +74,12 @@ public class Utilidades {
     public static char leerLetra(Scanner teclado, String mensaje, char minimo, char maximo) {
         char letra;
 
-
-
+        do {
+            System.out.println(mensaje);
+            letra = teclado.nextLine().charAt(0);
+        }while (letra < minimo || letra > maximo);
         return letra;
     }
-
 
     /**
      * TODO: Solicita una fecha repetidamente hasta que se introduzca una correcta
@@ -77,15 +88,20 @@ public class Utilidades {
      * @return Fecha
      */
     public static Fecha leerFecha(Scanner teclado, String mensaje) {
-        int dia;
-        int mes;
-        int anio;
+        int dia, mes, anio;
+        System.out.println(mensaje);
 
+        do {
+            dia = leerNumero(teclado, "Ingrese dia:", 1, 31);
+            mes = leerNumero(teclado, "Ingrese mes:", 1, 12);
+            anio = leerNumero(teclado, "Ingrese año:", 1900, 3000);
 
-
+            if (!Fecha.comprobarFecha(dia, mes, anio)){
+                System.out.println("Fecha introducida incorrecta.");
+            }
+        }while(!Fecha.comprobarFecha(dia, mes, anio));
         return new Fecha(dia, mes, anio);
     }
-
 
     /**
      * TODO: Solicita una fecha y hora repetidamente hasta que se introduzcan unas correctas
@@ -94,15 +110,23 @@ public class Utilidades {
      * @return Fecha
      */
     public static Fecha leerFechaHora(Scanner teclado, String mensaje) {
-        int dia;
-        int mes;
-        int anio;
-        int hora;
-        int minuto;
-        int segundo;
+        int dia, mes, anio, hora, minuto, segundo;
+        System.out.println(mensaje);
 
+        do {
+            dia = leerNumero(teclado, "Ingrese dia:", 1, 31);
+            mes = leerNumero(teclado, "Ingrese mes:", 1, 12);
+            anio = leerNumero(teclado, "Ingrese año:", 1900, 3000);
 
+            hora = leerNumero(teclado, "Ingrese hora:", 0, 23);
+            minuto = leerNumero(teclado, "Ingrese minuto:", 0, 59);
+            segundo = leerNumero(teclado, "Ingrese segundo:", 0, 59);
 
+            if (!Fecha.comprobarFecha(dia, mes, anio) || !Fecha.comprobarHora(hora, minuto, segundo)) {
+                System.out.println("Fecha u hora introducida incorrecta.");
+            }
+
+        }while(!Fecha.comprobarFecha(dia, mes, anio) || !Fecha.comprobarHora(hora, minuto, segundo));
         return new Fecha(dia, mes, anio, hora, minuto, segundo);
     }
 
@@ -110,7 +134,7 @@ public class Utilidades {
      * TODO: Imprime por pantalla el String pasado por parámetro
      * @param teclado
      * @param s
-     * @return
+     * @return devuelve el variable string pasado por parametro
      */
     public static String leerCadena(Scanner teclado, String s) {
         System.out.print(s);

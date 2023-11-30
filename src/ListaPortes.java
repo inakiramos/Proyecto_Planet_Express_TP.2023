@@ -1,40 +1,47 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
  * Description of the class
  *
- * @author
- * @author
+ * @author Iñaki Ramos Iturria
+ * @author Cristiana Velislavova Tsekova
  * @version     1.0
  */
 public class ListaPortes {
     private Porte[] portes;
+    private int ocupacion;
+
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
      *
      * @param capacidad
      */
     public ListaPortes(int capacidad) {
-        
-		
-		
+        this.ocupacion = 0;
+        portes = new Porte[capacidad];
     }
+
     // TODO: Devuelve el número de portes que hay en la lista
     public int getOcupacion() {
-
+        return ocupacion;
     }
+
     // TODO: ¿Está llena la lista?
     public boolean estaLlena() {
-
+        boolean estaLlena = false;
+        if (ocupacion == portes.length){
+            estaLlena = true;
+        }
+        return estaLlena;
     }
 
 	//TODO: devuelve un porte dado un indice
     public Porte getPorte(int i) {
-        return portes[i];
+        return portes[i - 1];
     }
-
 
     /**
      * TODO: Devuelve true si puede insertar el porte
@@ -42,8 +49,13 @@ public class ListaPortes {
      * @return false en caso de estar llena la lista o de error
      */
     public boolean insertarPorte(Porte porte) {
-
-        return false;
+        boolean insertado = false;
+        if (!estaLlena()){
+            portes[ocupacion] = porte;
+            ocupacion ++;
+            insertado = true;
+        }
+        return insertado;
     }
 
 
@@ -53,8 +65,14 @@ public class ListaPortes {
      * @return el objeto Porte que encontramos o null si no existe
      */
     public Porte buscarPorte(String id) {
+        Porte resul = null;
 
-        return null;
+        for (int i = 0; i < portes.length; i++) {
+            if (Objects.equals(portes[i].getID(), id)){
+                resul = portes[i];
+            }
+        }
+        return resul;
     }
 
     /**
@@ -66,18 +84,23 @@ public class ListaPortes {
      * @return
      */
     public ListaPortes buscarPortes(String codigoOrigen, String codigoDestino, Fecha fecha) {
-        
-
-        return listaPortes;
+        ListaPortes portesBuscados = new ListaPortes(ocupacion);
+        for (int i = 0; i < ocupacion; i ++){
+            if ((codigoOrigen.equals(portes[i].getOrigen().getCodigo())) && (codigoDestino.equals(portes[i].getDestino().getCodigo())) && (fecha.equals(portes[i].getSalida()))){
+                portesBuscados.insertarPorte(portes[i]);
+            }
+        }
+        return portesBuscados;
     }
 
     /**
      * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
      */
     public void listarPortes() {
-
+        for (int i = 0; i < ocupacion; i++) {
+            System.out.println(portes[i].toString());
+        }
     }
-
 
     /**
      * TODO: Permite seleccionar un Porte existente a partir de su ID, usando el mensaje pasado como argumento para

@@ -1,8 +1,8 @@
 /**
  * Description of the class
  *
- * @author
- * @author
+ * @author Iñaki Ramos Iturria
+ * @author Cristiana Velislavova Tsekova
  * @version     1.0
  */
 public class Nave {
@@ -32,6 +32,7 @@ public class Nave {
         this.filas = filas;
         this.alcance = alcance;
     }
+
     public String getMarca() {
         return marca;
     }
@@ -51,13 +52,13 @@ public class Nave {
         return alcance;
     }
 
-
     /**
      * TODO: Crea un String con los datos de una nave con el siguiente formato:
      * @return ejemplo del formato -> "Planet Express One (EP-245732X): 40 contenedores, hasta 1.57 UA"
      */
     public String toString() {
-        return " ";
+        return this.marca + this.modelo + "(" + this.matricula + "): " + this.filas * this.columnas +
+                " contenedores, hasta " + this.alcance + " UA";
     }
 
 
@@ -66,6 +67,6 @@ public class Nave {
      * @return ejemplo del formato -> "Planet Express One (EP-245732X)"
      */
     public String toStringSimple() {
-        return " ";
+        return this.marca + this.modelo + "(" + this.matricula + ")";
     }
 }

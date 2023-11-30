@@ -1,3 +1,4 @@
+import javax.rmi.CORBA.Util;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -89,12 +90,14 @@ public class PlanetExpress {
      * @return
      */
     public ListaPortes buscarPorte(Scanner teclado) {
-
-
+        System.out.print("Ingrese código de puerto Origen:");
+        String codigoOrigen = teclado.nextLine().toUpperCase();
+        System.out.print("Ingrese código de puerto Destino:");
+        String codigoDestino = teclado.nextLine().toUpperCase();
+        Fecha fecha = Utilidades.leerFecha(teclado,"Introduzca la fecha de salida:");
 
         return listaPortes.buscarPortes(codigoOrigen, codigoDestino, fecha);
     }
-
 
     /**
      * TODO: Metodo para contratar un envio tal y como se indica en el enunciado de la práctica. Se contrata un envio para un porte
@@ -113,7 +116,6 @@ public class PlanetExpress {
         }
     }
 
-
     /**
      * TODO Metodo statico con la interfaz del menú de entrada a la App.
      * Tiene que coincidir con las trazas de ejecución que se muestran en el enunciado
@@ -121,7 +123,16 @@ public class PlanetExpress {
      * @return opción seleccionada
      */
     public static int menu(Scanner teclado) {
+        int opcion;
 
+        System.out.println("1. Alta de Porte");
+        System.out.println("2. Alta de Cliente");
+        System.out.println("3. Buscar Porte");
+        System.out.println("4. Mostrar envíos de un cliente");
+        System.out.println("5. Generar lista de envíos");
+        opcion = Utilidades.leerNumero(teclado, "Seleccione opción:", 0, 5 );
+
+        return opcion;
     }
 
     /**
@@ -147,13 +158,19 @@ public class PlanetExpress {
             System.out.println("Número de argumentos incorrecto");
             return;
         }
-
+        Scanner teclado = new Scanner(System.in);
+        PlanetExpress planetExpress = new PlanetExpress();
+        planetExpress.cargarDatos();
+        Random rand = new Random();
+        ListaPortes listaPortes;
+        Porte porte;
+        int opcion;
 
         do {
             opcion = menu(teclado);
             switch (opcion) {
                 case 1:     // TODO: Alta de Porte
-
+                    planetExpress.guardarDatos();
 
                     break;
                 case 2:     // TODO: Alta de Cliente
