@@ -1,4 +1,5 @@
-import java.io.PrintWriter;
+import javax.lang.model.util.ElementFilter;
+import java.io.*;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -16,7 +17,6 @@ public class ListaNaves {
      */
     private Nave[] naves;
 
-
     /**
      * Atributo que devuelve la capacidad de la Lista de naves
      */
@@ -30,7 +30,7 @@ public class ListaNaves {
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
      *
-     * @param capacidad
+     * @param capacidad especifica la capacidad de la lista que contiene las naves
      */
     public ListaNaves(int capacidad) {
         this.ocupacion = 0;
@@ -38,12 +38,18 @@ public class ListaNaves {
         this.naves = new Nave[capacidad];
     }
 
-    // TODO: Devuelve el número de naves que hay en la lista
+    /**
+     * Getter del atributo ocupación
+     * @return Devuelve la cantidad de las naves que hay en el array "naves" con la variable ocupación
+     */
     public int getOcupacion() {
         return this.ocupacion;
     }
 
-    // TODO: ¿Está llena la lista de naves?
+    /**
+     * Devuelve true si la lista "naves" está llena, si no, devuelve false
+     * @return  estaLlena
+     */
     public boolean estaLlena() {
         boolean estaLlena = false;
         if (ocupacion == capacidad){
@@ -52,14 +58,17 @@ public class ListaNaves {
         return estaLlena;
     }
 
-	// TODO: Devuelve nave dado un indice
+    /**
+     * @param posicion es la posición que se pasa por parámetro
+     * @return Devuelve la nave que se encuentra en las posición pasada por parámetro
+     */
     public Nave getNave(int posicion) {
         return naves[posicion - 1];
     }
 
     /**
      * TODO: insertamos una nueva nave en la lista
-     * @param nave
+     * @param nave nave que se quiere insertar en la lista "naves"
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarNave(Nave nave) {
@@ -74,7 +83,7 @@ public class ListaNaves {
 
     /**
      * TODO: Buscamos la nave a partir de la matricula pasada como parámetro
-     * @param matricula
+     * @param matricula código que identifica a una nave
      * @return la nave que encontramos o null si no existe
      */
     public Nave buscarNave(String matricula) {
@@ -86,6 +95,9 @@ public class ListaNaves {
         return resul;
     }
 
+    /**
+     *
+     */
     // TODO: Muestra por pantalla las naves de la lista con el formato indicado en el enunciado
     public void mostrarNaves() {
         for (int i = 0; i < ocupacion; i ++){
@@ -134,16 +146,31 @@ public class ListaNaves {
      */
     public boolean escribirNavesCsv(String nombre) {
         PrintWriter pw = null;
+        Nave nave;
+        boolean ficheroEscrito = true;
+
         try {
+            pw = new PrintWriter(nombre);
+            for (int i = 0; i < ocupacion; i++) {
+                nave = naves[i];
+                pw.print(nave.getMarca() + ";" + nave.getModelo() + ";" + nave.getMatricula() + ";" + nave.getFilas() + ";" + nave.getColumnas() + ";" + nave.getAlcance());
+                if (i != ocupacion -1) pw.println();
+            }
 
-            return true;
-        } catch (Exception e) {
-            return false;
-        } finally {
-
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("Fichero " + nombre + " no encontrado.");
+            ficheroEscrito = false;
+        } catch(IOException ioException) {
+            System.out.println("Error de escritura en fichero " + nombre + ".");
+            ficheroEscrito = false;
         }
+        finally {
+            if (pw != null) {
+                pw.close();
+            }
+        }
+        return ficheroEscrito;
     }
-
 
     /**
      * TODO: Genera una lista de naves a partir del fichero CSV, usando el argumento como capacidad máxima de la lista
@@ -154,12 +181,25 @@ public class ListaNaves {
     public static ListaNaves leerNavesCsv(String fichero, int capacidad) {
         ListaNaves listaNaves = new ListaNaves(capacidad);
         Scanner sc = null;
+        Nave nave;
+        String arrayNave[];
+
         try {
-
-        } catch (Exception e) {
-            return null;
-        } finally {
-
+            sc = new Scanner(new FileReader(fichero));
+            do {
+                arrayNave = sc.nextLine().split(";");
+                nave = new Nave(arrayNave[0], arrayNave[1], arrayNave[2], arrayNave[3], arrayNave[4], arrayNave[5]);
+                listaNaves.insertarNave(nave);
+            }while(sc.hasNext());
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("Fichero " + fichero + " no encontrado.");
+        } catch(IOException ioException){
+            System.out.println("Error de lectura en fichero " + fichero + ".");
+        }
+        finally {
+            if (sc != null) {
+                sc.close();
+            }
         }
         return listaNaves;
     }
