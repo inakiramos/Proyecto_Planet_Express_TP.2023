@@ -10,8 +10,21 @@ import java.util.Scanner;
  * @version     1.0
  */
 public class ListaNaves {
+
+    /**
+     * Atributo que contiene el array donde estan las naves
+     */
     private Nave[] naves;
+
+
+    /**
+     * Atributo que devuelve la capacidad de la Lista de naves
+     */
     private int capacidad;
+
+    /**
+     * Atributo que devuelve la ocupación de la nave de la lista
+     */
     private int ocupacion;
 
     /**

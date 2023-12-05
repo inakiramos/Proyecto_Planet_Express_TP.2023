@@ -1,7 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -12,14 +9,26 @@ import java.util.Scanner;
  * @version     1.0
  */
 public class ListaPuertosEspaciales {
+
+    /**
+     *  Atributo que contiene el array donde se guardan los Puertos Espaciales
+     */
     private PuertoEspacial[] lista;
+
+    /**
+     * Atributo que contiene la capacidad de la Lista de Puertos Espaciales
+     */
     private int capacidad;
+
+    /**
+     * Atributo que contiene la ocupacion del Puerto Espacial dentro de la lista
+     */
     private int ocupacion;
 
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
      *
-     * @param capacidad
+     * @param capacidad especifica la capacidad del Puerto Espacial
      */
     public ListaPuertosEspaciales(int capacidad) {
         this.ocupacion = 0;
@@ -27,11 +36,19 @@ public class ListaPuertosEspaciales {
         lista = new PuertoEspacial[capacidad];
     }
 
+    /**
+     * Getter del atributo ocupación
+     * @return Devuelve la cantidad de Puertos Espaciales que hay en la lista como una variable "ocupación"
+     */
     // TODO: Devuelve el número de puertos espaciales que hay en la lista
     public int getOcupacion() {
         return this.ocupacion;
     }
 
+    /**
+     * Devuelve true si la Lista de Puertos Espaciales esta llena, si no, devuelve false
+     * @return estaLlena
+     */
     // TODO: ¿Está llena la lista?
     public boolean estaLlena() {
         boolean estaLlena = false;
@@ -42,6 +59,11 @@ public class ListaPuertosEspaciales {
         return estaLlena;
     }
 
+    /**
+     * Getter para conseguir el Puerto Espacial deseado
+     * @param i especifica la posición del Puerto Espacial dentro del array
+     * @return Devuelve el Puerto Espacial que se encuentre en la psición recibida como parámetro
+     */
 	// TODO: Devuelve un puerto espacial dado un indice
     public PuertoEspacial getPuertoEspacial(int i) {
         return lista[i - 1];
@@ -49,8 +71,8 @@ public class ListaPuertosEspaciales {
 
     /**
      * TODO: insertamos un Puerto espacial nuevo en la lista
-     * @param puertoEspacial
-     * @return true en caso de que se añada correctamente, false en caso de lista llena o error
+     * @param puertoEspacial es el Puerto Espacial que se quiere insertar en la lista
+     * @return Devuelve true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarPuertoEspacial(PuertoEspacial puertoEspacial) {
         boolean insertado = false;
@@ -65,8 +87,8 @@ public class ListaPuertosEspaciales {
 
     /**
      * TODO: Buscamos un Puerto espacial a partir del codigo pasado como parámetro
-     * @param codigo
-     * @return Puerto espacial que encontramos o null si no existe
+     * @param codigo especifica que Puerto Espacial se esta considerando y comparando para ver si existe
+     * @return Devuelve el Puerto Espacial que encontramos o null si no existe
      */
     public PuertoEspacial buscarPuertoEspacial(String codigo) {
         PuertoEspacial resul = null;
@@ -83,9 +105,9 @@ public class ListaPuertosEspaciales {
      * TODO: Permite seleccionar un puerto espacial existente a partir de su código, usando el mensaje pasado como
      *  argumento para la solicitud y siguiendo el orden y los textos mostrados en el enunciado.
      *  La función solicita repetidamente el código hasta que se introduzca uno correcto
-     * @param teclado
-     * @param mensaje
-     * @return
+     * @param teclado códigoGFSC que introduce el usuario
+     * @param mensaje mensaje que se muestra por pantalla
+     * @return Devuelve el Puerto Espacial, si este existe
      */
     public PuertoEspacial seleccionarPuertoEspacial(Scanner teclado, String mensaje) {
         PuertoEspacial puertoEspacial = null;
@@ -94,38 +116,58 @@ public class ListaPuertosEspaciales {
         do {
             System.out.println(mensaje);
             codigoGFSC = teclado.nextLine().toUpperCase();
-            if (buscarPuertoEspacial(codigoGFSC)){
+            if (buscarPuertoEspacial(codigoGFSC) == null){
                 System.out.println("Código del puerto espacial no encontrado.");
             }
-        }while(buscarPuertoEspacial(codigoGFSC));
+        }while(buscarPuertoEspacial(codigoGFSC) == null);
 
         return buscarPuertoEspacial(codigoGFSC);
     }
 
     /**
      * TODO: Genera un fichero CSV con la lista de puertos espaciales, SOBREESCRIBIENDOLO
-     * @param nombre
-     * @return
+     * @param nombre nombre del fichero en el que se guardan los datos
+     * @return Devuelve true si se ha escrito correctamente en el fichero
      */
     public boolean escribirPuertosEspacialesCsv(String nombre) {
         PrintWriter pw = null;
+        PuertoEspacial puertoEspacial;
+        String infoPuertoEspacial;
+        boolean ficheroEscrito = true;
+
         try {
+            pw = new PrintWriter(nombre);
+            for (int i = 0; i < ocupacion; i ++){
+                //Cogemos el aeropuertos de la posición i, luego imprimimos
+                puertoEspacial = lista[i];
+                //info del aeropuerto para escribir
+                infoPuertoEspacial = puertoEspacial.getNombre() + ";" + puertoEspacial.getCodigo() + ";" + puertoEspacial.getAzimut() + ";" + puertoEspacial.getPolar() + ";" + puertoEspacial.getRadio() + ";" + puertoEspacial.getMuelles();
+                pw.write(infoPuertoEspacial);
+                //Escribimos el salto de línea
+                if (i != ocupacion - 1) pw.println();
+            }
 
-            return true;
-        } catch (Exception e) {
-            return false;
-        } finally {
-
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("Fichero " + nombre + " no encontrado.");
+            ficheroEscrito = false;
+        } catch(IOException ioException) {
+            System.out.println("Error de escritura en fichero " + nombre + ".");
+            ficheroEscrito = false;
         }
+        finally {
+            if (pw != null) {
+                pw.close();
+            }
+        }
+        return ficheroEscrito;
     }
-
 
     /**
      * TODO: Genera una lista de PuertosEspaciales a partir del fichero CSV, usando el argumento como capacidad máxima
      *  de la lista
-     * @param fichero
-     * @param capacidad
-     * @return
+     * @param fichero nombre del fichero por el cual se van a leer los datos
+     * @param capacidad capacidad máxima que tendrá la lista
+     * @return genera una lista de los aeropuertos con los datos del fichero CSV
      */
     public static ListaPuertosEspaciales leerPuertosEspacialesCsv(String fichero, int capacidad) {
         ListaPuertosEspaciales listaPuertosEspaciales = new ListaPuertosEspaciales(capacidad);

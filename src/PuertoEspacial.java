@@ -8,44 +8,44 @@
 public class PuertoEspacial {
 
     /**
-     * Nombre del puerto espacial
+     * Atributo que contiene el nombre del puerto espacial
      */
     private String nombre;
 
     /**
-     * Código identificativo GFSC
+     * Atributo que contiene el código identificativo GFSC
      */
     private String codigo;
 
     /**
-     * Radio (distancia del Puerto en cuanto al Sol)
+     * Atributo que contiene el radio (distancia del Puerto en cuanto al Sol)
      */
     private double radio;
 
     /**
-     * Ángulo del eje positivo x hasta un punto en el plano xy
+     * Atributo que contiene el ángulo del eje positivo x hasta un punto en el plano xy
      */
     private double azimut;
 
     /**
-     * Ángulo desde el eje positivo z hasta el puerto
+     * Atributo que contiene el ángulo desde el eje positivo z hasta el puerto
      */
     private double polar;
 
     /**
-     * Número de muelles de carga del puerto
+     * Atributo que contiene el número de muelles de carga del puerto
      */
     private int numMuelles;
 
     /**
      * Constructor of the class
      *
-     * @param nombre del puerto espacial.
-     * @param codigo identificativo (GFSC), el codigo que identifica cada Puerto Espacial.
-     * @param radio distancia del puerto segun distancia al Sol (Unidades Astonómicas (UA)).
-     * @param azimut ángulo desde el eje positivo x hasta la proyección del punto en el plano xy.
-     * @param polar ángulo desde el eje positivo z hasta el puerto.
-     * @param numMuelles número de muelles de carga del puerto espacial.
+     * @param nombre del puerto espacial
+     * @param codigo identificativo (GFSC), el codigo que identifica cada Puerto Espacial
+     * @param radio distancia del puerto segun distancia al Sol (Unidades Astonómicas (UA))
+     * @param azimut ángulo desde el eje positivo x hasta la proyección del punto en el plano xy
+     * @param polar ángulo desde el eje positivo z hasta el puerto
+     * @param numMuelles número de muelles de carga del puerto espacial
      */
     public PuertoEspacial(String nombre, String codigo, double radio, double azimut, double polar, int numMuelles) {
         this.nombre = nombre;
@@ -55,22 +55,52 @@ public class PuertoEspacial {
         this.polar = polar;
         this.numMuelles = numMuelles;
     }
+
+    /**
+     * Getter del atributo nombre
+     * @return Devuelve el nombre del Puerto Espacial
+     */
     public String getNombre() {
         return nombre;
     }
+
+    /**
+     * Getter del atributo código GFSC
+     * @return Devuelve el código GFSC del Puerto Espacial
+     */
     public String getCodigo() {
         return codigo;
     }
+
+    /**
+     * Getter del atributo radio
+     * @return Devuelve el radio del Puerto Espacial segun la distancia al Sol
+     */
     public double getRadio() {
         return radio;
     }
+
+    /**
+     * Getter del atributo azimut
+     * @return Devuelve azimut que es el ángulo desde el eje positivo x hasta
+     * la proyección del punto en el plano xy
+     */
     public double getAzimut() {
         return azimut;
     }
 
+    /**
+     * Getter del atributo polar
+     * @return Devuelve polar que es el ángulo desde el eje positivo z hasta el puerto
+     */
     public double getPolar() {
         return polar;
     }
+
+    /**
+     * Getter del atributo muelles
+     * @return Devuelve las muelles del Puerto Espacial
+     */
     public int getMuelles() {
         return numMuelles;
     }
@@ -78,8 +108,8 @@ public class PuertoEspacial {
     /**
      * TODO: Método para calcular la distancia entre el puerto espacial que recibe el mensaje y el puerto
      *  espacial "destino" siguiendo las ecuaciones del enunciado (Las formulas se encuentran en el enunciado)
-     * @param destino
-     * @return devuelve la distancia entre el puerto emisor y receptor
+     * @param destino distancia destio a otro Puerto Espacial
+     * @return Devuelve la distancia entre el puerto de origen y el de destino
      */
     public double distancia(PuertoEspacial destino) {
         // TODO: Para calcular la distancia entre dos Puertos Espaciales, se transforman sus coordenadas esféricas a cartesianas
