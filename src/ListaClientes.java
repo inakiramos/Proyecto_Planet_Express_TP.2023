@@ -5,8 +5,8 @@ import java.util.Scanner;
 /**
  * Description of the class
  *
- * @author
- * @author
+ * @author Iñaki Ramos Iturria
+ * @author Cristiana Velislavova Tsekova
  * @version     1.0
  */
 public class ListaClientes {

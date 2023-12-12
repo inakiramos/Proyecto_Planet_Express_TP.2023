@@ -146,7 +146,6 @@ public class PlanetExpress {
         System.out.print("Ingrese código de puerto Destino:");
         String codigoDestino = teclado.nextLine().toUpperCase();
         Fecha fecha = Utilidades.leerFecha(teclado,"Introduzca la fecha de salida:");
-
         return listaPortes.buscarPortes(codigoOrigen, codigoDestino, fecha);
     }
 

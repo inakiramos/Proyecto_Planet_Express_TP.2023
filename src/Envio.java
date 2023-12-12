@@ -6,8 +6,8 @@ import java.util.Scanner;
 /**
  * Description of the class
  *
- * @author
- * @author
+ * @author Iñaki Ramos Iturria
+ * @author Cristiana Velislavova Tsekova
  * @version     1.0
  */
 public class Envio {
@@ -52,9 +52,10 @@ public class Envio {
     public int getColumna() {
         return columna;
     }
+
     // TODO: Ejemplos: "1A" para el hueco con fila 1 y columna 1, "3D" para el hueco con fila 3 y columna 4
     public String getHueco() {
-        return "";
+        return getHueco() + " para el hueco con fila " + getFila() + " y columna " + getColumna() + ", " + getHueco() + " para el hueco con fila " + getFila() + " y columna " + getColumna();
     }
     public double getPrecio() {
         return precio;

@@ -3,7 +3,8 @@ import java.util.Scanner;
 /**
  * Description of the class
  *
- * @author Taller de Programación
+ * @author Iñaki Ramos Iturria
+ * @author Cristiana Velislavova Tsekova
  * @version     1.0
  */
 public class Cliente {
@@ -89,7 +90,7 @@ public class Cliente {
      */
     // TODO: Devuelve un booleano que indica si se ha alcanzado el número máximo de envíos
     public boolean maxEnviosAlcanzado() {
-        return maxEnvios == ;
+        return maxEnvios == listaEnvios.getOcupacion();
     }
 
     /**
@@ -106,9 +107,15 @@ public class Cliente {
     public ListaEnvios getListaEnvios() {
         return listaEnvios;
     }
+
     // TODO: Añade un envío al cliente
     public boolean aniadirEnvio(Envio envio) {
-        return null;
+        boolean aniadido = false;
+        if (!maxEnviosAlcanzado()){
+            listaEnvios.insertarEnvio(envio);
+            aniadido = true;
+        }
+        return aniadido;
     }
 
     /**
@@ -159,16 +166,16 @@ public class Cliente {
      */
     public static Cliente altaCliente(Scanner teclado, ListaClientes clientes, int maxEnvios) {
         Cliente nuevoCliente = null;
-        System.out.print("Ingrese nombre:");
+        System.out.print("Nombre:");
         String nombre = teclado.nextLine();
-        System.out.print("Ingrese apellidos:");
+        System.out.print("Apellidos:");
         String apellidos = teclado.nextLine();
         boolean emailIncorrecto;
         String email;
 
         do {
             emailIncorrecto = false;
-            System.out.print("Ingrese email:");
+            System.out.print("Email:");
             email = teclado.nextLine();
             if (clientes.buscarClienteEmail(email) != null){
                 emailIncorrecto = true;
@@ -196,7 +203,8 @@ public class Cliente {
         String segundaParte = emailCompleto[1];
         int longitud = primeraParte.length();
         boolean correcto = true;
-        if (segundaParte.equals("alumnos.upm.es") || segundaParte.equals("upm.es")) {
+
+        if (segundaParte.equals("planetexpress.com")) {
             if (primeraParte.charAt(0) == '.' || primeraParte.charAt(longitud - 1) == '.') {
                 System.out.println("Email incorrecto.");
                 correcto = false;
