@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
@@ -12,22 +13,45 @@ import java.util.Scanner;
  */
 public class Envio {
 
+    /**
+     * Atributo que contiene el localizador de un envío
+     */
     private String localizador;
+
+    /**
+     * Atributo que contiene el porte de donde se ha hecho un envío
+     */
     private Porte porte;
+
+    /**
+     * Atributo que contiene el cliente que compro ha hecho un envío
+     */
     private Cliente cliente;
+
+    /**
+     * Atributo que contiene la fila del hueco del envío
+     */
     private int fila;
+
+    /**
+     * Atributo que contiene la columna del hueco del envío
+     */
     private int columna;
+
+    /**
+     * Atributo que contiene el precio del envío
+     */
     private double precio;
 
     /**
-     * Constructor of the class
+     * Constructor of the class; Crea un envío con los parámetros que recibe
      *
-     * @param localizador
-     * @param porte
-     * @param cliente
-     * @param fila
-     * @param columna
-     * @param precio
+     * @param localizador del envío
+     * @param porte correspondiente al envío
+     * @param cliente que tiene que recibir el envío
+     * @param fila del hueco del paquete a enviar
+     * @param columna del hueco del paquete a enviar
+     * @param precio precio del envío
      */
     public Envio(String localizador, Porte porte, Cliente cliente, int fila, int columna, double precio) {
         this.localizador = localizador;
@@ -37,42 +61,102 @@ public class Envio {
         this.columna = columna;
         this.precio = precio;
     }
+
+    /**
+     * Getter del atributo localizador
+     *
+     * @return devuelve el localizador de un envío
+     */
     public String getLocalizador() {
         return localizador;
     }
+
+    /**
+     * Getter del atributo porte
+     *
+     * @return devuelve el porte del envío
+     */
     public Porte getPorte() {
         return porte;
     }
+
+    /**
+     * Getter del atributo pasajero
+     *
+     * @return devuelve el cliente relacionado al envío
+     */
     public Cliente getCliente() {
         return cliente;
     }
+
+    /**
+     * Getter del atributo fila
+     *
+     * @return devuelve la fila del hueco del envío
+     */
     public int getFila() {
         return fila;
     }
+
+    /**
+     * Getter del atributo columna
+     *
+     * @return devuelve la columna del hueco del envío
+     */
     public int getColumna() {
         return columna;
     }
 
+    /**
+     * Getter del para conseguir un hueco dependiendo de una fila y una columna
+     *
+     * @return devuelve el hueco de un cliente dependiendo de la fila y la columna seleccionada
+     */
     // TODO: Ejemplos: "1A" para el hueco con fila 1 y columna 1, "3D" para el hueco con fila 3 y columna 4
     public String getHueco() {
-        return getHueco() + " para el hueco con fila " + getFila() + " y columna " + getColumna() + ", " + getHueco() + " para el hueco con fila " + getFila() + " y columna " + getColumna();
+        char[] columna = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+        int numcolumna = getColumna();
+        return getFila() + "" + columna[numcolumna - 1];
     }
+
+    /**
+     * Getter del atributo precio
+     *
+     * @return devuelve el precio de un envío
+     */
     public double getPrecio() {
         return precio;
     }
+
+    /**
+     * Función que muestra la información completa del envío de una forma específica según el enunciado
+     *
+     * @return devuelve un String con toda la información del envío
+     */
     //TODO: Texto que debe generar: Envío PM1111AAAABBBBC para Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05) en hueco 6C por 13424,56 SSD
     public String toString() {
-
+        return "Envío " + localizador + " para Porte " + porte.getID() + " de " + porte.getOrigen().getCodigo() + " M"
+                + porte.getMuelleOrigen() + " (" + porte.getSalida().toString() + ") a "
+                + porte.getDestino().getCodigo() + " M" + porte.getMuelleDestino() + " (" + porte.getLlegada().toString() + ") en hueco " +
+                getHueco() + " por " + String.format("%.2f", precio).replace(".", ",") + "SSD";
     }
+
     // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
     public boolean cancelar() {
-
+        boolean cancelar = true;
+        if (!porte.desocuparHueco(localizador)){
+            cancelar = false;
+        }
+        if (!cliente.cancelarEnvio(localizador)){
+            cancelar = false;
+        }
+        return cancelar;
     }
 
     /**
      * TODO: Método para imprimir la información de este envío en un fichero que respecta el formato descrito en el
      *  enunciado
-     * @param fichero
+     * @param fichero en el que se escribe la informaión del envío
      * @return Devuelve la información con el siguiente formato como ejemplo ->
      *     -----------------------------------------------------
      *     --------- Factura del envío PM1111AAAABBBBC ---------
@@ -87,22 +171,43 @@ public class Envio {
      *     Precio: 13424,56 SSD
      */
     public boolean generarFactura(String fichero) {
+        PrintWriter pw = null;
+        boolean facturaGenerada = true;
+
         try {
+            pw = new PrintWriter(fichero);
+            pw.write("--------------------------------------------------\n");
+            pw.write("--------- Factura del billete " + localizador + " ---------\n");
+            pw.write("--------------------------------------------------\n");
+            pw.write("Vuelo: " + porte.getID() + "\n");
+            pw.write("Origen: " + porte.getOrigen().toStringSimple() + " M" + porte.getMuelleOrigen() + "\n");
+            pw.write("Destino: " + porte.getDestino().toStringSimple() + " M" + porte.getMuelleDestino() + "\n");
+            pw.write("Salida: " + porte.getSalida().toString() + "\n");
+            pw.write("Llegada: " + porte.getLlegada().toString() + "\n");
+            pw.write("Cliente: " + cliente.toString() + "\n");
 
+            String precio = String.format("%.2f", getPrecio());
+            pw.write("Precio: " + precio + "€");
 
-
-
-
-
-
-
-            return true;
-        } catch (FileNotFoundException e) {
-            return false;
+        } catch (FileNotFoundException fileNotFoundException){
+            System.out.println("Fichero " + fichero + " no encontrado.");
+            facturaGenerada = false;
         }
+        catch (IOException ioException){
+            System.out.println("Error de escritura en fichero " + fichero + ".");
+            facturaGenerada = false;
+        }
+        finally {
+            if (pw != null){
+                pw.close();
+            }
+        }
+        //Si la factura se genera correctamente
+        if (facturaGenerada){
+            System.out.print("Factura de Envio " + localizador);
+        }
+        return facturaGenerada;
     }
-
-
 
     /**
      *	TODO: Genera un localizador de envío. Este consistirá en una cadena de 15 caracteres, de los cuales los seis
