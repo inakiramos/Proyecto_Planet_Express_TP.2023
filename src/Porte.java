@@ -12,21 +12,65 @@ import java.util.Scanner;
  * @version     1.0
  */
 public class Porte {
+
+    /**
+     * Matriz que indica los huecos libres de la nave
+     */
     private boolean[][] huecos; //Matriz de hueco (indicando para filas y columnas si el hueco esta libre)
+
+    /**
+     * ID de Envío
+     */
     private String id; //ID del porte "unico", 6 caracteres (dos primeros "PM" y los 4 siguientes aleatorios)
+
+    /**
+     * Nave encargada del envío
+     */
     private Nave nave;
+
+    /**
+     * Puerto Espacial de Origen
+     */
     private PuertoEspacial origen;
+
+    /**
+     * Muelle del inicio del envío, muelleOrigen
+     */
     private int muelleOrigen;
+
+    /**
+     * Fecha de salida del envío
+     */
     private Fecha salida;
+
+    /**
+     * Puerto Espacial de Destino
+     */
     private PuertoEspacial destino;
+
+    /**
+     * Muelle del fin del envío, muelleDestino
+     */
     private int muelleDestino;
+
+    /**
+     * Fecha de llegada del envío
+     */
     private Fecha llegada;
+
+    /**
+     * Precio de un hueco para el envío de un paquete
+     */
     private double precio;
+
+    /**
+     * Lista de envíos de paquetes
+     */
     private ListaEnvios listaEnvios;
 
     /**
      * TODO: Completa el constructo de la clase
-     * 
+     *
      * @param id
      * @param nave
      * @param origen
@@ -47,72 +91,135 @@ public class Porte {
         this.muelleDestino = muelleDestino;
         this.llegada = llegada;
         this.precio = precio;
+        this.huecos = new boolean[nave.getFilas()][nave.getColumnas()];
+
+        for (int i = 0; i < nave.getFilas(); i++) {
+            for (int k = 0; k < nave.getColumnas(); k++) {
+                huecos[i][k] = false;
+            }
+        }
+        listaEnvios = new ListaEnvios(nave.getFilas() * nave.getColumnas());
     }
 
+    /**
+     * @return devuelve el id del envío
+     */
     public String getID() {
         return id;
     }
-    public Nave getNave(){
+
+    /**
+     * @return devuelve la nave que se utiliza para el envío
+     */
+    public Nave getNave() {
         return nave;
     }
+
+    /**
+     * @return devuelve el Puerto Espacial por el cual sale la nave
+     */
     public PuertoEspacial getOrigen() {
         return origen;
     }
+
+    /**
+     * @return devuelve el muelle de origen del envío
+     */
     public int getMuelleOrigen() {
         return muelleOrigen;
     }
-    public Fecha getSalida(){
+
+    /**
+     * @return devuelve la fecha de salida del envío
+     */
+    public Fecha getSalida() {
         return salida;
     }
+
+    /**
+     * @return devuelve el Puerto Espacial de destino
+     */
     public PuertoEspacial getDestino() {
         return destino;
     }
+
+    /**
+     * @return devuelve la muelle de llegada del envío
+     */
     public int getMuelleDestino() {
         return muelleDestino;
     }
+
+    /**
+     * @return devuelve la fecha de llegada del envío
+     */
     public Fecha getLlegada() {
         return llegada;
     }
+
+    /**
+     * @return devuelve el precio del envío del paquete
+     */
     public double getPrecio() {
         return precio;
     }
 
+    /**
+     * @return devuelve el número de huecos libres disponibles para ocupar
+     */
     // TODO: Devuelve el número de huecos libres que hay en el porte
     public int numHuecosLibres() {
         int huecoLibres = 0;
-        for (int i = 0; i < nave.getFilas() ; i++) {
-            for (int j = 0; j < nave.getColumnas() ; j++) {
-                if (huecos[i][j] == false){
-                    huecoLibres ++;
+        for (int i = 0; i < nave.getFilas(); i++) {
+            for (int j = 0; j < nave.getColumnas(); j++) {
+                if (huecos[i][j] == false) {
+                    huecoLibres++;
                 }
             }
         }
         return huecoLibres;
     }
 
+    /**
+     * @return devuelve true si no quedan huecos libres y false si no quedan
+     */
     // TODO: ¿Están llenos todos los huecos?
     public boolean porteLleno() {
         boolean porteLleno = false;
-        if (numHuecosLibres() == 0){
+        if (numHuecosLibres() == 0) {
             porteLleno = true;
         }
         return porteLleno;
     }
 
+    /**
+     * Verifica si un hueco del envío (por filas y columnas) está ocupado
+     *
+     * @param fila    fila del hueco
+     * @param columna columna del hueco
+     * @return devuelve true si el hueco está ocupado y false si este mismo no lo esta
+     */
     // TODO: ¿Está ocupado el hueco consultado?
     public boolean huecoOcupado(int fila, int columna) {
         return huecos[fila - 1][columna - 1]; // Se le quita un valor porque la matriz comienza en 0
     }
 
+    /**
+     * Busca un envío, entre los de la lista de clientes del vuelo mediante un localizador introducido por parámetro
+     *
+     * @param localizador localizador del envío a buscar
+     * @return devuelve el envío que coincida con el introducido por parámetro, si no existe el envío devuelve null
+     */
     public Envio buscarEnvio(String localizador) {
         return listaEnvios.buscarEnvio(localizador);
     }
 
     /**
      * TODO: Devuelve el objeto Envio que corresponde con una fila o columna,
-     * @param fila
-     * @param columna
-     * @return el objeto Envio que corresponde, o null si está libre o se excede en el límite de fila y columna
+     *
+     * @param fila    del envío
+     * @param columna del envío
+     * @return devuelve el objeto envío que corresponde, o null si está libre o se excede en el límite de fila y columna
      */
     public Envio buscarEnvio(int fila, int columna) {
         Envio localizado = listaEnvios.buscarEnvio(id, fila, columna);
@@ -122,14 +229,16 @@ public class Porte {
     /**
      * TODO: Método que Si está desocupado el hueco que indica el envio, lo pone ocupado y devuelve true,
      *  si no devuelve false
-     * @param envio
-     * @return
+     *
+     * @param envio de la nave (indica el hueco a ocupar)
+     * @return devuelve true si el hueco no estaba ocupado antes de invocar a la función
      */
+    //Si está desocupado el asiento que indica el billete, lo pone ocupado y devuelve true, si no devuelve false
     public boolean ocuparHueco(Envio envio) {
         boolean ocupado = false;
 
-        if (!huecoOcupado(envio.getFila(),envio.getColumna())){
-            huecos[envio.getFila() - 1][envio.getColumna() - 1] = true;
+        if (!huecoOcupado(envio.getFila(), envio.getColumna())) {
+            huecos[envio.getFila() - 1][envio.getColumna() - 1] = true; // True de ocupado
             ocupado = true;
         }
 
@@ -138,14 +247,15 @@ public class Porte {
 
     /**
      * TODO: A través del localizador del envio, se desocupará el hueco
-     * @param localizador
-     * @return
+     *
+     * @param localizador del hueco (indica el hueco a ocupar)
+     * @return devuelve true si se ha desocupado el asiento correctamente y false si no se ha desocupado
      */
     public boolean desocuparHueco(String localizador) {
         boolean desocupado = false;
         Envio envio = listaEnvios.buscarEnvio(localizador);
 
-        if (huecoOcupado(envio.getFila(), envio.getColumna())){
+        if (huecoOcupado(envio.getFila(), envio.getColumna())) {
             huecos[envio.getFila() - 1][envio.getColumna() - 1] = false;
             desocupado = true;
         }
@@ -155,8 +265,9 @@ public class Porte {
 
     /**
      * TODO: Devuelve una cadena con información completa del porte
+     *
      * @return ejemplo del formato -> "Porte PM0066 de Gaia Galactic Terminal(GGT) M5 (01/01/2023 08:15:00) a
-     *  Cidonia(CID) M1 (01/01/2024 11:00:05) en Planet Express One(EP-245732X) por 13424,56 SSD, huecos libres: 10"
+     * Cidonia(CID) M1 (01/01/2024 11:00:05) en Planet Express One(EP-245732X) por 13424,56 SSD, huecos libres: 10"
      */
     public String toString() {
         return "Porte " + this.id + " de " + this.origen.getNombre() + "Terminal(" + this.origen.getCodigo() + ")" + "M" +
@@ -168,6 +279,7 @@ public class Porte {
 
     /**
      * TODO: Devuelve una cadena con información abreviada del vuelo
+     *
      * @return ejemplo del formato -> "Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05)"
      */
     public String toStringSimple() {
@@ -177,15 +289,16 @@ public class Porte {
 
     /**
      * TODO: Devuelve true si el código origen, destino y fecha son los mismos que el porte
-     * @param codigoOrigen
-     * @param codigoDestino
-     * @param fecha
-     * @return
+     *
+     * @param codigoOrigen  código del porte de origen (comprobar)
+     * @param codigoDestino código del porte de destino (comprobar)
+     * @param fecha         fecha a comprobar
+     * @return devuelve true si el código de origen, destino y fecha son correctos y cinciden con los que se pasan por parámetro
      */
     public boolean coincide(String codigoOrigen, String codigoDestino, Fecha fecha) {
         boolean correcto = false;
 
-        if (origen.getCodigo().equals(codigoOrigen) && destino.getCodigo().equals(codigoDestino) && salida.coincide(fecha)){
+        if (origen.getCodigo().equals(codigoOrigen) && destino.getCodigo().equals(codigoDestino) && salida.coincide(fecha)) {
             correcto = true;
         }
         return correcto;
@@ -207,36 +320,36 @@ public class Porte {
      */
     public void imprimirMatrizHuecos() {
         System.out.print("  ");
-        for (int i = 1; i <= nave.getColumnas(); i ++){
+        for (int i = 1; i <= nave.getColumnas(); i++) {
             System.out.printf("%c  ", 64 + i);
         }
         System.out.println();
         System.out.printf("  1");
-        for (int j = 1; j <= nave.getColumnas(); j ++){
-            if (huecoOcupado(1, j)){
+        for (int j = 1; j <= nave.getColumnas(); j++) {
+            if (huecoOcupado(1, j)) {
                 System.out.println("[X]");
-            }else{
+            } else {
                 System.out.println("[ ]");
             }
         }
         System.out.println();
-        for (int k = 2; k < 6; k ++){
+        for (int k = 2; k < 6; k++) {
             System.out.printf(" %2d", k);
-            for (int l = 1; l <= nave.getColumnas() ; l++) {
-                if (huecoOcupado(2, l)){
+            for (int l = 1; l <= nave.getColumnas(); l++) {
+                if (huecoOcupado(2, l)) {
                     System.out.println("[X]");
-                }else{
+                } else {
                     System.out.println("[ ]");
                 }
             }
             System.out.println();
         }
-        for (int m = 6; m < nave.getColumnas(); m ++){
+        for (int m = 6; m < nave.getColumnas(); m++) {
             System.out.printf(" %2d", m);
-            for (int n = 1; n <= nave.getColumnas(); n ++){
-                if (huecoOcupado(m, n)){
+            for (int n = 1; n <= nave.getColumnas(); n++) {
+                if (huecoOcupado(m, n)) {
                     System.out.println("[x]");
-                }else{
+                } else {
                     System.out.println("[ ]");
                 }
             }
@@ -247,14 +360,15 @@ public class Porte {
     /**
      * TODO: Devuelve true si ha podido escribir en un fichero la lista de envíos del porte, siguiendo las indicaciones
      *  del enunciado
-     * @param fichero
-     * @return
+     *
+     * @param fichero donde se quiere generar la lista con los envíos
+     * @return devuelve true si se ha podido escribir en el fichero la lista de envíos del vuelo
      */
     public boolean generarListaEnvios(String fichero) {
         boolean ficheroEnvios = false;
         Envio envio = null;
         PrintWriter printW = null;
-        char[] letrasHuecos = { 'A', 'B', 'C','D','E','F'};
+        char[] letrasHuecos = {'A', 'B', 'C', 'D', 'E', 'F'};
 
         try {
             printW = new PrintWriter(fichero);
@@ -263,12 +377,12 @@ public class Porte {
             printW.write("--------------------------------------------------");
             printW.write("Hueco\tCliente");
 
-            for (int i = 0; i < nave.getFilas(); i ++){
-                for (int j = 0; j < nave.getColumnas(); j ++){
+            for (int i = 0; i < nave.getFilas(); i++) {
+                for (int j = 0; j < nave.getColumnas(); j++) {
                     envio = buscarEnvio(i + 1, j + 1);
                     printW.write(String.valueOf(i + 1) + ((char) (j + 65)) + "\t\t");
 
-                    if (envio != null){
+                    if (envio != null) {
                         printW.write(envio.getCliente().getNombre() + "\t");
 
                     }
@@ -280,10 +394,10 @@ public class Porte {
         } catch (FileNotFoundException ex1) {
             System.out.println("Fichero " + fichero + " no encontrado.");
             ficheroEnvios = false;
-        }catch(IOException ex2){
+        } catch (IOException ex2) {
             System.out.println("Error de escritura en fichero " + fichero + ".");
-        }finally {
-            if (printW != null){
+        } finally {
+            if (printW != null) {
                 printW.close();
             }
         }
@@ -294,8 +408,9 @@ public class Porte {
      * TODO: Genera un ID de porte. Este consistirá en una cadena de 6 caracteres, de los cuales los dos primeros
      *  serán PM y los 4 siguientes serán números aleatorios.
      *  NOTA: Usar el objeto rand pasado como argumento para la parte aleatoria.
-     * @param rand
-     * @return ejemplo -> "PM0123"
+     *
+     * @param rand parámetro aleatorio
+     * @return ejemplo -> "PM0123" (ID´s aleatorios)
      */
     public static String generarID(Random rand) {
         return String.format("PM%04d", rand.nextInt(9999));
@@ -306,15 +421,61 @@ public class Porte {
      *  y naves y la restricción de que no puede estar repetido el identificador, siguiendo las indicaciones
      *  del enunciado.
      *  La función solicita repetidamente los parametros hasta que sean correctos
-     * @param teclado
-     * @param rand
-     * @param puertosEspaciales
-     * @param naves
-     * @param portes
-     * @return
+     *
+     * @param teclado           pasa por parámetro el teclado para no tener que declararlo
+     * @param rand              número aleatorio para generar el ID del vuelo
+     * @param puertosEspaciales lista de Puertos Espaciales entre los que puede ir la nave
+     * @param naves             lista de naves que pueden usarse para envíar paquetes
+     * @param portes            lista de portes que ya existen para no generar, ni dar el mismo ID a dos naves
+     * @return devuelve el envío que se acaba de crear
      */
     public static Porte altaPorte(Scanner teclado, Random rand, ListaPuertosEspaciales puertosEspaciales, ListaNaves naves, ListaPortes portes) {
+        boolean envioCorrecto = false;
+        boolean fechaCorrecta;
+        Fecha fechaLlegada;
+        Fecha fechaSalida;
 
-        return null;
+        //Información de los Aeropuertos
+        PuertoEspacial origen = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de Aeropuerto Origen:");
+        String primerMensaje = "Ingrese Muelle Origen (1 - " + origen.getMuelles() + "):";
+        int muelleOrigen = Utilidades.leerNumero(teclado, primerMensaje, 1, origen.getMuelles());
+
+        PuertoEspacial destino = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de Aeropuerto Destino:");
+        String segundoMensaje = "Ingrese Terminal Destino (1 - " + destino.getMuelles() + "):";
+        int muelleDestino = Utilidades.leerNumero(teclado, segundoMensaje, 1, destino.getMuelles());
+
+        //Información del avión
+        double distancia = origen.distancia(destino);
+        Nave nave = naves.seleccionarNave(teclado, "Ingrese matrícula de Avión:", distancia);
+
+        //Comprobamos la fecha
+        do {
+            fechaSalida = Utilidades.leerFechaHora(teclado, "Fecha de Salida:");
+            fechaLlegada = Utilidades.leerFechaHora(teclado, "Fecha de Llegada:");
+
+            if (fechaSalida.anterior(fechaLlegada))
+                fechaCorrecta = true;
+            else {
+                System.out.println("Llegada debe ser posterior a salida.");
+                fechaCorrecta = false;
+            }
+        } while (!fechaCorrecta);
+
+        //Información de ID
+        String envioID;
+        do {
+            envioID = generarID(rand);
+            for (int i = 0; i < portes.getOcupacion(); i++) {
+                if (envioID.equals(portes.getPorte(i + 1).getID())) envioCorrecto = true;
+            }
+        } while (envioCorrecto);
+
+        double precio;
+        precio = Utilidades.leerNumero(teclado, "Ingrese precio de pasaje:", 0, (double) 999);
+        Porte porteNuevo = new Porte(envioID, nave, origen, muelleOrigen,fechaSalida, destino, muelleDestino, fechaLlegada, precio);
+
+        System.out.println("Porte " + envioID + " creado con éxito.");
+        portes.insertarPorte(porteNuevo);
+        return porteNuevo;
     }
 }

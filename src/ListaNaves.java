@@ -117,24 +117,24 @@ public class ListaNaves {
      */
     public Nave seleccionarNave(Scanner teclado, String mensaje, double alcance) {
         Nave nave = null;
+        String matricula = "";
         boolean stop = false;
 
         do {
             System.out.println(mensaje);
-            String pantalla = teclado.nextLine();
+            matricula = teclado.nextLine();
+            nave = buscarNave(matricula);
 
             // Comprobar el alcance de la nave VER
-            if (pantalla.equalsIgnoreCase(alcance)) stop = true;
-
-            else{
-                nave = buscarNave(pantalla);
-                if (nave == null){
-                    System.out.println("Matricula de nave no encontrada.");
-                }else{
-                    stop = true;
-                }
+            if (nave == null){
+                System.out.println("Matricula de nave no encontrada.");
+            } else if (nave.getAlcance() < alcance){
+                System.out.printf(String.format("Nave seleccionado con alcance insuficiente.", alcance).replace(',', '.'));
+            } else {
+                stop = true;
             }
-        }while (!stop);
+        } while (!stop);
+        //} while (nave == null || !stop);
         return nave;
     }
 
@@ -188,7 +188,7 @@ public class ListaNaves {
             sc = new Scanner(new FileReader(fichero));
             do {
                 arrayNave = sc.nextLine().split(";");
-                nave = new Nave(arrayNave[0], arrayNave[1], arrayNave[2], arrayNave[3], arrayNave[4], arrayNave[5]);
+                nave = new Nave(arrayNave[0], arrayNave[1], arrayNave[2], Integer.parseInt(arrayNave[3]), Integer.parseInt(arrayNave[4]), Double.parseDouble(arrayNave[5]));
                 listaNaves.insertarNave(nave);
             }while(sc.hasNext());
         } catch (FileNotFoundException fileNotFoundException) {

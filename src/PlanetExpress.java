@@ -9,15 +9,51 @@ import java.util.Scanner;
  * @version     1.0
  */
 public class PlanetExpress {
+
+    /**
+     * Atributo que representa la capacidad máxima de la lista de Portes
+     */
     private final int maxPortes;
+
+    /**
+     * Atributo que representa la capacidad máxima de la lista de Naves
+     */
     private final int maxNaves;
+
+    /**
+     * Atributo que representa la capacidad máxima de la lista de Clientes
+     */
     private final int maxClientes;
+
+    /**
+     * Atributo que representa la capacidad máxima de la lista de Envíos
+     */
     private final int maxEnviosPorCliente;
-    private ListaPuertosEspaciales listaPuertosEspaciales;
+
+    /**
+     * Atributo que representa la capacidad máxima de la lista de Aeropuertos
+     */
     private final int maxPuertosEspaciales;
-    private ListaNaves listaNaves;
-    private ListaClientes listaClientes;
-    private ListaPortes listaPortes;
+
+    /**
+     * Objeto que contiene los Puertos Espaciales disponibles del programa
+     */
+    private ListaPuertosEspaciales listaPuertosEspaciales = null;
+
+    /**
+     * Objeto que contiene las naves disponibles del programa
+     */
+    private ListaNaves listaNaves = null;
+
+    /**
+     * Objeto que contiene los clientes disponibles del programa
+     */
+    private ListaClientes listaClientes = null;
+
+    /**
+     * Objeto que contiene los portes disponibles del programa
+     */
+    private ListaPortes listaPortes = null;
 
 
     /**
@@ -30,53 +66,67 @@ public class PlanetExpress {
      * @param maxEnviosPorCliente Máximo número de envíos por cliente.
      */
     public PlanetExpress(int maxPuertosEspaciales, int maxNaves, int maxPortes, int maxClientes, int maxEnviosPorCliente) {
-
-
-
-
-
+        this.maxPuertosEspaciales = maxPuertosEspaciales;
+        this.maxNaves = maxNaves;
+        this.maxPortes = maxPortes;
+        this.maxClientes = maxClientes;
+        this.maxEnviosPorCliente = maxEnviosPorCliente;
     }
-
 
     /**
      * TODO: Metodo para leer los datos de los ficheros específicados en el enunciado y los agrega a
      *  la información de PlanetExpress (listaPuertosEspaciales, listaNaves, listaPortes, listaClientes)
-     * @param ficheroPuertos
-     * @param ficheroNaves
-     * @param ficheroPortes
-     * @param ficheroClientes
-     * @param ficheroEnvios
+     * @param ficheroPuertos fichero que contiene la lista de los Puertos Espaciales
+     * @param ficheroNaves fichero que contiene la lista de las naves
+     * @param ficheroPortes fichero que contiene la lista de portes
+     * @param ficheroClientes fichero que contiene la lista de clientes
+     * @param ficheroEnvios fichero que contiene la lista de los envios
      */
+    // Lee los datos de los ficheros especificados y los agrega a Planet Express
     public void cargarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
 
 
 
     }
 
-
     /**
      * TODO: Metodo para almacenar los datos de PlanetExpress en los ficheros .csv especificados
      *  en el enunciado de la práctica
-     * @param ficheroPuertos
-     * @param ficheroNaves
-     * @param ficheroPortes
-     * @param ficheroClientes
-     * @param ficheroEnvios
+     * @param ficheroPuertos fichero en donde se guardan los Puertos Espaciales
+     * @param ficheroNaves fichero en donde se guardan las naves
+     * @param ficheroPortes fichero en donde se guardan los portes
+     * @param ficheroClientes fichero en donde se guardan los clientes
+     * @param ficheroEnvios fichero donde se guardan los envios
      */
     public void guardarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
 
 
 
     }
+
+    /**
+     * @return devuelve verdadero si se ha alcanzado el numero maximo de portes, en caso contrario devuelve falso
+     */
     public boolean maxPortesAlcanzado() {
         return listaPortes.estaLlena();
     }
+
     public boolean insertarPorte (Porte porte) {
         return listaPortes.insertarPorte(porte);
     }
+
+    /**
+     * @return devuelve verdadero si se ha alcanzado el numero maximo de clientes, en caso contrario devuelve falso
+     */
     public boolean maxClientesAlcanzado() {
         return listaClientes.estaLlena();
     }
+
+    /**
+     * Inserta un cliente en la lista de clientes
+     * @param cliente  a insertar por parámetro
+     * @return devuelve verdadero si se ha insertado correctamente y falso si no se inserta
+     */
     public boolean insertarCliente (Cliente cliente) {
         return listaClientes.insertarCliente(cliente);
     }
@@ -86,8 +136,9 @@ public class PlanetExpress {
      *  Devuelve una lista de los portes entre dos puertos espaciales con una fecha de salida solicitados por teclado
      *  al usuario en el orden y con los textos establecidos (tomar como referencia los ejemplos de ejecución en el
      *  enunciado de la prática)
-     * @param teclado
-     * @return
+     * @param teclado objeto para guardar lo que escribe el usuario
+     * @return devuelve la lista de portes con el los Puertos Espaciales de llegada y salida.
+     * Tambien, devuelve las fechas de llegada y salida.
      */
     public ListaPortes buscarPorte(Scanner teclado) {
         System.out.print("Ingrese código de puerto Origen:");
@@ -103,9 +154,9 @@ public class PlanetExpress {
      * TODO: Metodo para contratar un envio tal y como se indica en el enunciado de la práctica. Se contrata un envio para un porte
      *  especificado, pidiendo por teclado los datos necesarios al usuario en el orden y con los textos (tomar como referencia los
      *  ejemplos de ejecución en el enunciado de la prática)
-     * @param teclado
-     * @param rand
-     * @param porte
+     * @param teclado objeto paraa guardar lo que escribe el usuario
+     * @param rand número aleatorio para crear el identificador de un envío (aleatorio)
+     * @param porte de el cual se va a hacer un envío (crear el envío)
      */
     public void contratarEnvio(Scanner teclado, Random rand, Porte porte) {
         if (porte != null) {
@@ -124,14 +175,13 @@ public class PlanetExpress {
      */
     public static int menu(Scanner teclado) {
         int opcion;
-
         System.out.println("1. Alta de Porte");
         System.out.println("2. Alta de Cliente");
         System.out.println("3. Buscar Porte");
         System.out.println("4. Mostrar envíos de un cliente");
         System.out.println("5. Generar lista de envíos");
+        System.out.println("0. Salir");
         opcion = Utilidades.leerNumero(teclado, "Seleccione opción:", 0, 5 );
-
         return opcion;
     }
 
@@ -159,8 +209,8 @@ public class PlanetExpress {
             return;
         }
         Scanner teclado = new Scanner(System.in);
-        PlanetExpress planetExpress = new PlanetExpress();
-        planetExpress.cargarDatos();
+        PlanetExpress planetExpress = new PlanetExpress(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+        planetExpress.cargarDatos(args[5], args[6], args[7], args[8], args[9]);
         Random rand = new Random();
         ListaPortes listaPortes;
         Porte porte;
@@ -169,25 +219,39 @@ public class PlanetExpress {
         do {
             opcion = menu(teclado);
             switch (opcion) {
-                case 1:     // TODO: Alta de Porte
-                    planetExpress.guardarDatos();
+                case 0:
+                    PlanetExpress.guardarDatos(args[5], args[6], args[7], args[8], args[9]);
+                    break;
+
+                case 1:     // TODO: Alta de Cliente
+                    if (!planetExpress.maxPortesAlcanzado())
+                        Porte.altaPorte(teclado, rand, planetExpress.listaPuertosEspaciales, planetExpress.listaNaves, planetExpress.listaPortes);
+                    else System.out.println("No se pueden dar de alta más portes.");
+                    break;
 
                     break;
-                case 2:     // TODO: Alta de Cliente
+
+                case 2:     // TODO: Buscar Porte
+                    if (!planetExpress.maxClientesAlcanzado()) {
+                        Cliente nuevoCliente = Cliente.altaCliente(teclado, planetExpress.listaClientes, planetExpress.maxEnviosPorCliente);
+                        if (nuevoCliente != null)
+                            System.out.println("Cliente con email " + nuevoCliente.getEmail() + " dado de alta con éxito.");
+                    } else System.out.println("No se pueden dar de alta más clientes.");
+                    break;
+
+                case 3:     // TODO: Listado de envíos de un cliente
+
+                    break;
+
+                case 4:     // TODO: Lista de envíos de un porte
 
 
                     break;
-                case 3:     // TODO: Buscar Porte
 
-
-                    break;
-                case 4:     // TODO: Listado de envíos de un cliente
+                case 5:
 
                     break;
-                case 5:     // TODO: Lista de envíos de un porte
 
-
-                    break;
             }
         } while (opcion != 0);
 
