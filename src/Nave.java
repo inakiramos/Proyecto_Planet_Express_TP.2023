@@ -23,7 +23,7 @@ public class Nave {
     private String matricula;
 
     /**
-     * Atributo que contiene las columnas de huecos del aviòn
+     * Atributo que contiene las columnas de huecos de la nave
      */
     private int columnas;
 
@@ -36,7 +36,6 @@ public class Nave {
      * Atributo que contiene el alcance de la nave
      */
     private double alcance;
-
 
     /**
      * Constructor que crea una nave con los parámetros recbidos (String marca, String modelo, String matricula, int columnas, int filas, double alcance)
@@ -59,6 +58,7 @@ public class Nave {
 
     /**
      * Getter del atributo marca
+     *
      * @return Devuelve la marca de la nave
      */
     public String getMarca() {
@@ -67,6 +67,7 @@ public class Nave {
 
     /**
      * Getter del atributo modelo
+     *
      * @return Devuelve el modelo de la nave
      */
     public String getModelo() {
@@ -75,7 +76,8 @@ public class Nave {
 
     /**
      * Getter del atributo matrícula
-     * @return Devuelve la matricula de la nave
+     *
+     * @return Devuelve la matrícula de la nave
      */
     public String getMatricula() {
         return matricula;
@@ -83,6 +85,7 @@ public class Nave {
 
     /**
      * Getter del atributo columnas
+     *
      * @return Devuelve las columnas de los asientos de la nave
      */
     public int getColumnas() {
@@ -91,6 +94,7 @@ public class Nave {
 
     /**
      * Getter del atributo filas
+     *
      * @return Devuelve las filas de los asientos de la nave
      */
     public int getFilas() {
@@ -99,6 +103,7 @@ public class Nave {
 
     /**
      * Getter del atributo alcance
+     *
      * @return Devuelve el alcance máximo de la nave
      */
     public double getAlcance() {
@@ -107,7 +112,7 @@ public class Nave {
 
     /**
      * TODO: Crea un String con los datos de una nave con el siguiente formato:
-     * @return ejemplo del formato -> "Planet Express One (EP-245732X): 40 contenedores, hasta 1.57 UA"
+     * @return Ejemplo del formato -> "Planet Express One (EP-245732X): 40 contenedores, hasta 1.57 UA"
      */
     public String toString() {
         return this.marca + this.modelo + "(" + this.matricula + "): " + this.filas * this.columnas +
@@ -116,7 +121,7 @@ public class Nave {
 
     /**
      * TODO: Crea un String con los datos de una nave con el siguiente formato:
-     * @return ejemplo del formato -> "Planet Express One (EP-245732X)"
+     * @return Ejemplo del formato -> "Planet Express One (EP-245732X)"
      */
     public String toStringSimple() {
         return this.marca + this.modelo + "(" + this.matricula + ")";

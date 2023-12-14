@@ -58,6 +58,7 @@ public class PuertoEspacial {
 
     /**
      * Getter del atributo nombre
+     *
      * @return Devuelve el nombre del Puerto Espacial
      */
     public String getNombre() {
@@ -66,6 +67,7 @@ public class PuertoEspacial {
 
     /**
      * Getter del atributo código GFSC
+     *
      * @return Devuelve el código GFSC del Puerto Espacial
      */
     public String getCodigo() {
@@ -74,6 +76,7 @@ public class PuertoEspacial {
 
     /**
      * Getter del atributo radio
+     *
      * @return Devuelve el radio del Puerto Espacial segun la distancia al Sol
      */
     public double getRadio() {
@@ -82,6 +85,7 @@ public class PuertoEspacial {
 
     /**
      * Getter del atributo azimut
+     *
      * @return Devuelve azimut que es el ángulo desde el eje positivo x hasta
      * la proyección del punto en el plano xy
      */
@@ -91,6 +95,7 @@ public class PuertoEspacial {
 
     /**
      * Getter del atributo polar
+     *
      * @return Devuelve polar que es el ángulo desde el eje positivo z hasta el puerto
      */
     public double getPolar() {
@@ -99,6 +104,7 @@ public class PuertoEspacial {
 
     /**
      * Getter del atributo muelles
+     *
      * @return Devuelve las muelles del Puerto Espacial
      */
     public int getMuelles() {
@@ -126,7 +132,7 @@ public class PuertoEspacial {
 
     /**
      * TODO: Método que crea un String con los datos de un puerto espacial con el siguiente formato:
-     * @return ejemplo -> "Gaia Galactic Terminal(GGT), en (1.0 90.0 0.0), con 8 muelles" (Radio, Azimut, Polar)
+     * @return Ejemplo -> "Gaia Galactic Terminal(GGT), en (1.0 90.0 0.0), con 8 muelles" (Radio, Azimut, Polar)
      */
     public String toString() {
         return this.nombre + "Terminal(" + this.codigo + "), en (" + this.radio + this.azimut + this.polar + "), " +
@@ -135,7 +141,7 @@ public class PuertoEspacial {
 
     /**
      * TODO: Método que crea un String con los datos de un aeropuerto con el siguiente formato:
-     * @return ejemplo -> "Gaia Galactic Terminal (GGT)"
+     * @return Ejemplo -> "Gaia Galactic Terminal (GGT)"
      */
     public String toStringSimple() {
         return this.nombre + "Terminal (" + this.codigo + ")";

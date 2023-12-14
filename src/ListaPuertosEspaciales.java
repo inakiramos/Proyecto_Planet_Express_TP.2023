@@ -38,6 +38,7 @@ public class ListaPuertosEspaciales {
 
     /**
      * Getter del atributo ocupación
+     *
      * @return Devuelve la cantidad de Puertos Espaciales que hay en la lista como una variable "ocupación"
      */
     // TODO: Devuelve el número de puertos espaciales que hay en la lista
@@ -47,7 +48,7 @@ public class ListaPuertosEspaciales {
 
     /**
      * Devuelve true si la Lista de Puertos Espaciales esta llena, si no, devuelve false
-     * @return estaLlena
+     * @return  Devuelve estaLlena
      */
     // TODO: ¿Está llena la lista?
     public boolean estaLlena() {
@@ -61,6 +62,7 @@ public class ListaPuertosEspaciales {
 
     /**
      * Getter para conseguir el Puerto Espacial deseado
+     *
      * @param i especifica la posición del Puerto Espacial dentro del array
      * @return Devuelve el Puerto Espacial que se encuentre en la psición recibida como parámetro
      */
@@ -167,7 +169,7 @@ public class ListaPuertosEspaciales {
      *  de la lista
      * @param fichero nombre del fichero por el cual se van a leer los datos
      * @param capacidad capacidad máxima que tendrá la lista
-     * @return genera una lista de los aeropuertos con los datos del fichero CSV
+     * @return Genera una lista de los aeropuertos con los datos del fichero CSV
      */
     public static ListaPuertosEspaciales leerPuertosEspacialesCsv(String fichero, int capacidad) {
         ListaPuertosEspaciales listaPuertosEspaciales = new ListaPuertosEspaciales(capacidad);
