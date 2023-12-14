@@ -197,8 +197,6 @@ public class ListaEnvios {
         Scanner sc = null;
         try {
 
-        } catch (FileNotFoundException e) {
-            System.out.println("No se ha encontrado el fichero de envíos");
         } finally {
 
         }
