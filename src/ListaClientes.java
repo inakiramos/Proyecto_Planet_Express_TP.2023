@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -120,7 +121,7 @@ public class ListaClientes {
      */
     public Cliente seleccionarCliente(Scanner teclado, String mensaje) {
         Cliente cliente = null;
-        String email;
+        String email = null;
         String[] emailCompleto = email.split("@");
         String primeraParte = emailCompleto[0];
         String segundaParte = emailCompleto[1];
@@ -146,9 +147,9 @@ public class ListaClientes {
                 System.out.println("Email incorrecto.");
                 correcto = false;
             }
-        }while (buscarClienteEmail(emailCompleto) == null);
+        }while (buscarClienteEmail(Arrays.toString(emailCompleto)) == null);
 
-        return correcto;
+        return cliente;
     }
 
     /**
