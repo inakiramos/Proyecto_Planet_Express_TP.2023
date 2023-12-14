@@ -219,10 +219,12 @@ public class Envio {
      */
     public static String generarLocalizador(Random rand, String idPorte) {
         StringBuilder localizador = new StringBuilder(idPorte);
-
-
-
-        return localizador.toString();
+        Character posicion1 = (char) ('A' + rand.nextInt(26));
+        Character posicion2 = (char) ('A' + rand.nextInt(26));
+        Character posicion3 = (char) ('A' + rand.nextInt(26));
+        Character posicion4 = (char) ('A' + rand.nextInt(26));
+        return idPorte + posicion1 + posicion2 + posicion3 + posicion4;
+        //return localizador.toString();
     }
 
 
@@ -237,9 +239,12 @@ public class Envio {
      * @return Envio para el porte y cliente especificados
      */
     public static Envio altaEnvio(Scanner teclado, Random rand, Porte porte, Cliente cliente) {
+        String hueco;
+        char columna;
+        int codOrigen, codDestino;
+        char letraColumna;
+        Envio nuevoEnvio = null;
 
-
-
-        return ;
+        return nuevoEnvio;
     }
 }

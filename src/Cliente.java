@@ -222,4 +222,14 @@ public class Cliente {
         }
         return correcto;
     }
+
+
+    /**
+     * Función que comprueba la ocupación de un billete dentro del array listaBilletesPasajero
+     *
+     * @return Devuelve la ocupación del billete comprado por un pasajero dentro del array listaBilletesPasajero
+     */
+    public int numBilletesComprado() {
+        return listaEnvios.getOcupacion();
+    }
 }
