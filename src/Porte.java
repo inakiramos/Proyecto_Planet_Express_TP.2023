@@ -459,22 +459,22 @@ public class Porte {
         Fecha fechaSalida;
 
         //Información de los Puertos Espaciales
-        PuertoEspacial origen = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Origen:");
-        String primerMensaje = "Ingrese el muelle de Origen (1 - " + origen.getMuelles() + "):";
+        PuertoEspacial origen = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Origen: ");
+        String primerMensaje = "Ingrese el muelle de Origen (1 - " + origen.getMuelles() + "): ";
         int muelleOrigen = Utilidades.leerNumero(teclado, primerMensaje, 1, origen.getMuelles());
 
-        PuertoEspacial destino = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Destino:");
-        String segundoMensaje = "Ingrese el muelle de Destino (1 - " + destino.getMuelles() + "):";
+        PuertoEspacial destino = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Destino: ");
+        String segundoMensaje = "Ingrese el muelle de Destino (1 - " + destino.getMuelles() + "): ";
         int muelleDestino = Utilidades.leerNumero(teclado, segundoMensaje, 1, destino.getMuelles());
 
         //Información de la nave
         double distancia = origen.distancia(destino);
-        Nave nave = naves.seleccionarNave(teclado, "Ingrese matrícula de la nave:", distancia);
+        Nave nave = naves.seleccionarNave(teclado, "Ingrese matrícula de la nave: ", distancia);
 
         //Comprobamos la fecha
         do {
-            fechaSalida = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de salida:");
-            fechaLlegada = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de Llegada:");
+            fechaSalida = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de salida: ");
+            fechaLlegada = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de Llegada: ");
 
             if (fechaSalida.anterior(fechaLlegada))
                 fechaCorrecta = true;

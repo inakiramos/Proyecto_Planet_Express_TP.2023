@@ -186,10 +186,12 @@ public class Cliente {
      */
     public static Cliente altaCliente(Scanner teclado, ListaClientes clientes, int maxEnvios) {
         Cliente nuevoCliente = null;
+
         System.out.print("Nombre:");
         String nombre = teclado.nextLine();
         System.out.print("Apellidos:");
         String apellidos = teclado.nextLine();
+
         boolean emailIncorrecto;
         String email;
 

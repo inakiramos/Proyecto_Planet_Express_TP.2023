@@ -114,7 +114,7 @@ public class ListaPuertosEspaciales {
         String codigoGFSC;
 
         do {
-            System.out.println(mensaje);
+            System.out.print(mensaje);
             codigoGFSC = teclado.nextLine().toUpperCase();
             if (buscarPuertoEspacial(codigoGFSC) == null){
                 System.out.println("Código de puerto no encontrado.");
@@ -141,7 +141,7 @@ public class ListaPuertosEspaciales {
                 //Cogemos el puerto espacial de la posición i, luego imprimimos
                 puertoEspacial = lista[i];
                 //info del puerto espacial
-                infoPuertoEspacial = puertoEspacial.getNombre() + ";" + puertoEspacial.getCodigo() + ";" + puertoEspacial.getAzimut() + ";" + puertoEspacial.getPolar() + ";" + puertoEspacial.getRadio() + ";" + puertoEspacial.getMuelles();
+                infoPuertoEspacial = puertoEspacial.getNombre() + ";" + puertoEspacial.getCodigo() + ";" + puertoEspacial.getRadio() + ";" + puertoEspacial.getAzimut() + ";" + puertoEspacial.getPolar() + ";" + puertoEspacial.getMuelles();
                 pw.write(infoPuertoEspacial);
                 //Escribimos el salto de línea
                 if (i != ocupacion - 1) pw.println();

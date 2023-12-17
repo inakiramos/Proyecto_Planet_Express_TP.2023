@@ -168,7 +168,7 @@ public class ListaClientes {
             pw = new PrintWriter(fichero);
             for (int i = 0; i < ocupacion; i ++){
                 Cliente cliente1 = clientes[i];
-                pw.write(cliente1.getNombre() + ";" + cliente1.getApellidos() + ";" + cliente1.getEmail() + ";" + cliente1.maxEnviosAlcanzado());
+                pw.write(cliente1.getNombre() + ";" + cliente1.getApellidos() + ";" + cliente1.getEmail());
                 if (i != ocupacion -1) pw.println();
             }
         } catch (FileNotFoundException fileNotFoundException){

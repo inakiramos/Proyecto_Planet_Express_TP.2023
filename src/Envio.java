@@ -180,18 +180,19 @@ public class Envio {
 
         try {
             pw = new PrintWriter(fichero);
-            pw.write("--------------------------------------------------\n");
-            pw.write("--------- Factura del billete " + localizador + " ---------\n");
-            pw.write("--------------------------------------------------\n");
-            pw.write("Vuelo: " + porte.getID() + "\n");
-            pw.write("Origen: " + porte.getOrigen().toStringSimple() + " M" + porte.getMuelleOrigen() + "\n");
+            pw.write("-------------------------------------------------------------------------\n");
+            pw.write("--------- Factura del envío " + localizador + " ---------\n");
+            pw.write("-------------------------------------------------------------------------\n");
+            pw.write("Porte: " + porte.getID() + "\n");
+            pw.write("Origen: " + porte.getOrigen().toStringSimple() + " (M" + porte.getMuelleOrigen() +")" + "\n");
             pw.write("Destino: " + porte.getDestino().toStringSimple() + " M" + porte.getMuelleDestino() + "\n");
             pw.write("Salida: " + porte.getSalida().toString() + "\n");
             pw.write("Llegada: " + porte.getLlegada().toString() + "\n");
             pw.write("Cliente: " + cliente.toString() + "\n");
+            //pw.write("Hueco: " + porte. );
 
             String precio = String.format("%.2f", getPrecio());
-            pw.write("Precio: " + precio + "€");
+            pw.write("Precio: " + precio + "SSD");
 
         } catch (FileNotFoundException fileNotFoundException){
             System.out.println("Fichero " + fichero + " no encontrado.");
@@ -207,9 +208,11 @@ public class Envio {
         }
 
         //Si la factura se genera correctamente
+        /*
         if (facturaGenerada){
             System.out.print("Factura de Envio " + localizador);
         }
+        */
         return facturaGenerada;
     }
 
@@ -249,31 +252,13 @@ public class Envio {
         char letraColumna;
         Envio nuevoEnvio = null;
 
-        vuelo.imprimirMatrizAsientos();
-        System.out.println("Tipo de asiento: '[ ]' = TURISTA, '{ }' = PREFERENTE, '( )' = PRIMERA");
-
+        /*
         do {
             numeroFila = Utilidades.leerNumero(teclado, "Ingrese fila del asiento (1-" + vuelo.getAvion().getFilas() + "):", 1, vuelo.getAvion().getFilas());
             columna = (char) (vuelo.getAvion().getColumnas() + 64);
 
             //Sólo se aceptan respuestas en minúsculas
             letraColumna = Utilidades.leerLetra(teclado, "Ingrese columna del asiento (A-" + columna + "):", 'A', columna);
-
-            //Acepta respuestas en mayúsculas y minúsculas indistintamente
-            //no pilla bien si pones un número en la columna
-            /*
-            do {
-                System.out.print("Ingrese columna del asiento (A-" + columna + "):");
-                letraColumna = Character.toUpperCase(teclado.nextLine().charAt(0));
-
-                    asiento = String.valueOf(numeroFila) + String.valueOf(letraColumna);
-                    numeroColumna = letraColumna - 64;
-
-                    if (vuelo.asientoOcupado(numeroFila, numeroColumna))
-                        System.out.println("El asiento " + asiento + " ya está reservado.");
-
-            } while (letraColumna < 'A' || letraColumna > columna);
-             */
 
             asiento = String.valueOf(numeroFila) + String.valueOf(letraColumna);
             numeroColumna = letraColumna - 64;
@@ -282,22 +267,6 @@ public class Envio {
                 System.out.println("El asiento " + asiento + " ya está reservado.");
 
         } while(vuelo.asientoOcupado(numeroFila, numeroColumna));
-
-        //Diferenciamos entre las filas
-        TIPO tipo;
-        switch (numeroFila){
-            case 1:
-                tipo = TIPO.PRIMERA;
-                precioBilletes = vuelo.getPrecioPrimera();
-                break;
-            case 2,3,4,5:
-                tipo = TIPO.PREFERENTE;
-                precioBilletes = vuelo.getPrecioPreferente();
-                break;
-            default:
-                tipo = TIPO.TURISTA;
-                precioBilletes = vuelo.getPrecio();
-        }
 
         Billete nuevoBillete = new Billete(generarLocalizador(rand, vuelo.getID()), vuelo, pasajero, tipo, numeroFila, numeroColumna, precioBilletes);
         //Billete nuevoBillete = new Billete(generarLocalizador(rand, vuelo.getID()), vuelo, pasajero, TIPO.valueOf(tipo), numeroFila, numeroColumna, precioBilletes);
@@ -310,5 +279,8 @@ public class Envio {
         vuelo.getListaBilletesVuelo().insertarBillete(nuevoBillete);
 
         return nuevoBillete;
+         */
+
+        return null;
     }
 }

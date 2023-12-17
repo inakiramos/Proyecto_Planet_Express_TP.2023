@@ -255,7 +255,7 @@ public class PlanetExpress {
         System.out.println("4. Mostrar envíos de un cliente");
         System.out.println("5. Generar lista de envíos");
         System.out.println("0. Salir");
-        opcion = Utilidades.leerNumero(teclado, "Seleccione opción:", 0, 5 );
+        opcion = Utilidades.leerNumero(teclado, "Seleccione opción: ", 0, 5 );
         return opcion;
     }
 

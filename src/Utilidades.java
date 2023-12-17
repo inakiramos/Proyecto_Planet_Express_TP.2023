@@ -21,7 +21,7 @@ public class Utilidades {
         int numero;
 
         do {
-            System.out.println(mensaje);
+            System.out.print(mensaje);
             numero = Integer.parseInt(teclado.nextLine());
         }while (numero < minimo || numero > maximo);
         return numero;

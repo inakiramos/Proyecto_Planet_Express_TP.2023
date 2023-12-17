@@ -180,7 +180,7 @@ public class ListaEnvios {
              fW = new FileWriter(fichero, true);
              for (int i = 0; i < ocupacion; i ++){
                  Envio infoEnvio = envios[i];
-                 fW.write(infoEnvio.getLocalizador() + ";" + infoEnvio.getPorte() + ";" + infoEnvio.getCliente() + ";" + infoEnvio.getFila() + ";" + infoEnvio.getColumna() + ";" + infoEnvio.getPrecio());
+                 fW.write(infoEnvio.getLocalizador() + ";" + infoEnvio.getPorte().getID() + ";" + infoEnvio.getCliente().getEmail() + ";" + infoEnvio.getFila() + ";" + infoEnvio.getColumna() + ";" + infoEnvio.getPrecio());
                  if (i != ocupacion) fW.write("\n");
              }
         } catch (FileNotFoundException fileNotFoundException){
