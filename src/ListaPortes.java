@@ -22,9 +22,9 @@ public class ListaPortes {
     private int ocupacion;
 
     /**
-     * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
+     * TODO: Constructor de la clase para inicializar la lista de portes a una capacidad determinada
      *
-     * @param capacidad especifica la capacidad de la lista que contiene las naves
+     * @param capacidad especifica la capacidad de la lista de portes, que contiene las naves
      */
     public ListaPortes(int capacidad) {
         this.ocupacion = 0;
@@ -33,7 +33,8 @@ public class ListaPortes {
 
     /**
      * Getter del atributo ocupación
-     * @return devuelve la cantidad de portes que hay en "portes" como una variable ocupación
+     *
+     * @return Dvuelve la cantidad de portes que hay en "portes" como una variable ocupación
      */
     // TODO: Devuelve el número de portes que hay en la lista
     public int getOcupacion() {
@@ -42,6 +43,7 @@ public class ListaPortes {
 
     /**
      * Devuelve verdadero si la lista de portes está llena
+     *
      * @return estaLlena
      */
     // TODO: ¿Está llena la lista?
@@ -55,6 +57,7 @@ public class ListaPortes {
 
     /**
      * Getter para conseguir un porte
+     *
      * @param i variable que toma la posición del porte dentro del array
      * @return Devuelve la posición (i) de un porte dentro del array porte
      */
@@ -65,8 +68,8 @@ public class ListaPortes {
 
     /**
      * TODO: Devuelve true si puede insertar el porte
-     * @param porte porte que se quiere insertar en la lista
-     * @return false en caso de estar llena la lista o de error
+     * @param porte que se quiere insertar en la lista
+     * @return Devuelve false en caso de estar llena la lista o de error
      */
     public boolean insertarPorte(Porte porte) {
         boolean insertado = false;
@@ -81,7 +84,7 @@ public class ListaPortes {
     /**
      * TODO: Devuelve el objeto Porte que tenga el identificador igual al parámetro id
      * @param id código que idetifica al porte que se esta buscando
-     * @return el objeto Porte que encontramos o null si no existe
+     * @return Devuelve el objeto Porte que encontramos o null si no existe
      */
     public Porte buscarPorte(String id) {
         Porte resul = null;
@@ -100,7 +103,7 @@ public class ListaPortes {
      * @param codigoOrigen código que depende del Puerto Espacial de salida de un porte
      * @param codigoDestino código que depende del Puerto Espacial de destino de un porte
      * @param fecha fecha que esta determinada por la salida de un porte específico
-     * @return devuelve el porte buscado mediante los parámetros introducidos y si este tiene las caracteristicas introducidas lo coge
+     * @return Devuelve el porte buscado mediante los parámetros introducidos y si este tiene las caracteristicas introducidas lo coge
      */
     public ListaPortes buscarPortes(String codigoOrigen, String codigoDestino, Fecha fecha) {
         ListaPortes portesBuscados = new ListaPortes(ocupacion);
@@ -117,19 +120,20 @@ public class ListaPortes {
      */
     public void listarPortes() {
         for (int i = 0; i < ocupacion; i++) {
-            System.out.println(portes[i].toString());
+            if (portes[i] != null){
+                System.out.println("\n" + portes[i].toString());
+            }
         }
     }
 
     /**
      * TODO: Permite seleccionar un Porte existente a partir de su ID, usando el mensaje pasado como argumento para
      *  la solicitud y siguiendo el orden y los textos mostrados en el enunciado, y usando la cadena cancelar para
-     *  salir devolviendo null.
-     *  La función solicita repetidamente hasta que se introduzca un ID correcto
+     *  salir devolviendo null. La función solicita repetidamente hasta que se introduzca un ID correcto
      * @param teclado el usuario introduce el ID del porte que desea
      * @param mensaje mensaje que se muestra por pantalla
      * @param cancelar cancela la búsqueda del porte
-     * @return devuelve el porte seleccionado y si cumple los requisitos (exista y que tenga ID correspondiente)
+     * @return Devuelve el porte seleccionado y si cumple los requisitos (exista y que tenga ID correspondiente)
      */
     public Porte seleccionarPorte(Scanner teclado, String mensaje, String cancelar) {
         listarPortes();
@@ -144,7 +148,7 @@ public class ListaPortes {
 
             else {
                 porte =  buscarPorte(pantalla);
-                if (porte == null) System.out.println("ID de porte no encontrado.");
+                if (porte == null) System.out.println("Porte no encontrado.");
                 else pararDePreguntar = true;
             }
         } while(!pararDePreguntar);
@@ -156,7 +160,7 @@ public class ListaPortes {
      * TODO: Ha de escribir la lista de Portes en la ruta y nombre del fichero pasado como parámetro.
      *  Si existe el fichero, SE SOBREESCRIBE, si no existe se crea.
      * @param fichero nombre del fichero en el que se quardan los datos
-     * @return true si se ha logrado escribir y guardar los datos
+     * @return Devuelve true si se ha logrado escribir y guardar los datos
      */
     public boolean escribirPortesCsv(String fichero) {
         PrintWriter pw = null;
@@ -193,7 +197,7 @@ public class ListaPortes {
      * @param capacidad capacidad máxima para la lista de vuelos devuelta
      * @param puertosEspaciales lista de Puertos Espaciales de la cual seleccionr las naves para el porte
      * @param naves lista de naves de la cual seleccionar naves para el porte
-     * @return devuelve la lista de portes leída
+     * @return Devuelve la lista de portes leída
      */
     public static ListaPortes leerPortesCsv(String fichero, int capacidad, ListaPuertosEspaciales puertosEspaciales, ListaNaves naves) {
         ListaPortes listaPortes = new ListaPortes(capacidad);
@@ -211,9 +215,9 @@ public class ListaPortes {
                 listaPortes.insertarPorte(porte);
             } while (sc.hasNext());
         } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println("Fichero Billetes no encontrado.");
+            System.out.println("Fichero " + fichero + " no encontrado.");
         } catch (IOException IOException) {
-            System.out.println("Error de lectura en fichero Billetes.");
+            System.out.println("Error de escritura en fichero " + fichero + ".");
         } finally {
             if (sc != null) {
                 sc.close();

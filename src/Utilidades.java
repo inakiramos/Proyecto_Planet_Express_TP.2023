@@ -114,7 +114,7 @@ public class Utilidades {
         System.out.println(mensaje);
 
         do {
-            dia = leerNumero(teclado, "Ingrese dia:", 1, 31);
+            dia = leerNumero(teclado, "Ingrese día:", 1, 31);
             mes = leerNumero(teclado, "Ingrese mes:", 1, 12);
             anio = leerNumero(teclado, "Ingrese año:", 1900, 3000);
 

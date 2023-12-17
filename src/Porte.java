@@ -19,12 +19,12 @@ public class Porte {
     private boolean[][] huecos; //Matriz de hueco (indicando para filas y columnas si el hueco esta libre)
 
     /**
-     * ID de Envío
+     * ID del Porte
      */
     private String id; //ID del porte "unico", 6 caracteres (dos primeros "PM" y los 4 siguientes aleatorios)
 
     /**
-     * Nave encargada del envío
+     * Nave empleada en dicho porte
      */
     private Nave nave;
 
@@ -34,52 +34,52 @@ public class Porte {
     private PuertoEspacial origen;
 
     /**
-     * Muelle del inicio del envío, muelleOrigen
+     * Muelle del puerto espacial, muelleOrigen
      */
     private int muelleOrigen;
 
     /**
-     * Fecha de salida del envío
+     * Fecha de salida del porte
      */
     private Fecha salida;
 
     /**
-     * Puerto Espacial de Destino
+     * Puerto Espacial de Destino del porte
      */
     private PuertoEspacial destino;
 
     /**
-     * Muelle del fin del envío, muelleDestino
+     * Muelle del puerto espacial, muelleDestino
      */
     private int muelleDestino;
 
     /**
-     * Fecha de llegada del envío
+     * Fecha de llegada del porte
      */
     private Fecha llegada;
 
     /**
-     * Precio de un hueco para el envío de un paquete
+     * Precio de un contenedor para dicho Porte, en Solar System Dollars (SSD)
      */
     private double precio;
 
     /**
-     * Lista de envíos de paquetes
+     * Lista de contratados para dicho Porte, limitada por el número de huecos del avión
      */
     private ListaEnvios listaEnvios;
 
     /**
      * TODO: Completa el constructo de la clase
      *
-     * @param id
-     * @param nave
-     * @param origen
-     * @param muelleOrigen
-     * @param salida
-     * @param destino
-     * @param muelleDestino
-     * @param llegada
-     * @param precio
+     * @param id del porte
+     * @param nave que se emplea en dicho porte
+     * @param origen Puerto Espacial de origen del porte
+     * @param muelleOrigen del puerto de origen
+     * @param salida fecha de salida del porte
+     * @param destino Puerto Espacial de destino
+     * @param muelleDestino del puerto de destino (localidad final del porte)
+     * @param llegada fecha de llegada del porte
+     * @param precio de un contenedor para dicho porte
      */
     public Porte(String id, Nave nave, PuertoEspacial origen, int muelleOrigen, Fecha salida, PuertoEspacial destino, int muelleDestino, Fecha llegada, double precio) {
         this.id = id;
@@ -102,70 +102,96 @@ public class Porte {
     }
 
     /**
-     * @return devuelve el id del envío
+     * Getter del atributo ID
+     *
+     * @return Devuelve el id del envío
      */
     public String getID() {
-        return id;
+        return this.id;
     }
 
     /**
-     * @return devuelve la nave que se utiliza para el envío
+     * Getter del atributo nave
+     *
+     * @return Devuelve la nave que se utiliza para el envío
      */
     public Nave getNave() {
-        return nave;
+        return this.nave;
     }
 
     /**
-     * @return devuelve el Puerto Espacial por el cual sale la nave
+     * Getter del atributo "origen" (Origen del envío)
+     *
+     * @return Devuelve el Puerto Espacial por el cual sale la nave
      */
     public PuertoEspacial getOrigen() {
-        return origen;
+        return this.origen;
     }
 
     /**
-     * @return devuelve el muelle de origen del envío
+     * Getter del atributo "Muelle de origen"
+     *
+     * @return Devuelve el muelle de origen del envío
      */
     public int getMuelleOrigen() {
-        return muelleOrigen;
+        return this.muelleOrigen;
     }
 
     /**
-     * @return devuelve la fecha de salida del envío
+     * Getter del atributo fecha de salida del envío
+     *
+     * @return Devuelve la fecha de salida del envío
      */
     public Fecha getSalida() {
-        return salida;
+        return this.salida;
     }
 
     /**
-     * @return devuelve el Puerto Espacial de destino
+     * Getter del atributo "destino" (destino del envío)
+     *
+     * @return Devuelve el Puerto Espacial de destino
      */
     public PuertoEspacial getDestino() {
-        return destino;
+        return this.destino;
     }
 
     /**
-     * @return devuelve la muelle de llegada del envío
+     * Getter del atributo "Muelle de destino"
+     *
+     * @return Devuelve la muelle de llegada del envío
      */
     public int getMuelleDestino() {
-        return muelleDestino;
+        return this.muelleDestino;
     }
 
     /**
-     * @return devuelve la fecha de llegada del envío
+     * Getter de la fecha de llegada
+     *
+     * @return Devuelve la fecha de llegada del envío
      */
     public Fecha getLlegada() {
-        return llegada;
+        return this.llegada;
     }
 
     /**
-     * @return devuelve el precio del envío del paquete
+     * Getter del precio del coste del contenedor del porte
+     *
+     * @return Devuelve el precio del envío del paquete
      */
     public double getPrecio() {
-        return precio;
+        return this.precio;
+    }
+
+    public ListaEnvios getListaEnvios(){
+        return this.listaEnvios;
     }
 
     /**
-     * @return devuelve el número de huecos libres disponibles para ocupar
+     * Método que devuelve el numero dde hueccos libres en dicho porte. Recorre
+     * la matriz de huecos y busca si existen huecos libres, si los ahi, devuelve
+     * la cantidad
+     *
+     * @return Dvuelve el número de huecos libres disponibles para ocupar
      */
     // TODO: Devuelve el número de huecos libres que hay en el porte
     public int numHuecosLibres() {
@@ -181,7 +207,9 @@ public class Porte {
     }
 
     /**
-     * @return devuelve true si no quedan huecos libres y false si no quedan
+     * Indica si el Porte de dicho envío esta lleno
+     *
+     * @return Devuelve true si no quedan huecos libres y false si no quedan
      */
     // TODO: ¿Están llenos todos los huecos?
     public boolean porteLleno() {
@@ -195,9 +223,9 @@ public class Porte {
     /**
      * Verifica si un hueco del envío (por filas y columnas) está ocupado
      *
-     * @param fila    fila del hueco
+     * @param fila fila del hueco
      * @param columna columna del hueco
-     * @return devuelve true si el hueco está ocupado y false si este mismo no lo esta
+     * @return Devuelve true si el hueco está ocupado y false si este mismo no lo esta
      */
     // TODO: ¿Está ocupado el hueco consultado?
     public boolean huecoOcupado(int fila, int columna) {
@@ -208,7 +236,7 @@ public class Porte {
      * Busca un envío, entre los de la lista de clientes del vuelo mediante un localizador introducido por parámetro
      *
      * @param localizador localizador del envío a buscar
-     * @return devuelve el envío que coincida con el introducido por parámetro, si no existe el envío devuelve null
+     * @return Devuelve el envío que coincida con el introducido por parámetro, si no existe el envío devuelve null
      */
     public Envio buscarEnvio(String localizador) {
         return listaEnvios.buscarEnvio(localizador);
@@ -217,7 +245,7 @@ public class Porte {
     /**
      * TODO: Devuelve el objeto Envio que corresponde con una fila o columna,
      *
-     * @param fila    del envío
+     * @param fila del envío
      * @param columna del envío
      * @return devuelve el objeto envío que corresponde, o null si está libre o se excede en el límite de fila y columna
      */
@@ -231,17 +259,15 @@ public class Porte {
      *  si no devuelve false
      *
      * @param envio de la nave (indica el hueco a ocupar)
-     * @return devuelve true si el hueco no estaba ocupado antes de invocar a la función
+     * @return Devuelve true si el hueco no estaba ocupado antes de invocar a la función
      */
     //Si está desocupado el asiento que indica el billete, lo pone ocupado y devuelve true, si no devuelve false
     public boolean ocuparHueco(Envio envio) {
         boolean ocupado = false;
-
         if (!huecoOcupado(envio.getFila(), envio.getColumna())) {
             huecos[envio.getFila() - 1][envio.getColumna() - 1] = true; // True de ocupado
             ocupado = true;
         }
-
         return ocupado;
     }
 
@@ -249,24 +275,22 @@ public class Porte {
      * TODO: A través del localizador del envio, se desocupará el hueco
      *
      * @param localizador del hueco (indica el hueco a ocupar)
-     * @return devuelve true si se ha desocupado el asiento correctamente y false si no se ha desocupado
+     * @return Devuelve true si se ha desocupado el asiento correctamente y false si no se ha desocupado
      */
     public boolean desocuparHueco(String localizador) {
         boolean desocupado = false;
         Envio envio = listaEnvios.buscarEnvio(localizador);
-
         if (huecoOcupado(envio.getFila(), envio.getColumna())) {
             huecos[envio.getFila() - 1][envio.getColumna() - 1] = false;
             desocupado = true;
         }
-
         return desocupado;
     }
 
     /**
      * TODO: Devuelve una cadena con información completa del porte
      *
-     * @return ejemplo del formato -> "Porte PM0066 de Gaia Galactic Terminal(GGT) M5 (01/01/2023 08:15:00) a
+     * @return Ejemplo del formato -> "Porte PM0066 de Gaia Galactic Terminal(GGT) M5 (01/01/2023 08:15:00) a
      * Cidonia(CID) M1 (01/01/2024 11:00:05) en Planet Express One(EP-245732X) por 13424,56 SSD, huecos libres: 10"
      */
     public String toString() {
@@ -275,7 +299,6 @@ public class Porte {
                 ")" + "M" + this.muelleDestino + " (" + this.llegada + ") en " + this.nave.getMarca() + " " + this.nave.getModelo()
                 + "(" + this.nave.getMatricula() + ") por " + String.format("%2f", this.precio) + " SSD, huecos libres: " + numHuecosLibres();
     }
-
 
     /**
      * TODO: Devuelve una cadena con información abreviada del vuelo
@@ -290,10 +313,10 @@ public class Porte {
     /**
      * TODO: Devuelve true si el código origen, destino y fecha son los mismos que el porte
      *
-     * @param codigoOrigen  código del porte de origen (comprobar)
+     * @param codigoOrigen código del porte de origen (comprobar)
      * @param codigoDestino código del porte de destino (comprobar)
-     * @param fecha         fecha a comprobar
-     * @return devuelve true si el código de origen, destino y fecha son correctos y cinciden con los que se pasan por parámetro
+     * @param fecha a comprobar
+     * @return Devuelve true si el código de origen, destino y fecha son correctos y cinciden con los que se pasan por parámetro
      */
     public boolean coincide(String codigoOrigen, String codigoDestino, Fecha fecha) {
         boolean correcto = false;
@@ -362,7 +385,7 @@ public class Porte {
      *  del enunciado
      *
      * @param fichero donde se quiere generar la lista con los envíos
-     * @return devuelve true si se ha podido escribir en el fichero la lista de envíos del vuelo
+     * @return Devuelve true si se ha podido escribir en el fichero la lista de envíos del porte
      */
     public boolean generarListaEnvios(String fichero) {
         boolean ficheroEnvios = false;
@@ -410,7 +433,7 @@ public class Porte {
      *  NOTA: Usar el objeto rand pasado como argumento para la parte aleatoria.
      *
      * @param rand parámetro aleatorio
-     * @return ejemplo -> "PM0123" (ID´s aleatorios)
+     * @return Ejemplo -> "PM0123" (ID´s aleatorios)
      */
     public static String generarID(Random rand) {
         return String.format("PM%04d", rand.nextInt(9999));
@@ -422,12 +445,12 @@ public class Porte {
      *  del enunciado.
      *  La función solicita repetidamente los parametros hasta que sean correctos
      *
-     * @param teclado           pasa por parámetro el teclado para no tener que declararlo
-     * @param rand              número aleatorio para generar el ID del vuelo
+     * @param teclado pasa por parámetro el teclado para no tener que declararlo
+     * @param rand número aleatorio para generar el ID del porte
      * @param puertosEspaciales lista de Puertos Espaciales entre los que puede ir la nave
-     * @param naves             lista de naves que pueden usarse para envíar paquetes
-     * @param portes            lista de portes que ya existen para no generar, ni dar el mismo ID a dos naves
-     * @return devuelve el envío que se acaba de crear
+     * @param naves lista de naves que pueden usarse para envíar paquetes
+     * @param portes lista de portes que ya existen para no generar y que no existan dos objetos con el mismo ID
+     * @return Devuelve el envío que se acaba de crear
      */
     public static Porte altaPorte(Scanner teclado, Random rand, ListaPuertosEspaciales puertosEspaciales, ListaNaves naves, ListaPortes portes) {
         boolean envioCorrecto = false;
@@ -435,23 +458,23 @@ public class Porte {
         Fecha fechaLlegada;
         Fecha fechaSalida;
 
-        //Información de los Aeropuertos
-        PuertoEspacial origen = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de Aeropuerto Origen:");
-        String primerMensaje = "Ingrese Muelle Origen (1 - " + origen.getMuelles() + "):";
+        //Información de los Puertos Espaciales
+        PuertoEspacial origen = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Origen:");
+        String primerMensaje = "Ingrese el muelle de Origen (1 - " + origen.getMuelles() + "):";
         int muelleOrigen = Utilidades.leerNumero(teclado, primerMensaje, 1, origen.getMuelles());
 
-        PuertoEspacial destino = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de Aeropuerto Destino:");
-        String segundoMensaje = "Ingrese Terminal Destino (1 - " + destino.getMuelles() + "):";
+        PuertoEspacial destino = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Destino:");
+        String segundoMensaje = "Ingrese el muelle de Destino (1 - " + destino.getMuelles() + "):";
         int muelleDestino = Utilidades.leerNumero(teclado, segundoMensaje, 1, destino.getMuelles());
 
-        //Información del avión
+        //Información de la nave
         double distancia = origen.distancia(destino);
-        Nave nave = naves.seleccionarNave(teclado, "Ingrese matrícula de Avión:", distancia);
+        Nave nave = naves.seleccionarNave(teclado, "Ingrese matrícula de la nave:", distancia);
 
         //Comprobamos la fecha
         do {
-            fechaSalida = Utilidades.leerFechaHora(teclado, "Fecha de Salida:");
-            fechaLlegada = Utilidades.leerFechaHora(teclado, "Fecha de Llegada:");
+            fechaSalida = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de salida:");
+            fechaLlegada = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de Llegada:");
 
             if (fechaSalida.anterior(fechaLlegada))
                 fechaCorrecta = true;
@@ -471,10 +494,10 @@ public class Porte {
         } while (envioCorrecto);
 
         double precio;
-        precio = Utilidades.leerNumero(teclado, "Ingrese precio de pasaje:", 0, (double) 999);
+        precio = Utilidades.leerNumero(teclado, "Ingrese precio del porte:", 0, (double) 999);
         Porte porteNuevo = new Porte(envioID, nave, origen, muelleOrigen,fechaSalida, destino, muelleDestino, fechaLlegada, precio);
 
-        System.out.println("Porte " + envioID + " creado con éxito.");
+        System.out.println("Porte " + envioID + " creado correctamente");
         portes.insertarPorte(porteNuevo);
         return porteNuevo;
     }

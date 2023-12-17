@@ -62,7 +62,7 @@ public class PuertoEspacial {
      * @return Devuelve el nombre del Puerto Espacial
      */
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     /**
@@ -71,7 +71,7 @@ public class PuertoEspacial {
      * @return Devuelve el código GFSC del Puerto Espacial
      */
     public String getCodigo() {
-        return codigo;
+        return this.codigo;
     }
 
     /**
@@ -80,7 +80,7 @@ public class PuertoEspacial {
      * @return Devuelve el radio del Puerto Espacial segun la distancia al Sol
      */
     public double getRadio() {
-        return radio;
+        return this.radio;
     }
 
     /**
@@ -90,25 +90,26 @@ public class PuertoEspacial {
      * la proyección del punto en el plano xy
      */
     public double getAzimut() {
-        return azimut;
+        return this.azimut;
     }
 
     /**
      * Getter del atributo polar
      *
-     * @return Devuelve polar que es el ángulo desde el eje positivo z hasta el puerto
+     * @return Devuelve la variablepolar que es el ángulo desde el eje
+     * positivo z hasta el puerto
      */
     public double getPolar() {
-        return polar;
+        return this.polar;
     }
 
     /**
      * Getter del atributo muelles
      *
-     * @return Devuelve las muelles del Puerto Espacial
+     * @return Devuelve el número de muelles del Puerto Espacial
      */
     public int getMuelles() {
-        return numMuelles;
+        return this.numMuelles;
     }
 
     /**

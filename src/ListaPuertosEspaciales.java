@@ -53,7 +53,6 @@ public class ListaPuertosEspaciales {
     // TODO: ¿Está llena la lista?
     public boolean estaLlena() {
         boolean estaLlena = false;
-
         if (ocupacion == capacidad){
             estaLlena = true;
         }
@@ -78,7 +77,6 @@ public class ListaPuertosEspaciales {
      */
     public boolean insertarPuertoEspacial(PuertoEspacial puertoEspacial) {
         boolean insertado = false;
-
         if (!estaLlena()){
             lista[ocupacion] = puertoEspacial;
             ocupacion ++;
@@ -119,7 +117,7 @@ public class ListaPuertosEspaciales {
             System.out.println(mensaje);
             codigoGFSC = teclado.nextLine().toUpperCase();
             if (buscarPuertoEspacial(codigoGFSC) == null){
-                System.out.println("Código del puerto espacial no encontrado.");
+                System.out.println("Código de puerto no encontrado.");
             }
         }while(buscarPuertoEspacial(codigoGFSC) == null);
 
@@ -140,9 +138,9 @@ public class ListaPuertosEspaciales {
         try {
             pw = new PrintWriter(nombre);
             for (int i = 0; i < ocupacion; i ++){
-                //Cogemos el aeropuertos de la posición i, luego imprimimos
+                //Cogemos el puerto espacial de la posición i, luego imprimimos
                 puertoEspacial = lista[i];
-                //info del aeropuerto para escribir
+                //info del puerto espacial
                 infoPuertoEspacial = puertoEspacial.getNombre() + ";" + puertoEspacial.getCodigo() + ";" + puertoEspacial.getAzimut() + ";" + puertoEspacial.getPolar() + ";" + puertoEspacial.getRadio() + ";" + puertoEspacial.getMuelles();
                 pw.write(infoPuertoEspacial);
                 //Escribimos el salto de línea
@@ -155,8 +153,7 @@ public class ListaPuertosEspaciales {
         } catch(IOException ioException) {
             System.out.println("Error de escritura en fichero " + nombre + ".");
             ficheroEscrito = false;
-        }
-        finally {
+        } finally {
             if (pw != null) {
                 pw.close();
             }
@@ -180,9 +177,9 @@ public class ListaPuertosEspaciales {
             scanner = new Scanner(new FileReader(fichero));
             do {
                 arrayPuertosEspaciales = scanner.nextLine().split(";");
-                // Posiciones del array en el aeropuerto
+                // Posiciones del array del puerto espacial con sus atributos
                 PuertoEspacial puertoEspacial = new PuertoEspacial(arrayPuertosEspaciales[0], arrayPuertosEspaciales[1], Double.parseDouble(arrayPuertosEspaciales[2]), Double.parseDouble(arrayPuertosEspaciales[3]), Double.parseDouble(arrayPuertosEspaciales[4]), Integer.parseInt(arrayPuertosEspaciales[5]));
-                // Insertar el Puerto Espacial en la lista
+                // Insertar el puerto espacial en la lista
                 listaPuertosEspaciales.insertarPuertoEspacial(puertoEspacial);
             }while (scanner.hasNextLine());
 

@@ -101,7 +101,7 @@ public class PlanetExpress {
      * @param ficheroPortes   fichero en donde se guardan los portes
      * @param ficheroClientes fichero en donde se guardan los clientes
      * @param ficheroEnvios   fichero donde se guardan los envios
-     * @return
+     * @return Devuelve true su se guardan los datos correspondientes, si no es así, indica false
      */
     public boolean guardarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
         boolean ficheroPuertosEspaciales = listaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
@@ -179,7 +179,7 @@ public class PlanetExpress {
         String codigoOrigen = teclado.nextLine().toUpperCase();
         System.out.print("Ingrese código de puerto Destino:");
         String codigoDestino = teclado.nextLine().toUpperCase();
-        Fecha fecha = Utilidades.leerFecha(teclado,"Introduzca la fecha de salida:");
+        Fecha fecha = Utilidades.leerFecha(teclado,"Fecha de salida:");
         return listaPortes.buscarPortes(codigoOrigen, codigoDestino, fecha);
     }
 
@@ -192,11 +192,52 @@ public class PlanetExpress {
      * @param porte de el cual se va a hacer un envío (crear el envío)
      */
     public void contratarEnvio(Scanner teclado, Random rand, Porte porte) {
-        if (porte != null) {
+        char respuesta;
+        Cliente clienteEnvio = null;
+        Envio envioCliente = null;
 
+        if (porte.porteLleno()){
+            System.out.println("El porte " + porte.getID() + " está lleno, no se pueden hacer mas envíos");
+        } else {
+            if (listaClientes.estaLlena()){ //Cliente existente
+                clienteEnvio = listaClientes.seleccionarCliente(teclado,"Email del cliente:");
+                if (clienteEnvio.maxEnviosAlcanzado()){
+                    System.out.println("El cliente seleccionado no puede realizar más envios.");
+                }else{
+                    envioCliente = Envio.altaEnvio(teclado, rand, porte, clienteEnvio);
+                    System.out.println("Envío " + envioCliente.getLocalizador() + " realizado con éxito.");
+                }
+            }else{
 
+                do {
+                    //Acepta respuestas en mayúsculas y minúsculas indistintamente
+                    do {
+                        System.out.print("¿Comprar billete para un nuevo pasajero (n), o para uno ya existente (e)?");
+                        respuesta = Character.toLowerCase(teclado.nextLine().charAt(0));
+                    } while (respuesta < 'a' || respuesta > 'z');
 
+                    if (respuesta != 'n' && respuesta != 'e')
+                        System.out.println("El valor de entrada debe ser 'n' o 'e'");
 
+                    if (respuesta == 'n') {
+                        clienteEnvio = Cliente.altaCliente(teclado, listaClientes, maxEnviosPorCliente);
+                        envioCliente = Envio.altaEnvio(teclado, rand, porte, clienteEnvio);
+                        //hueco acupado en la función alta
+                        System.out.println("Billete " + envioCliente.getLocalizador() + " comprado con éxito.");
+                    }
+
+                    if (respuesta == 'e') {
+                        clienteEnvio = listaClientes.seleccionarCliente(teclado, "Ingrese DNI del pasajero:");
+                        if (clienteEnvio.maxEnviosAlcanzado())
+                            System.out.println("El Pasajero seleccionado no puede adquirir más billetes.");
+                        else {
+                            envioCliente = Envio.altaEnvio(teclado, rand, porte, clienteEnvio);
+                            //si se ha ocupado el asiento
+                            System.out.println("Billete " + envioCliente.getLocalizador() + " comprado con éxito.");
+                        }
+                    }
+                } while (respuesta != 'n' && respuesta != 'e');
+            }
         }
     }
 
@@ -326,7 +367,5 @@ public class PlanetExpress {
                     break;
             }
         } while (opcion != 0);
-
-
     }
 }

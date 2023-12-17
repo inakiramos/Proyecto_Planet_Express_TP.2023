@@ -62,7 +62,7 @@ public class Nave {
      * @return Devuelve la marca de la nave
      */
     public String getMarca() {
-        return marca;
+        return this.marca;
     }
 
     /**
@@ -71,7 +71,7 @@ public class Nave {
      * @return Devuelve el modelo de la nave
      */
     public String getModelo() {
-        return modelo;
+        return this.modelo;
     }
 
     /**
@@ -80,25 +80,25 @@ public class Nave {
      * @return Devuelve la matrícula de la nave
      */
     public String getMatricula() {
-        return matricula;
+        return this.matricula;
     }
 
     /**
      * Getter del atributo columnas
      *
-     * @return Devuelve las columnas de los asientos de la nave
+     * @return Devuelve las columnas de los huecos de la nave
      */
     public int getColumnas() {
-        return columnas;
+        return this.columnas;
     }
 
     /**
      * Getter del atributo filas
      *
-     * @return Devuelve las filas de los asientos de la nave
+     * @return Devuelve las filas de los huecos de la nave
      */
     public int getFilas() {
-        return filas;
+        return this.filas;
     }
 
     /**
@@ -107,7 +107,7 @@ public class Nave {
      * @return Devuelve el alcance máximo de la nave
      */
     public double getAlcance() {
-        return alcance;
+        return this.alcance;
     }
 
     /**

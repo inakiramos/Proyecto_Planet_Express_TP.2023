@@ -87,7 +87,7 @@ public class ListaNaves {
     /**
      * TODO: Buscamos la nave a partir de la matricula pasada como parámetro
      * @param matricula código que identifica a una nave
-     * @return Devuelve la nave que encontramos o null si no existe
+     * @return Devuelve la nave que tenga la matrícula pasada por parámetro, si no, devuelve null al no existir esta misma
      */
     public Nave buscarNave(String matricula) {
         Nave resul = null;
@@ -103,7 +103,9 @@ public class ListaNaves {
      */
     public void mostrarNaves() {
         for (int i = 0; i < ocupacion; i ++){
-            System.out.println(naves[i].toString());
+            if (naves[i] != null){
+                System.out.println("\n" + naves[i].toString());
+            }
         }
     }
 
@@ -129,9 +131,9 @@ public class ListaNaves {
 
             // Comprobar el alcance de la nave VER
             if (nave == null){
-                System.out.println("Matricula de nave no encontrada.");
+                System.out.println("Matrícula de nave no encontrada.");
             } else if (nave.getAlcance() < alcance){
-                System.out.printf(String.format("Nave seleccionado con alcance insuficiente.", alcance).replace(',', '.'));
+                System.out.printf(String.format("Nave seleccionada con alcance insuficiente.", alcance).replace(',', '.'));
             } else {
                 stop = true;
             }
@@ -139,7 +141,6 @@ public class ListaNaves {
         //} while (nave == null || !stop);
         return nave;
     }
-
 
     /**
      * TODO: Genera un fichero CSV con la lista de Naves, SOBREESCRIBIÉNDOLO
@@ -165,8 +166,7 @@ public class ListaNaves {
         } catch(IOException ioException) {
             System.out.println("Error de escritura en fichero " + nombre + ".");
             ficheroEscrito = false;
-        }
-        finally {
+        } finally {
             if (pw != null) {
                 pw.close();
             }
@@ -197,8 +197,7 @@ public class ListaNaves {
             System.out.println("Fichero " + fichero + " no encontrado.");
         } catch(IOException ioException){
             System.out.println("Error de lectura en fichero " + fichero + ".");
-        }
-        finally {
+        } finally {
             if (sc != null) {
                 sc.close();
             }

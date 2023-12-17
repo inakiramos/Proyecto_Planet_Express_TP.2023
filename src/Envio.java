@@ -65,52 +65,52 @@ public class Envio {
     /**
      * Getter del atributo localizador
      *
-     * @return devuelve el localizador de un envío
+     * @return Devuelve el localizador de un envío
      */
     public String getLocalizador() {
-        return localizador;
+        return this.localizador;
     }
 
     /**
      * Getter del atributo porte
      *
-     * @return devuelve el porte del envío
+     * @return Devuelve el porte del envío
      */
     public Porte getPorte() {
-        return porte;
+        return this.porte;
     }
 
     /**
      * Getter del atributo pasajero
      *
-     * @return devuelve el cliente relacionado al envío
+     * @return Devuelve el cliente relacionado al envío
      */
     public Cliente getCliente() {
-        return cliente;
+        return this.cliente;
     }
 
     /**
      * Getter del atributo fila
      *
-     * @return devuelve la fila del hueco del envío
+     * @return Devuelve la fila del hueco del envío
      */
     public int getFila() {
-        return fila;
+        return this.fila;
     }
 
     /**
      * Getter del atributo columna
      *
-     * @return devuelve la columna del hueco del envío
+     * @return Devuelve la columna del hueco del envío
      */
     public int getColumna() {
-        return columna;
+        return this.columna;
     }
 
     /**
      * Getter del para conseguir un hueco dependiendo de una fila y una columna
      *
-     * @return devuelve el hueco de un cliente dependiendo de la fila y la columna seleccionada
+     * @return Devuelve el hueco de un cliente dependiendo de la fila y la columna seleccionada
      */
     // TODO: Ejemplos: "1A" para el hueco con fila 1 y columna 1, "3D" para el hueco con fila 3 y columna 4
     public String getHueco() {
@@ -122,16 +122,16 @@ public class Envio {
     /**
      * Getter del atributo precio
      *
-     * @return devuelve el precio de un envío
+     * @return Devuelve el precio de un envío
      */
     public double getPrecio() {
-        return precio;
+        return this.precio;
     }
 
     /**
      * Función que muestra la información completa del envío de una forma específica según el enunciado
      *
-     * @return devuelve un String con toda la información del envío
+     * @return Devuelve un String con toda la información del envío
      */
     //TODO: Texto que debe generar: Envío PM1111AAAABBBBC para Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05) en hueco 6C por 13424,56 SSD
     public String toString() {
@@ -141,7 +141,11 @@ public class Envio {
                 getHueco() + " por " + String.format("%.2f", precio).replace(".", ",") + "SSD";
     }
 
-    // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
+    /**
+     * TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
+     *
+     * @return Devuelve true si se cancela el envío y false si este no se cancela
+     */
     public boolean cancelar() {
         boolean cancelar = true;
         if (!porte.desocuparHueco(localizador)){
@@ -196,12 +200,12 @@ public class Envio {
         catch (IOException ioException){
             System.out.println("Error de escritura en fichero " + fichero + ".");
             facturaGenerada = false;
-        }
-        finally {
+        } finally {
             if (pw != null){
                 pw.close();
             }
         }
+
         //Si la factura se genera correctamente
         if (facturaGenerada){
             System.out.print("Factura de Envio " + localizador);
@@ -245,6 +249,66 @@ public class Envio {
         char letraColumna;
         Envio nuevoEnvio = null;
 
-        return nuevoEnvio;
+        vuelo.imprimirMatrizAsientos();
+        System.out.println("Tipo de asiento: '[ ]' = TURISTA, '{ }' = PREFERENTE, '( )' = PRIMERA");
+
+        do {
+            numeroFila = Utilidades.leerNumero(teclado, "Ingrese fila del asiento (1-" + vuelo.getAvion().getFilas() + "):", 1, vuelo.getAvion().getFilas());
+            columna = (char) (vuelo.getAvion().getColumnas() + 64);
+
+            //Sólo se aceptan respuestas en minúsculas
+            letraColumna = Utilidades.leerLetra(teclado, "Ingrese columna del asiento (A-" + columna + "):", 'A', columna);
+
+            //Acepta respuestas en mayúsculas y minúsculas indistintamente
+            //no pilla bien si pones un número en la columna
+            /*
+            do {
+                System.out.print("Ingrese columna del asiento (A-" + columna + "):");
+                letraColumna = Character.toUpperCase(teclado.nextLine().charAt(0));
+
+                    asiento = String.valueOf(numeroFila) + String.valueOf(letraColumna);
+                    numeroColumna = letraColumna - 64;
+
+                    if (vuelo.asientoOcupado(numeroFila, numeroColumna))
+                        System.out.println("El asiento " + asiento + " ya está reservado.");
+
+            } while (letraColumna < 'A' || letraColumna > columna);
+             */
+
+            asiento = String.valueOf(numeroFila) + String.valueOf(letraColumna);
+            numeroColumna = letraColumna - 64;
+
+            if (vuelo.asientoOcupado(numeroFila, numeroColumna))
+                System.out.println("El asiento " + asiento + " ya está reservado.");
+
+        } while(vuelo.asientoOcupado(numeroFila, numeroColumna));
+
+        //Diferenciamos entre las filas
+        TIPO tipo;
+        switch (numeroFila){
+            case 1:
+                tipo = TIPO.PRIMERA;
+                precioBilletes = vuelo.getPrecioPrimera();
+                break;
+            case 2,3,4,5:
+                tipo = TIPO.PREFERENTE;
+                precioBilletes = vuelo.getPrecioPreferente();
+                break;
+            default:
+                tipo = TIPO.TURISTA;
+                precioBilletes = vuelo.getPrecio();
+        }
+
+        Billete nuevoBillete = new Billete(generarLocalizador(rand, vuelo.getID()), vuelo, pasajero, tipo, numeroFila, numeroColumna, precioBilletes);
+        //Billete nuevoBillete = new Billete(generarLocalizador(rand, vuelo.getID()), vuelo, pasajero, TIPO.valueOf(tipo), numeroFila, numeroColumna, precioBilletes);
+
+        //Ocupamos el asiento
+        vuelo.ocuparAsiento(nuevoBillete);
+
+        //Insertamos el billete en las listas
+        pasajero.getListaBilletesPasajero().insertarBillete(nuevoBillete);
+        vuelo.getListaBilletesVuelo().insertarBillete(nuevoBillete);
+
+        return nuevoBillete;
     }
 }

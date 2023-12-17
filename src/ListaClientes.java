@@ -43,7 +43,7 @@ public class ListaClientes {
 
     /**
      * Getter del atributo ocupación
-     * @return devuelve la cantidad de clientes que hay en la lista de clientes como una variable ocupación
+     * @return Devuelve la cantidad de clientes que hay en la lista de clientes como una variable ocupación
      */
     // TODO: Devuelve el número de clientes que hay en la lista de clientes
     public int getOcupacion() {
@@ -68,7 +68,7 @@ public class ListaClientes {
      * Getter para conseguir al cliente que se encuentra en la posición i del array clientes
      *
      * @param i especifica la posición del cliente dentro del array
-     * @return devuelve el cliente que se encuentra en la posición recibida por el parámetro
+     * @return Devuelve el cliente que se encuentra en la posición recibida por el parámetro
      */
 	// TODO: Devuelve el cliente dada el indice
     public Cliente getCliente(int i) {
@@ -79,7 +79,7 @@ public class ListaClientes {
      * Inserta un cliente en el array clientes
      *
      * @param cliente que se quiere insertar en la lista
-     * @return devuelve true si se ha insertado al cliente o false si no se ha añadido
+     * @return Devuelve true si se ha insertado al cliente o false si no se ha añadido
      */
     // TODO: Inserta el cliente en la lista de clientes
     public boolean insertarCliente(Cliente cliente) {
@@ -96,7 +96,7 @@ public class ListaClientes {
      * Función que busca a un cliente por medio de su email pasado por parámetro
      *
      * @param email que esta asociado a un cliente
-     * @return devuelve el cliente que coincide con el email
+     * @return Devuelve el cliente que coincide con el email
      */
     // TODO: Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
     public Cliente buscarClienteEmail(String email) {
@@ -115,9 +115,10 @@ public class ListaClientes {
      * TODO: Método para seleccionar un Cliente existente a partir de su email, usando el mensaje pasado como argumento
      *  para la solicitud y, siguiendo el orden y los textos mostrados en el enunciado.
      *  La función debe solicitar repetidamente hasta que se introduzca un email correcto
+     *
      * @param teclado el usuario introduce el email del cliente que desea seleccionar
      * @param mensaje que se muestra por pantalla
-     * @return devuelve el cliente seleccionado que coincide con el email
+     * @return Devuelve el cliente seleccionado que coincide con el email
      */
     public Cliente seleccionarCliente(Scanner teclado, String mensaje) {
         Cliente cliente = null;
@@ -155,8 +156,9 @@ public class ListaClientes {
     /**
      * TODO: Método para guardar la lista de clientes en un fichero .csv, sobreescribiendo la información del mismo
      *  fichero
+     *
      * @param fichero sobre el que se sobreescriben los datos de los clientes
-     * @return devuelve true si se ha sobreescrito el fichero y false si no se ha podido
+     * @return Devuelve true si se ha sobreescrito el fichero y false si no se ha podido
      */
     public boolean escribirClientesCsv(String fichero) {
         PrintWriter pw = null;
@@ -189,7 +191,7 @@ public class ListaClientes {
      * @param fichero fichero donde lee los datos de los portes
      * @param capacidad del array clientes
      * @param maxEnviosPorCliente cantidad máxima de envíos posibles por clientes en un vuelo
-     * @return lista de clientes
+     * @return Devuelve un fichero CSV con la lista de clientes
      */
     public static ListaClientes leerClientesCsv(String fichero, int capacidad, int maxEnviosPorCliente) {
         ListaClientes listaClientes = new ListaClientes(capacidad);

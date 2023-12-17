@@ -1,9 +1,6 @@
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -172,33 +169,74 @@ public class ListaEnvios {
 
     /**
      * TODO: Añade los Envios al final de un fichero CSV, SIN SOBREESCRIBIR la información
-     * @param fichero
-     * @return
+     * @param fichero donde se sobreescriben los datos de los envios
+     * @return Devuelve true si se ha podido escribir la información y false si no se ha podido
      */
     public boolean aniadirEnviosCsv(String fichero) {
-        PrintWriter pw = null;
+        FileWriter fW = null;
+        boolean envioAniadido = false;
+
         try {
-
-            return true;
-        } catch (Exception e) {
-            return false;
+             fW = new FileWriter(fichero, true);
+             for (int i = 0; i < ocupacion; i ++){
+                 Envio infoEnvio = envios[i];
+                 fW.write(infoEnvio.getLocalizador() + ";" + infoEnvio.getPorte() + ";" + infoEnvio.getCliente() + ";" + infoEnvio.getFila() + ";" + infoEnvio.getColumna() + ";" + infoEnvio.getPrecio());
+                 if (i != ocupacion) fW.write("\n");
+             }
+        } catch (FileNotFoundException fileNotFoundException){
+            System.out.println("Fichero " + fichero + " no encontrado.");
+            envioAniadido = false;
+        } catch (IOException ioException) {
+            System.out.println("Error de escritura en fichero " + fichero + ".");
+            envioAniadido = false;
         } finally {
-
+            if(fW != null){
+                try {
+                    fW.close();
+                } catch (IOException ioException) {
+                    //throw new RuntimeException(ioException);
+                }
+            }
         }
+        return envioAniadido;
     }
 
     /**
      * TODO: Lee los Envios del fichero CSV y los añade a las listas de sus respectivos Portes y Clientes
-     * @param ficheroEnvios
-     * @param portes
-     * @param clientes
+     * @param ficheroEnvios ; fichero donde se encuentran los envios
+     * @param portes porte actual de los envios
+     * @param clientes de los envios del fichero
      */
     public static void leerEnviosCsv(String ficheroEnvios, ListaPortes portes, ListaClientes clientes) {
         Scanner sc = null;
+        String arrayEnvio[];
+        Envio infoEnvios;
+        Porte porte;
+        Cliente cliente;
+
         try {
+            sc = new Scanner(new FileReader(ficheroEnvios));
+            do {
+                arrayEnvio = sc.nextLine().split(";");
+                porte = portes.buscarPorte(arrayEnvio[1]);
+                cliente = clientes.buscarClienteEmail(arrayEnvio[2]);
 
+                infoEnvios = new Envio(arrayEnvio[0], porte, cliente, Integer.parseInt(arrayEnvio[3]), Integer.parseInt(arrayEnvio[4]), Double.parseDouble(arrayEnvio[5]));
+
+                porte.getListaEnvios().insertarEnvio(infoEnvios);
+                cliente.getListaEnvios().insertarEnvio(infoEnvios);
+                porte.ocuparHueco(infoEnvios);
+
+            }while (sc.hasNext()); // Mientras tenga líneas de texto para leer
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("Fichero Billetes no encontrado.");
+        }
+        catch (IOException IOException) {
+            System.out.println("Error de lectura en fichero Billetes.");
         } finally {
-
+            if (sc != null) {
+                sc.close();
+            }
         }
     }
 }
