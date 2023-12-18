@@ -21,7 +21,7 @@ public class ListaPuertosEspaciales {
     private int capacidad;
 
     /**
-     * Atributo que contiene la ocupacion del Puerto Espacial dentro de la lista
+     * Atributo que contiene la ocupación del Puerto Espacial dentro de la lista
      */
     private int ocupacion;
 
@@ -72,6 +72,7 @@ public class ListaPuertosEspaciales {
 
     /**
      * TODO: insertamos un Puerto espacial nuevo en la lista
+     *
      * @param puertoEspacial es el Puerto Espacial que se quiere insertar en la lista
      * @return Devuelve true en caso de que se añada correctamente, false en caso de lista llena o error
      */
@@ -87,13 +88,14 @@ public class ListaPuertosEspaciales {
 
     /**
      * TODO: Buscamos un Puerto espacial a partir del codigo pasado como parámetro
+     *
      * @param codigo especifica que Puerto Espacial se esta considerando y comparando para ver si existe
      * @return Devuelve el Puerto Espacial que encontramos o null si no existe
      */
     public PuertoEspacial buscarPuertoEspacial(String codigo) {
         PuertoEspacial resul = null;
 
-        for (int i = 0; i < lista.length ; i++) {
+        for (int i = 0; i < ocupacion ; i++) {
             if (lista[i].getCodigo().equals(codigo)){
                 resul = lista[i];
             }
@@ -105,6 +107,7 @@ public class ListaPuertosEspaciales {
      * TODO: Permite seleccionar un puerto espacial existente a partir de su código, usando el mensaje pasado como
      *  argumento para la solicitud y siguiendo el orden y los textos mostrados en el enunciado.
      *  La función solicita repetidamente el código hasta que se introduzca uno correcto
+     *
      * @param teclado códigoGFSC que introduce el usuario
      * @param mensaje mensaje que se muestra por pantalla
      * @return Devuelve el Puerto Espacial, si este existe
@@ -119,13 +122,14 @@ public class ListaPuertosEspaciales {
             if (buscarPuertoEspacial(codigoGFSC) == null){
                 System.out.println("Código de puerto no encontrado.");
             }
-        }while(buscarPuertoEspacial(codigoGFSC) == null);
+        }while(buscarPuertoEspacial(codigoGFSC) != null);
 
         return buscarPuertoEspacial(codigoGFSC);
     }
 
     /**
      * TODO: Genera un fichero CSV con la lista de puertos espaciales, SOBREESCRIBIENDOLO
+     *
      * @param nombre nombre del fichero en el que se guardan los datos
      * @return Devuelve true si se ha escrito correctamente en el fichero
      */
@@ -164,6 +168,7 @@ public class ListaPuertosEspaciales {
     /**
      * TODO: Genera una lista de PuertosEspaciales a partir del fichero CSV, usando el argumento como capacidad máxima
      *  de la lista
+     *
      * @param fichero nombre del fichero por el cual se van a leer los datos
      * @param capacidad capacidad máxima que tendrá la lista
      * @return Genera una lista de los aeropuertos con los datos del fichero CSV

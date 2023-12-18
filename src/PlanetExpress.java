@@ -85,10 +85,10 @@ public class PlanetExpress {
      */
     // Lee los datos de los ficheros especificados y los agrega a Planet Express
     public void cargarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
-        listaPuertosEspaciales = ListaPuertosEspaciales.leerPuertosEspacialesCsv(ficheroPuertos, maxPuertosEspaciales);
-        listaNaves = ListaNaves.leerNavesCsv(ficheroNaves, maxNaves);
-        listaPortes = ListaPortes.leerPortesCsv(ficheroPortes, maxPortes, listaPuertosEspaciales, listaNaves);
-        listaClientes = ListaClientes.leerClientesCsv(ficheroClientes, maxClientes, maxEnviosPorCliente);
+        this.listaPuertosEspaciales = ListaPuertosEspaciales.leerPuertosEspacialesCsv(ficheroPuertos, maxPuertosEspaciales);
+        this.listaNaves = ListaNaves.leerNavesCsv(ficheroNaves, maxNaves);
+        this.listaPortes = ListaPortes.leerPortesCsv(ficheroPortes, maxPortes, listaPuertosEspaciales, listaNaves);
+        this.listaClientes = ListaClientes.leerClientesCsv(ficheroClientes, maxClientes, maxEnviosPorCliente);
         ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes, listaClientes);
     }
 
@@ -104,6 +104,7 @@ public class PlanetExpress {
      * @return Devuelve true su se guardan los datos correspondientes, si no es así, indica false
      */
     public boolean guardarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
+
         boolean ficheroPuertosEspaciales = listaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
         boolean ficheroNave = listaNaves.escribirNavesCsv(ficheroNaves);
         boolean ficheroPorte = listaPortes.escribirPortesCsv(ficheroPortes);
@@ -127,7 +128,7 @@ public class PlanetExpress {
             }
         }
 
-        //Sobreescribimos el fichero de los billetes paar que se guarden de manera correcta
+        // Sobreescribimos el fichero de los envíos paar que se guarden de manera correcta
         for (int i = 1; i <= listaPortes.getOcupacion(); i++){
             listaPortes.getPorte(i).generarListaEnvios(ficheroEnvios);
         }
@@ -142,18 +143,24 @@ public class PlanetExpress {
      * @return devuelve verdadero si se ha alcanzado el numero maximo de portes, en caso contrario devuelve falso
      */
     public boolean maxPortesAlcanzado() {
-        return listaPortes.estaLlena();
+        return maxPortes == listaPortes.getOcupacion();
     }
 
     public boolean insertarPorte (Porte porte) {
-        return listaPortes.insertarPorte(porte);
+        boolean insertado;
+        if (maxPortesAlcanzado()) insertado = false;
+        else {
+            listaPortes.insertarPorte(porte);
+            insertado = true;
+        }
+        return insertado;
     }
 
     /**
      * @return devuelve verdadero si se ha alcanzado el numero maximo de clientes, en caso contrario devuelve falso
      */
     public boolean maxClientesAlcanzado() {
-        return listaClientes.estaLlena();
+        return maxClientes == listaClientes.getOcupacion();
     }
 
     /**
@@ -162,7 +169,13 @@ public class PlanetExpress {
      * @return devuelve verdadero si se ha insertado correctamente y falso si no se inserta
      */
     public boolean insertarCliente (Cliente cliente) {
-        return listaClientes.insertarCliente(cliente);
+        boolean insertado;
+        if (maxClientesAlcanzado()) insertado = false;
+        else {
+            listaClientes.insertarCliente(cliente);
+            insertado = true;
+        }
+        return insertado;
     }
 
     /**
@@ -294,7 +307,7 @@ public class PlanetExpress {
             opcion = menu(teclado);
             switch (opcion) {
                 case 0:
-                    //PlanetExpress.guardarDatos(args[5], args[6], args[7], args[8], args[9]);
+                    planetExpress.guardarDatos(args[5], args[6], args[7], args[8], args[9]);
                     break;
 
                 case 1:     // TODO: Alta de Cliente
@@ -349,7 +362,7 @@ public class PlanetExpress {
                             System.out.println(" Factura generada correctamente en" + rutaFichero);
                         } else if (character == 'c') {
                             String localizadorEnvio = envio.getLocalizador();
-                            if (envio.cancelar()) System.out.println("Billete " + localizadorEnvio + " cancelado.");
+                            if (envio.cancelar()) System.out.println("Envío " + localizadorEnvio + " cancelado.");
                         }
                     } else System.out.println("El pasajero seleccionado no ha adquirido ningún billete.");
                     break;
@@ -363,7 +376,7 @@ public class PlanetExpress {
                             //System.out.println("Lista de pasajeros del Vuelo " + porte2.getID() + " generada en " + rutaPorte);
                             System.out.println("Fichero creado correctamente.");
                         }
-                    } else System.out.println("No se ha encontrado ningún vuelo.");
+                    } else System.out.println("No se ha encontrado ningún porte.");
                     break;
             }
         } while (opcion != 0);

@@ -16,12 +16,12 @@ public class Porte {
     /**
      * Matriz que indica los huecos libres de la nave
      */
-    private boolean[][] huecos; //Matriz de hueco (indicando para filas y columnas si el hueco esta libre)
+    private boolean[][] huecos; // Matriz de hueco (indicando para filas y columnas si el hueco esta libre)
 
     /**
      * ID del Porte
      */
-    private String id; //ID del porte "unico", 6 caracteres (dos primeros "PM" y los 4 siguientes aleatorios)
+    private String id; // ID del porte "unico", 6 caracteres (dos primeros "PM" y los 4 siguientes aleatorios)
 
     /**
      * Nave empleada en dicho porte
