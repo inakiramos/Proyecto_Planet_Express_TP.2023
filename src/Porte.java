@@ -474,7 +474,7 @@ public class Porte {
         //Comprobamos la fecha
         do {
             fechaSalida = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de salida: ");
-            fechaLlegada = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de Llegada: ");
+            fechaLlegada = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de llegada: ");
 
             if (fechaSalida.anterior(fechaLlegada))
                 fechaCorrecta = true;
@@ -485,19 +485,19 @@ public class Porte {
         } while (!fechaCorrecta);
 
         //Información de ID
-        String envioID;
+        String porteID;
         do {
-            envioID = generarID(rand);
+            porteID = generarID(rand);
             for (int i = 0; i < portes.getOcupacion(); i++) {
-                if (envioID.equals(portes.getPorte(i + 1).getID())) envioCorrecto = true;
+                if (porteID.equals(portes.getPorte(i + 1).getID())) envioCorrecto = true;
             }
         } while (envioCorrecto);
 
         double precio;
         precio = Utilidades.leerNumero(teclado, "Ingrese precio del porte:", 0, (double) 999);
-        Porte porteNuevo = new Porte(envioID, nave, origen, muelleOrigen,fechaSalida, destino, muelleDestino, fechaLlegada, precio);
+        Porte porteNuevo = new Porte(porteID, nave, origen, muelleOrigen,fechaSalida, destino, muelleDestino, fechaLlegada, precio);
 
-        System.out.println("Porte " + envioID + " creado correctamente");
+        System.out.println("Porte " + porteID + " creado correctamente");
         portes.insertarPorte(porteNuevo);
         return porteNuevo;
     }

@@ -85,7 +85,7 @@ public class Cliente {
      */
     // TODO: Texto que debe generar: Zapp Brannigan, zapp.brannigan@dop.gov
     public String toString() {
-        return nombre + " " + apellidos + " " + email;
+        return nombre + " " + apellidos + ", " + email;
     }
 
     /**
@@ -187,9 +187,9 @@ public class Cliente {
     public static Cliente altaCliente(Scanner teclado, ListaClientes clientes, int maxEnvios) {
         Cliente nuevoCliente = null;
 
-        System.out.print("Nombre:");
+        System.out.print("Nombre: ");
         String nombre = teclado.nextLine();
-        System.out.print("Apellidos:");
+        System.out.print("Apellidos: ");
         String apellidos = teclado.nextLine();
 
         boolean emailIncorrecto;

@@ -161,7 +161,7 @@ public class ListaEnvios {
             String localizador = teclado.nextLine();
             envio = buscarEnvio(localizador);
             if (envio == null){
-                System.out.println("Localizador no encontrado.");
+                System.out.println("Localizador incorrecto");
             }
         }while (envio == null);
         return envio;
@@ -229,10 +229,10 @@ public class ListaEnvios {
 
             }while (sc.hasNext()); // Mientras tenga líneas de texto para leer
         } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println("Fichero Billetes no encontrado.");
+            System.out.println("Fichero " + ficheroEnvios + " no encontrado.");
         }
         catch (IOException IOException) {
-            System.out.println("Error de lectura en fichero Billetes.");
+            System.out.println("Error de lectura en fichero " + ficheroEnvios + ".");
         } finally {
             if (sc != null) {
                 sc.close();

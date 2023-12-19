@@ -207,10 +207,10 @@ public class ListaClientes {
                 listaClientes.insertarCliente(cliente);
             }while(sc.hasNext());
         }catch (FileNotFoundException fileNotFoundException) {
-            System.out.println("Fichero Billetes no encontrado.");
+            System.out.println("Fichero " + fichero + " no encontrado.");
         }
         catch (IOException IOException) {
-            System.out.println("Error de lectura en fichero Billetes.");
+            System.out.println("Error de lectura en fichero " + fichero + ".");
         } finally {
             if (sc != null) {
                 sc.close();
