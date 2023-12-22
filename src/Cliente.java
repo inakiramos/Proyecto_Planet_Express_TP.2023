@@ -197,7 +197,7 @@ public class Cliente {
 
         do {
             emailIncorrecto = false;
-            System.out.print("Email:");
+            System.out.print("Email: ");
             email = teclado.nextLine();
             if (clientes.buscarClienteEmail(email) != null){
                 emailIncorrecto = true;

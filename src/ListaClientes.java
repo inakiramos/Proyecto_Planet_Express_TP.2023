@@ -72,7 +72,7 @@ public class ListaClientes {
      */
 	// TODO: Devuelve el cliente dada el indice
     public Cliente getCliente(int i) {
-        return clientes[i - 1];
+        return clientes[i];
     }
 
     /**
@@ -121,36 +121,11 @@ public class ListaClientes {
      * @return Devuelve el cliente seleccionado que coincide con el email
      */
     public Cliente seleccionarCliente(Scanner teclado, String mensaje) {
-        Cliente cliente = null;
-        String email = null;
-        String[] emailCompleto = email.split("@");
-        String primeraParte = emailCompleto[0];
-        String segundaParte = emailCompleto[1];
-        int longitud = primeraParte.length();
-        boolean correcto = true;
-
+        String emailCorrecto;
         do {
-            System.out.println(mensaje);
-            emailCompleto = teclado.delimiter().split("@");
-            if (segundaParte.equals("planetexpress.com")) {
-                if (primeraParte.charAt(0) == '.' || primeraParte.charAt(longitud - 1) == '.') {
-                    System.out.println("Email incorrecto.");
-                    correcto = false;
-                } else {
-                    for (int i = 0; i < longitud; i++) {
-                        if ((primeraParte.charAt(i) < 65 || primeraParte.charAt(i) > 90) && (primeraParte.charAt(i) < 97 || primeraParte.charAt(i) > 122) && primeraParte.charAt(i) != '.') {
-                            System.out.println("Email incorrecto");
-                            correcto = false;
-                        }
-                    }
-                }
-            } else {
-                System.out.println("Email incorrecto.");
-                correcto = false;
-            }
-        }while (buscarClienteEmail(Arrays.toString(emailCompleto)) == null);
-
-        return cliente;
+            emailCorrecto = Utilidades.leerCadena(teclado, mensaje);
+        }while(!Cliente.correctoEmail(emailCorrecto));
+        return buscarClienteEmail(emailCorrecto);
     }
 
     /**
@@ -203,8 +178,10 @@ public class ListaClientes {
             sc = new Scanner(new FileReader(fichero));
             do {
                 arrayClientes = sc.nextLine().split(";");
-                cliente = new Cliente(arrayClientes[0], arrayClientes[1], arrayClientes[2], Integer.parseInt(arrayClientes[3]));
-                listaClientes.insertarCliente(cliente);
+                cliente = new Cliente(arrayClientes[0], arrayClientes[1], arrayClientes[2], maxEnviosPorCliente);
+                if (listaClientes.buscarClienteEmail(cliente.getEmail()) == null){
+                    listaClientes.insertarCliente(cliente);
+                }
             }while(sc.hasNext());
         }catch (FileNotFoundException fileNotFoundException) {
             System.out.println("Fichero " + fichero + " no encontrado.");

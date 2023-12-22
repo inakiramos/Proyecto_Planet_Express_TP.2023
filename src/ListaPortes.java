@@ -144,13 +144,17 @@ public class ListaPortes {
             System.out.println(mensaje);
             String pantalla = teclado.nextLine();
 
+            if (pantalla.equalsIgnoreCase(cancelar)) {
+                pararDePreguntar = true;
+            }
+            /*
             if (pantalla.equalsIgnoreCase(cancelar)) pararDePreguntar = true;
-
             else {
                 porte =  buscarPorte(pantalla);
                 if (porte == null) System.out.println("Porte no encontrado.");
                 else pararDePreguntar = true;
             }
+            */
         } while(!pararDePreguntar);
 
         return porte;

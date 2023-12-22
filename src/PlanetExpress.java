@@ -257,7 +257,7 @@ public class PlanetExpress {
         System.out.println("4. Mostrar envíos de un cliente");
         System.out.println("5. Generar lista de envíos");
         System.out.println("0. Salir");
-        opcion = Utilidades.leerNumero(teclado, "Seleccione opción: ", 0, 5 );
+        opcion = Utilidades.leerNumero(teclado, "Seleccione opción:", 0, 5 );
         return opcion;
     }
 
@@ -281,7 +281,7 @@ public class PlanetExpress {
      */
     public static void main(String[] args) {
         if (args.length != 10) {
-            System.out.println("Número de argumentos incorrecto");
+            System.out.println("Número de argumentos incorrecto.");
             return;
         }
 
@@ -296,22 +296,23 @@ public class PlanetExpress {
         do {
             opcion = menu(teclado);
             switch (opcion) {
-                case 0:
-                    planetExpress.guardarDatos(args[5], args[6], args[7], args[8], args[9]);
-                    break;
-
                 case 1:     // TODO: Alta de Cliente
-                    if (!planetExpress.maxPortesAlcanzado())
-                        Porte.altaPorte(teclado, rand, planetExpress.listaPuertosEspaciales, planetExpress.listaNaves, planetExpress.listaPortes);
-                    else System.out.println("No se pueden dar de alta más portes.");
+                    if (!planetExpress.maxPortesAlcanzado()) {
+                        porte = Porte.altaPorte(teclado, rand, planetExpress.listaPuertosEspaciales, planetExpress.listaNaves, planetExpress.listaPortes);
+                    }else{
+                        System.out.println("No se pueden dar de alta más portes.");
+                    }
                     break;
 
                 case 2:     // TODO: Buscar Porte
                     if (!planetExpress.maxClientesAlcanzado()) {
                         Cliente nuevoCliente = Cliente.altaCliente(teclado, planetExpress.listaClientes, planetExpress.maxEnviosPorCliente);
-                        if (nuevoCliente != null)
-                            System.out.println("Cliente con email " + nuevoCliente.getEmail() + " creado correctamente.");
-                    } else System.out.println("No se pueden dar de alta más clientes.");
+                        if (nuevoCliente != null) {
+                            System.out.println("\t Cliente con email " + nuevoCliente.getEmail() + " creado correctamente");
+                        }
+                    } else{
+                            System.out.println("No se pueden dar de alta más clientes.");
+                        }
                     break;
 
                 case 3:     // TODO: Listado de envíos de un cliente
@@ -322,54 +323,27 @@ public class PlanetExpress {
                         if (porte != null){
                             planetExpress.contratarEnvio(teclado,rand, porte);
                         }
-                    } else System.out.println("No se ha encontrado ningún vuelo.");
+                    } else System.out.println("\tPorte no encontrado.");
                     break;
 
                 case 4:     // TODO: Lista de envíos de un porte
-                    Cliente cliente = planetExpress.listaClientes.seleccionarCliente(teclado, "Email del cliente:");
+                    Cliente cliente = planetExpress.listaClientes.seleccionarCliente(teclado, "Email del cliente: ");
                     if (cliente.numBilletesComprado() != 0) {
-                        cliente.getListaEnvios().listarEnvios();
+                        //cliente.getListaEnvios().listarEnvios();
                         Envio envio = cliente.getListaEnvios().seleccionarEnvio(teclado, "Seleccione un envío:");
-                        char character;
-
-                        do {
-                            //Sólo se aceptan respuestas en minúsculas
-                            //character = Utilidades.leerLetra(scanner, "¿Generar factura del billete (f), cancelarlo (c) o volver al menú (m)?", 'a', 'z');
-
-                            //Acepta respuestas en mayúsculas y minúsculas indistintamente
-                            do {
-                                System.out.print("¿Cancelar envío (c), o generar factura (f)");
-                                character = Character.toLowerCase(teclado.nextLine().charAt(0));
-                            } while (character < 'a' || character > 'z');
-
-                            //if (character != 'f' && character != 'c') System.out.println("El valor de entrada debe ser 'f', 'c'");
-                        } while (character != 'f' && character != 'c');
-
-                        if (character == 'f') {
-                            System.out.print("Nombre del fichero: ");
-                            String rutaFichero = teclado.nextLine();
-                            envio.generarFactura(rutaFichero);
-                            System.out.println(" Factura generada correctamente en " + rutaFichero);
-                        } else if (character == 'c') {
-                            String localizadorEnvio = envio.getLocalizador();
-                            if (envio.cancelar()) System.out.println("Envío " + localizadorEnvio + " cancelado.");
-                        }
+                        //char character;
                     } else System.out.println("El pasajero seleccionado no ha adquirido ningún billete.");
                     break;
 
                 case 5:
-                    /*
-                    Porte porte2 =planetExpress.listaPortes.seleccionarPorte(teclado, "Seleccione un porte: ","CANCELAR");
-                    if (porte2 != null){
-                        System.out.print("Nombre del fichero: ");
-                        String rutaPorte = teclado.nextLine();
-                        if (porte2.generarListaEnvios(rutaPorte)){
-                            System.out.println("Fichero creado correctamente.");
-                        }
-                    } else System.out.println("No se ha encontrado ningún porte.");
-                    */
+                    for(int i = 0; i < planetExpress.maxClientes; i ++){
+                        planetExpress.listaClientes.getCliente(i).listarEnvios();
+                    }
                     break;
             }
         } while (opcion != 0);
+
+        planetExpress.guardarDatos(args[5], args[6], args[7], args[8], args[9]);
+
     }
 }

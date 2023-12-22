@@ -229,7 +229,13 @@ public class Porte {
      */
     // TODO: ¿Está ocupado el hueco consultado?
     public boolean huecoOcupado(int fila, int columna) {
-        return huecos[fila - 1][columna - 1]; // Se le quita un valor porque la matriz comienza en 0
+        boolean huecoOcupado = false;
+        if (!porteLleno()){
+            buscarEnvio(fila,columna);
+            huecoOcupado = true;
+        }
+        return huecoOcupado;
+        // huecos[fila - 1][columna - 1];
     }
 
     /**

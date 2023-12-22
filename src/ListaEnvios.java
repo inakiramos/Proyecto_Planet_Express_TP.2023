@@ -157,11 +157,11 @@ public class ListaEnvios {
     public Envio seleccionarEnvio(Scanner teclado, String mensaje) {
         Envio envio = null;
         do {
-            System.out.println(mensaje);
+            System.out.print(mensaje);
             String localizador = teclado.nextLine();
             envio = buscarEnvio(localizador);
             if (envio == null){
-                System.out.println("Localizador incorrecto");
+                System.out.println("\tLocalizador incorrecto");
             }
         }while (envio == null);
         return envio;
