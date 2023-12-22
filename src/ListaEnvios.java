@@ -159,8 +159,8 @@ public class ListaEnvios {
         do {
             System.out.print(mensaje);
             String localizador = teclado.nextLine();
-            envio = buscarEnvio(localizador);
             if (envio == null){
+                envio = buscarEnvio(localizador);
                 System.out.println("\tLocalizador incorrecto");
             }
         }while (envio == null);

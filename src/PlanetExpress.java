@@ -308,7 +308,7 @@ public class PlanetExpress {
                     if (!planetExpress.maxClientesAlcanzado()) {
                         Cliente nuevoCliente = Cliente.altaCliente(teclado, planetExpress.listaClientes, planetExpress.maxEnviosPorCliente);
                         if (nuevoCliente != null) {
-                            System.out.println("\t Cliente con email " + nuevoCliente.getEmail() + " creado correctamente");
+                            System.out.println("\t  Cliente con email " + nuevoCliente.getEmail() + " creado correctamente");
                         }
                     } else{
                             System.out.println("No se pueden dar de alta más clientes.");

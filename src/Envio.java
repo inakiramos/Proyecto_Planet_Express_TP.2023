@@ -246,41 +246,23 @@ public class Envio {
      * @return Envio para el porte y cliente especificados
      */
     public static Envio altaEnvio(Scanner teclado, Random rand, Porte porte, Cliente cliente) {
+        /*
         String hueco;
         char columna;
         int codOrigen, codDestino;
         char letraColumna;
+        */
         Envio nuevoEnvio = null;
 
-        /*
-        do {
-            numeroFila = Utilidades.leerNumero(teclado, "Ingrese fila del asiento (1-" + vuelo.getAvion().getFilas() + "):", 1, vuelo.getAvion().getFilas());
-            columna = (char) (vuelo.getAvion().getColumnas() + 64);
+        nuevoEnvio = new Envio(generarLocalizador(rand, porte.getID()), porte, cliente, nuevoEnvio.getFila(), nuevoEnvio.getColumna(), nuevoEnvio.getPrecio());
 
-            //Sólo se aceptan respuestas en minúsculas
-            letraColumna = Utilidades.leerLetra(teclado, "Ingrese columna del asiento (A-" + columna + "):", 'A', columna);
+        //Ocupamos el hueco
+        porte.ocuparHueco(nuevoEnvio);
 
-            asiento = String.valueOf(numeroFila) + String.valueOf(letraColumna);
-            numeroColumna = letraColumna - 64;
+        //Insertamos el hueco en las listas
+        cliente.getListaEnvios().insertarEnvio(nuevoEnvio);
+        porte.getListaEnvios().insertarEnvio(nuevoEnvio);
 
-            if (vuelo.asientoOcupado(numeroFila, numeroColumna))
-                System.out.println("El asiento " + asiento + " ya está reservado.");
-
-        } while(vuelo.asientoOcupado(numeroFila, numeroColumna));
-
-        Billete nuevoBillete = new Billete(generarLocalizador(rand, vuelo.getID()), vuelo, pasajero, tipo, numeroFila, numeroColumna, precioBilletes);
-        //Billete nuevoBillete = new Billete(generarLocalizador(rand, vuelo.getID()), vuelo, pasajero, TIPO.valueOf(tipo), numeroFila, numeroColumna, precioBilletes);
-
-        //Ocupamos el asiento
-        vuelo.ocuparAsiento(nuevoBillete);
-
-        //Insertamos el billete en las listas
-        pasajero.getListaBilletesPasajero().insertarBillete(nuevoBillete);
-        vuelo.getListaBilletesVuelo().insertarBillete(nuevoBillete);
-
-        return nuevoBillete;
-         */
-
-        return null;
+        return nuevoEnvio;
     }
 }
