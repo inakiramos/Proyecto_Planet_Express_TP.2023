@@ -28,7 +28,7 @@ public class ListaPortes {
      */
     public ListaPortes(int capacidad) {
         this.ocupacion = 0;
-        portes = new Porte[capacidad];
+        this.portes = new Porte[capacidad];
     }
 
     /**
@@ -63,7 +63,7 @@ public class ListaPortes {
      */
 	//TODO: devuelve un porte dado un indice
     public Porte getPorte(int i) {
-        return portes[i - 1];
+        return portes[i];
     }
 
     /**
@@ -87,14 +87,25 @@ public class ListaPortes {
      * @return Devuelve el objeto Porte que encontramos o null si no existe
      */
     public Porte buscarPorte(String id) {
+        /*
         Porte resul = null;
 
         for (int i = 0; i < portes.length; i++) {
-            if (Objects.equals(portes[i].getID(), id)){
+            if (portes[i].getID().equals(id)){
                 resul = portes[i];
             }
         }
         return resul;
+        */
+        int i = 0;
+        Porte result = null;
+        do {
+            if(portes[i].getID().equals(id)) {
+                result = portes[i];
+            }
+            i++;
+        } while(result == null && i <= portes.length);
+        return result;
     }
 
     /**
@@ -144,17 +155,12 @@ public class ListaPortes {
             System.out.println(mensaje);
             String pantalla = teclado.nextLine();
 
-            if (pantalla.equalsIgnoreCase(cancelar)) {
-                pararDePreguntar = true;
-            }
-            /*
             if (pantalla.equalsIgnoreCase(cancelar)) pararDePreguntar = true;
             else {
                 porte =  buscarPorte(pantalla);
-                if (porte == null) System.out.println("Porte no encontrado.");
+                if (porte == null) System.out.println("Porte no encontrado");
                 else pararDePreguntar = true;
             }
-            */
         } while(!pararDePreguntar);
 
         return porte;

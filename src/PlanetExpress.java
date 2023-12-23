@@ -288,28 +288,28 @@ public class PlanetExpress {
         Scanner teclado = new Scanner(System.in);
         PlanetExpress planetExpress = new PlanetExpress(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
         planetExpress.cargarDatos(args[5], args[6], args[7], args[8], args[9]);
+
         Random rand = new Random();
         ListaPortes listaPortes;
         Porte porte;
+
         int opcion;
 
         do {
             opcion = menu(teclado);
             switch (opcion) {
                 case 1:     // TODO: Alta de Cliente
-                    if (!planetExpress.maxPortesAlcanzado()) {
+                    if (!planetExpress.maxPortesAlcanzado())
                         porte = Porte.altaPorte(teclado, rand, planetExpress.listaPuertosEspaciales, planetExpress.listaNaves, planetExpress.listaPortes);
-                    }else{
-                        System.out.println("No se pueden dar de alta más portes.");
-                    }
+                    else
+                        System.out.println("No se pueden dar de alta más vuelos.");
                     break;
 
                 case 2:     // TODO: Buscar Porte
                     if (!planetExpress.maxClientesAlcanzado()) {
                         Cliente nuevoCliente = Cliente.altaCliente(teclado, planetExpress.listaClientes, planetExpress.maxEnviosPorCliente);
-                        if (nuevoCliente != null) {
+                        if (nuevoCliente != null)
                             System.out.println("\t  Cliente con email " + nuevoCliente.getEmail() + " creado correctamente");
-                        }
                     } else{
                             System.out.println("No se pueden dar de alta más clientes.");
                         }
@@ -317,12 +317,12 @@ public class PlanetExpress {
 
                 case 3:     // TODO: Listado de envíos de un cliente
                     listaPortes = planetExpress.buscarPorte(teclado);
+                    System.out.println(listaPortes.toString());
                     if (listaPortes.getOcupacion() != 0) {
-                        listaPortes.listarPortes();
+                        //listaPortes.listarPortes();
                         porte = listaPortes.seleccionarPorte(teclado, "Seleccione un porte: ", "CANCELAR");
-                        if (porte != null){
+                        if (porte != null)
                             planetExpress.contratarEnvio(teclado,rand, porte);
-                        }
                     } else System.out.println("\tPorte no encontrado.");
                     break;
 

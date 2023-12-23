@@ -22,7 +22,7 @@ public class Utilidades {
 
         do {
             System.out.print(mensaje);
-            numero = Integer.parseInt(teclado.nextLine());
+            numero = Integer.parseInt(String.valueOf(teclado.nextInt()));
         }while (numero < minimo || numero > maximo);
         return numero;
     }
@@ -97,7 +97,7 @@ public class Utilidades {
             anio = leerNumero(teclado, "Ingrese año:", 1900, 3000);
 
             if (!Fecha.comprobarFecha(dia, mes, anio)){
-                System.out.println("\t\t\t Fecha introducida incorrecta.");
+                System.out.println("\t\t\t  Fecha introducida incorrecta.");
             }
         }while(!Fecha.comprobarFecha(dia, mes, anio));
         return new Fecha(dia, mes, anio);

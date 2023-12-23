@@ -180,16 +180,16 @@ public class Envio {
 
         try {
             pw = new PrintWriter(fichero);
-            pw.write("-------------------------------------------------------------------------\n");
+            pw.write("-----------------------------------------------------\n");
             pw.write("--------- Factura del envío " + localizador + " ---------\n");
-            pw.write("-------------------------------------------------------------------------\n");
+            pw.write("-----------------------------------------------------\n");
             pw.write("Porte: " + porte.getID() + "\n");
             pw.write("Origen: " + porte.getOrigen().toStringSimple() + " (M" + porte.getMuelleOrigen() +")" + "\n");
             pw.write("Destino: " + porte.getDestino().toStringSimple() + " M" + porte.getMuelleDestino() + "\n");
             pw.write("Salida: " + porte.getSalida().toString() + "\n");
             pw.write("Llegada: " + porte.getLlegada().toString() + "\n");
             pw.write("Cliente: " + cliente.toString() + "\n");
-            //pw.write("Hueco: " + porte. );
+            pw.write("Hueco: " + porte.getNave().getFilas() + porte.getNave().getColumnas());
 
             String precio = String.format("%.2f", getPrecio());
             pw.write("Precio: " + precio + "SSD");

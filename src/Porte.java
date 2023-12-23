@@ -459,6 +459,50 @@ public class Porte {
      * @return Devuelve el envío que se acaba de crear
      */
     public static Porte altaPorte(Scanner teclado, Random rand, ListaPuertosEspaciales puertosEspaciales, ListaNaves naves, ListaPortes portes) {
+
+        PuertoEspacial puertoOrigen = null, puertoDestino = null;
+
+        while(puertoOrigen == null){
+            System.out.print("Ingrese código de puerto Origen: ");
+            String codigo = teclado.next();
+            puertoOrigen = puertosEspaciales.buscarPuertoEspacial(codigo);
+            if(puertoOrigen == null){
+                System.out.println("\t Código de puerto no encontrado.");
+            }
+        }
+        int muelleOrigen = Utilidades.leerNumero(teclado, "Ingrese el muelle de Origen (1 - " + puertoOrigen.getMuelles() + "): ",1, puertoOrigen.getMuelles());
+
+        while(puertoDestino == null){
+            System.out.print("Ingrese código de puerto Destino: ");
+            String codigo = teclado.next();
+            puertoDestino = puertosEspaciales.buscarPuertoEspacial(codigo);
+            if(puertoDestino == null){
+                System.out.println("\t  Código de puerto no encontrado.");
+            }
+        }
+
+        int terminalDestino = Utilidades.leerNumero(teclado, "Ingrese Terminal Destino (1 - " + puertoDestino.getMuelles() + "): ",1, puertoDestino.getMuelles());
+        naves.mostrarNaves();
+        Nave nave = naves.seleccionarNave(teclado,"Ingrese matrícula de la nave: ", 1);
+        String identificador;
+        do{
+            identificador = generarID(rand);
+        }while(identificador != null);
+        Fecha salida = Utilidades.leerFechaHora(teclado,"Introduzca la fecha de salida:" );
+        Fecha llegada;
+        do {
+            llegada = Utilidades.leerFechaHora(teclado,"Introduzca la fecha de llegada:");
+            if (!llegada.anterior(salida)) {
+                System.out.println("Fecha de llegada debe ser posterior a la fecha de salida.");
+            }
+        } while (!llegada.anterior(salida));
+        double precio = Utilidades.leerNumero(teclado,"Ingrese precio de pasaje: ", 0,1000000);
+        Porte nuevoPorte = new Porte(identificador, nave, puertoOrigen, muelleOrigen, salida, puertoDestino, terminalDestino, llegada, precio);
+        portes.insertarPorte(nuevoPorte);
+        return nuevoPorte;
+
+        /*
+
         boolean envioCorrecto = false;
         boolean fechaCorrecta;
         Fecha fechaLlegada;
@@ -506,5 +550,6 @@ public class Porte {
         System.out.println("Porte " + porteID + " creado correctamente");
         portes.insertarPorte(porteNuevo);
         return porteNuevo;
+        */
     }
 }
