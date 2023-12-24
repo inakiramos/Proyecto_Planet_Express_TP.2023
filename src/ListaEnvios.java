@@ -227,22 +227,6 @@ public class ListaEnvios {
                 cliente.getListaEnvios().insertarEnvio(infoEnvios);
                 porte.ocuparHueco(infoEnvios);
 
-                /*
-                try {
-            sc = new Scanner(new FileReader(ficheroEnvios));
-            String line;
-            String[] values;
-            Envio envio;
-            while (sc.hasNextLine()) {
-                line = sc.nextLine();
-                values = line.split(";");
-                envio = new Envio(values[0], portes.buscarPorte(values[1]), clientes.buscarClienteEmail(values[2]),
-                        Integer.parseInt(values[3]), Integer.parseInt(values[4]), Double.parseDouble(values[5]));
-                portes.buscarPorte(envio.getPorte().getID()).ocuparHueco(envio);
-                clientes.buscarClienteEmail(envio.getCliente().getEmail()).aniadirEnvio(envio);
-            }
-                */
-
             }while (sc.hasNext()); // Mientras tenga líneas de texto para leer
         } catch (FileNotFoundException fileNotFoundException) {
             System.out.println("Fichero " + ficheroEnvios + " no encontrado.");

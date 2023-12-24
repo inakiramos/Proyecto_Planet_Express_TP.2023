@@ -283,21 +283,6 @@ public class PlanetExpress {
                             System.out.println("\tPorte no encontrado.");
                     }
                     break;
-                    /*
-                            do {
-                                ListaPortes portesElegir = planetExpress.buscarPortes(teclado);
-                                System.out.println("Portes encontrados: " + portesElegir.getOcupacion());
-                                portesElegir.listarPortes();
-                                Porte porteSeleccion = portesElegir.seleccionarPorte(teclado, "Seleccione un porte: ", "CANCELAR");
-                                if (porteSeleccion != null && !porteSeleccion.porteLleno()) {
-                                    planetExpress.contratarEnvio(teclado, rand, porteSeleccion);
-                                    salir = true;
-                                } else {
-                                    System.out.println("El porte está lleno. Seleccione otro.");
-                                }
-                            } while (!salir);
-                        }
-                    */
 
                 case 4:     // TODO: Lista de envíos de un porte
                     Cliente cliente = planetExpress.listaClientes.seleccionarCliente(teclado, "Email del cliente: ");
@@ -329,25 +314,6 @@ public class PlanetExpress {
                         planetExpress.listaClientes.getCliente(i).listarEnvios();
                     }
                     break;
-                    /*
-                    planetExpress.listaPortes.listarPortes();
-                        String ID;
-                        boolean porteExiste;
-                        do {
-                            ID = Utilidades.leerCadena(teclado, "Seleccione un porte: ");
-                            porteExiste = planetExpress.listaPortes.buscarPorte(ID) != null;
-                            if (!Porte.correctoID(ID) || !porteExiste) {
-                                System.out.println("ID incorrecto.");
-                            }
-                        } while (!Porte.correctoID(ID) || !porteExiste);
-                        Porte porte = planetExpress.listaPortes.buscarPorte(ID);
-                        if (porte.generarListaEnvios(Utilidades.leerCadena(teclado, "Nombre del fichero: "))) {
-                            System.out.println("Fichero creado correctamente.");
-                        } else {
-                            System.out.println("Error durante la creación del fichero.");
-                        }
-                        break;
-                    */
 
                 case 0:
                     planetExpress.guardarDatos(args[5], args[6], args[7], args[8], args[9]);

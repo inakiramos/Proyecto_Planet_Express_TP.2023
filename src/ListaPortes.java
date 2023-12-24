@@ -140,36 +140,16 @@ public class ListaPortes {
      * @return Devuelve el porte seleccionado y si cumple los requisitos (exista y que tenga ID correspondiente)
      */
     public Porte seleccionarPorte(Scanner teclado, String mensaje, String cancelar) {
-        String ID;
-        boolean IDExiste;
+        String porteID;
+        boolean existe;
         do {
-            ID = Utilidades.leerCadena(teclado, "Seleccione un porte: ");
-            IDExiste = buscarPorte(ID) != null;
-            if (!Porte.correctoID(ID) || !IDExiste) {
+            porteID = Utilidades.leerCadena(teclado, "Seleccione un porte: ");
+            existe = buscarPorte(porteID) != null;
+            if (!Porte.correctoID(porteID) || !existe) {
                 System.out.println("Porte no encontrado.");
             }
-        } while (!Porte.correctoID(ID) || !IDExiste);
-        return buscarPorte(ID);
-
-        /*
-        Porte porte = null;
-        String pantalla;
-        String porteID;
-        boolean pararDePreguntar = false;
-        listarPortes();
-
-        do {
-            System.out.print(mensaje);
-            pantalla = teclado.next();
-            if (buscarPorte(pantalla) == null)
-                System.out.println("\tPorte no encontrado.");
-            else
-                pararDePreguntar = true;
-        } while(buscarPorte(pantalla) == null && !pantalla.equals(cancelar));
-
-        return porte;
-
-        */
+        } while (!Porte.correctoID(porteID) || existe);
+        return buscarPorte(porteID);
     }
 
     /**
