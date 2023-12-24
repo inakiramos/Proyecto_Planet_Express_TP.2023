@@ -7,7 +7,10 @@ import java.util.Objects;
 import java.util.Scanner;
 
 /**
- * Description of the class
+ * ListaClientes es una clase que encapsula las variables enteras usadas para definir los clientes,
+ * así como también contiene funciones bara buscar, seleccionar e insertar estos mismos clientes en el array
+ * de nombre clientes
+ *  También escribe un fichero.csv con los datos de cada cliente
  *
  * @author Iñaki Ramos Iturria
  * @author Cristiana Velislavova Tsekova

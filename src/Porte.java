@@ -516,4 +516,8 @@ public class Porte {
         portes.insertarPorte(porteNuevo);
         return porteNuevo;
     }
+
+    public static boolean correctoID(String id) {
+        return id.matches("^PM\\d{4}$");
+    }
 }

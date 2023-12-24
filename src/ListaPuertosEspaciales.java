@@ -2,7 +2,9 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- * Description of the class
+ * ListaPuertosEspaciales es una clase que encapsula las variables enteras usadas para definir los puertos,
+ * así como también contiene funciones para buscar, seleccionar e insertar puertos espaciales en el array de nombre Lista
+ * También escribe un fichero.csv con los datos de cada puerto espacial
  *
  * @author Iñaki Ramos Iturria
  * @author Cristiana Velislavova Tsekova

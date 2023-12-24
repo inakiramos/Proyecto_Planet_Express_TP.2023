@@ -5,7 +5,9 @@ import java.util.Objects;
 import java.util.Scanner;
 
 /**
- * Description of the class
+ * ListaNaves es una clase que encapsula las variables enteras usadas para definir las naves,
+ * así como también contiene funciones para buscar, seleccionar e insertar naves en el array de nombre "naves"
+ * También escribe un fichero.csv con los datos de cada nave
  *
  * @author Iñaki Ramos Iturria
  * @author Cristiana Velislavova Tsekova

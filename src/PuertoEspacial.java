@@ -1,5 +1,5 @@
 /**
- * Description of the class
+ * Puerto Espacial es una clase que encapsula las variables enteras usadas para definir un puerto en concreto
  *
  * @author Iñaki Ramos Iturria
  * @author Cristiana Velislavova Tsekova

@@ -1,5 +1,5 @@
 /**
- * Description of the class
+ * Nave es una clase que encapsula las variables enteras usadas para definir una nave en concreto.
  *
  * @author Iñaki Ramos Iturria
  * @author Cristiana Velislavova Tsekova 

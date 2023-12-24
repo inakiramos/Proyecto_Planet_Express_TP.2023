@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * Description of the class
+ * Envío es una clase que encapsula las variables enteras usadas para definir un envío en concreto
  *
  * @author Iñaki Ramos Iturria
  * @author Cristiana Velislavova Tsekova
@@ -189,7 +189,7 @@ public class Envio {
             pw.write("Salida: " + porte.getSalida().toString() + "\n");
             pw.write("Llegada: " + porte.getLlegada().toString() + "\n");
             pw.write("Cliente: " + cliente.toString() + "\n");
-            pw.write("Hueco: " + porte.getNave().getFilas() + porte.getNave().getColumnas());
+            pw.write("Hueco: " + this.getHueco() + "\n");
 
             String precio = String.format("%.2f", getPrecio());
             pw.write("Precio: " + precio + "SSD");
@@ -205,11 +205,6 @@ public class Envio {
             if (pw != null){
                 pw.close();
             }
-        }
-
-        //Si la factura se genera correctamente
-        if (facturaGenerada){
-            System.out.print("Factura de Envío " + localizador);
         }
 
         return facturaGenerada;

@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * Description of the class
+ * Cliente es una clase que encapsula las variables enteras usadas para definira un cliente en concreto
  *
  * @author Iñaki Ramos Iturria
  * @author Cristiana Velislavova Tsekova

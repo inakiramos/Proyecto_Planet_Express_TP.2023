@@ -4,7 +4,9 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- * Description of the class
+ * ListaEnvios es una clase que encapsula las variables enteras usadas para definir los envios de un porte,
+ * así como también contiene funciones bara buscar, seleccionar e insertar envios en el array de nombre "envios"
+ * También añade a un fichero.csv los datos de cada envío
  *
  * @author Iñaki Ramos Iturria
  * @author Cristiana Velislavova Tsekova
