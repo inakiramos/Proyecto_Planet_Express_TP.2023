@@ -114,11 +114,10 @@ public class PlanetExpress {
      * @return Devuelve true su se guardan los datos correspondientes, si no es así, indica false
      */
     public void guardarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
-
-        boolean ficheroPuertosEspaciales = listaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
-        boolean ficheroNave = listaNaves.escribirNavesCsv(ficheroNaves);
-        boolean ficheroPorte = listaPortes.escribirPortesCsv(ficheroPortes);
-        boolean ficheroCliente = listaClientes.escribirClientesCsv(ficheroClientes);
+        listaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
+        listaNaves.escribirNavesCsv(ficheroNaves);
+        listaPortes.escribirPortesCsv(ficheroPortes);
+        listaClientes.escribirClientesCsv(ficheroClientes);
         ListaEnvios listaEnvios = new ListaEnvios(this.maxEnviosPorCliente * this.maxClientes);
 
         for (int i = 0; i < listaClientes.getOcupacion(); i++) {
@@ -196,6 +195,8 @@ public class PlanetExpress {
                 Cliente clienteSeleccion = listaClientes.seleccionarCliente(teclado, "Email del cliente: ");
                 Envio envioNuevo = Envio.altaEnvio(teclado, rand, porte, clienteSeleccion);
                 System.out.println("Envío " + envioNuevo.getLocalizador() + " creado correctamente");
+            } else {
+                System.out.println("\t  El valor de entrada debe ser 'n' o 'e'");
             }
         }
     }
@@ -274,13 +275,14 @@ public class PlanetExpress {
 
                 case 3:     // TODO: Listado de envíos de un cliente
                     if (planetExpress.listaPortes.getOcupacion() != 0){
-                        listaPortes = planetExpress.buscarPorte(teclado);
-                        listaPortes.listarPortes();
-                        porte = listaPortes.seleccionarPorte(teclado, "Seleccione un porte: ", "CANCELAR");
-                        if (porte != null || !porte.porteLleno())
-                            planetExpress.contratarEnvio(teclado,rand, porte);
-                        else
-                            System.out.println("\tPorte no encontrado.");
+                        boolean porteEncontrado = false;
+                        do {
+                            listaPortes = planetExpress.buscarPorte(teclado);
+                            listaPortes.listarPortes();
+                            porte = listaPortes.seleccionarPorte(teclado, "Seleccione un porte: ", "CANCELAR");
+                            if (porte != null && !porte.porteLleno())
+                                planetExpress.contratarEnvio(teclado,rand, porte);
+                        }while(!porteEncontrado);
                     }
                     break;
 
@@ -314,12 +316,8 @@ public class PlanetExpress {
                         planetExpress.listaClientes.getCliente(i).listarEnvios();
                     }
                     break;
-
-                case 0:
-                    planetExpress.guardarDatos(args[5], args[6], args[7], args[8], args[9]);
-                    break;
             }
         } while (opcion != 0);
-
+        planetExpress.guardarDatos(args[5], args[6], args[7], args[8], args[9]);
     }
 }

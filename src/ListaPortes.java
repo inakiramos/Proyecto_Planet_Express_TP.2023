@@ -110,23 +110,21 @@ public class ListaPortes {
      * @return Devuelve el porte buscado mediante los parámetros introducidos y si este tiene las caracteristicas introducidas lo coge
      */
     public ListaPortes buscarPortes(String codigoOrigen, String codigoDestino, Fecha fecha) {
-        ListaPortes portesBuscados = new ListaPortes(this.ocupacion);
-        for (int i = 0; i < ocupacion; i ++){
-            if ((codigoOrigen.equals(portes[i].getOrigen().getCodigo())) && (codigoDestino.equals(portes[i].getDestino().getCodigo())) && (fecha.equals(portes[i].getSalida()))){
-                portesBuscados.insertarPorte(portes[i]);
+        ListaPortes result = new ListaPortes(this.ocupacion);
+        for (int i = 0; i < this.ocupacion; i++) {
+            if (portes[i].getOrigen().getCodigo().equals(codigoOrigen) && portes[i].getDestino().getCodigo().equals(codigoDestino) && portes[i].getSalida().coincide(fecha)) {
+                result.insertarPorte(portes[i]);
             }
         }
-        return portesBuscados;
+        return result;
     }
 
     /**
      * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
      */
     public void listarPortes() {
-        for (int i = 0; i < ocupacion; i++) {
-            if (portes[i] != null){
-                System.out.println("\n" + portes[i].toString());
-            }
+        for (int i = 0; i < this.ocupacion; i++) {
+            System.out.println(portes[i].toStringSimple());
         }
     }
 
@@ -145,10 +143,9 @@ public class ListaPortes {
         do {
             porteID = Utilidades.leerCadena(teclado, "Seleccione un porte: ");
             existe = buscarPorte(porteID) != null;
-            if (!Porte.correctoID(porteID) || !existe) {
-                System.out.println("Porte no encontrado.");
-            }
-        } while (!Porte.correctoID(porteID) || existe);
+            if (!Porte.correctoID(porteID) || !existe)
+                System.out.println("\t  Porte no encontrado.");
+        } while (!Porte.correctoID(porteID) || !existe);
         return buscarPorte(porteID);
     }
 
@@ -197,15 +194,15 @@ public class ListaPortes {
      */
     public static ListaPortes leerPortesCsv(String fichero, int capacidad, ListaPuertosEspaciales puertosEspaciales, ListaNaves naves) {
         ListaPortes listaPortes = new ListaPortes(capacidad);
-        try (Scanner sc = new Scanner(new FileReader(fichero))) {
-            String line;
-            String[] values;
-            while (sc.hasNextLine()) {
-                line = sc.nextLine();
-                values = line.split(";");
-                listaPortes.insertarPorte(new Porte(values[0], naves.buscarNave(values[1]), puertosEspaciales.buscarPuertoEspacial(values[2]),
-                        Integer.parseInt(values[3]), Fecha.fromString(values[4]), puertosEspaciales.buscarPuertoEspacial(values[5]),
-                        Integer.parseInt(values[6]), Fecha.fromString(values[7]), Double.parseDouble(values[8])));
+        try (Scanner teclado = new Scanner(new FileReader(fichero))) {
+            String lineaTexto;
+            String[] arrayPortesFich;
+            while (teclado.hasNextLine()) {
+                lineaTexto = teclado.nextLine();
+                arrayPortesFich = lineaTexto.split(";");
+                listaPortes.insertarPorte(new Porte(arrayPortesFich[0], naves.buscarNave(arrayPortesFich[1]), puertosEspaciales.buscarPuertoEspacial(arrayPortesFich[2]),
+                        Integer.parseInt(arrayPortesFich[3]), Fecha.fromString(arrayPortesFich[4]), puertosEspaciales.buscarPuertoEspacial(arrayPortesFich[5]),
+                        Integer.parseInt(arrayPortesFich[6]), Fecha.fromString(arrayPortesFich[7]), Double.parseDouble(arrayPortesFich[8])));
             }
         } catch (FileNotFoundException ex) {
             System.out.printf("Fichero %s no encontrado.\n", fichero);

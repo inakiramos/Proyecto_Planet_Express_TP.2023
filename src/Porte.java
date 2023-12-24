@@ -330,6 +330,15 @@ public class Porte {
     }
 
     /**
+     * Método para comprobar el correcto funcionamiento de los ID de los portes
+     * @param id del puerto el cual se quiere buscar
+     * @return Devuelve true si el ID de puerto es correcto con el cual se quiere comparar
+     */
+    public static boolean correctoID(String id) {
+        return id.matches("^PM\\d{4}$");
+    }
+
+    /**
      * TODO: Muestra la matriz de huecos del porte, ejemplo:
      *    A  B  C  D  E  F
      *   1[ ][X][ ][ ][ ][ ]
@@ -400,7 +409,7 @@ public class Porte {
             printW.write("--------------------------------------------------");
             printW.write("-------- Lista de envíos del porte " + this.id + " --------");
             printW.write("--------------------------------------------------");
-            printW.write("Hueco\tCliente");
+            printW.write("Hueco\tCliente\n");
 
             for (int i = 0; i < nave.getFilas(); i++) {
                 for (int j = 0; j < nave.getColumnas(); j++) {
@@ -515,9 +524,5 @@ public class Porte {
         System.out.println("\t  Porte " + idenPorte + " creado correctamente");
         portes.insertarPorte(porteNuevo);
         return porteNuevo;
-    }
-
-    public static boolean correctoID(String id) {
-        return id.matches("^PM\\d{4}$");
     }
 }

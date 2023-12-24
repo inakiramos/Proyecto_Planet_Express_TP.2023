@@ -210,22 +210,22 @@ public class ListaEnvios {
     public static void leerEnviosCsv(String ficheroEnvios, ListaPortes portes, ListaClientes clientes) {
         Scanner sc = null;
         String arrayEnvio[];
-        Envio infoEnvios;
+        Envio envios;
         Porte porte;
-        Cliente cliente;
+        Cliente clienteFich;
 
         try {
             sc = new Scanner(new FileReader(ficheroEnvios));
             do {
                 arrayEnvio = sc.nextLine().split(";");
                 porte = portes.buscarPorte(arrayEnvio[1]);
-                cliente = clientes.buscarClienteEmail(arrayEnvio[2]);
+                clienteFich = clientes.buscarClienteEmail(arrayEnvio[2]);
 
-                infoEnvios = new Envio(arrayEnvio[0], porte, cliente, Integer.parseInt(arrayEnvio[3]), Integer.parseInt(arrayEnvio[4]), Double.parseDouble(arrayEnvio[5]));
+                envios = new Envio(arrayEnvio[0], porte, clienteFich, Integer.parseInt(arrayEnvio[3]), Integer.parseInt(arrayEnvio[4]), Double.parseDouble(arrayEnvio[5]));
 
-                porte.getListaEnvios().insertarEnvio(infoEnvios);
-                cliente.getListaEnvios().insertarEnvio(infoEnvios);
-                porte.ocuparHueco(infoEnvios);
+                porte.getListaEnvios().insertarEnvio(envios);
+                clienteFich.getListaEnvios().insertarEnvio(envios);
+                porte.ocuparHueco(envios);
 
             }while (sc.hasNext()); // Mientras tenga líneas de texto para leer
         } catch (FileNotFoundException fileNotFoundException) {
