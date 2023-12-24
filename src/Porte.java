@@ -91,14 +91,10 @@ public class Porte {
         this.muelleDestino = muelleDestino;
         this.llegada = llegada;
         this.precio = precio;
-        this.huecos = new boolean[nave.getFilas()][nave.getColumnas()];
-
-        for (int i = 0; i < nave.getFilas(); i++) {
-            for (int k = 0; k < nave.getColumnas(); k++) {
-                huecos[i][k] = false;
-            }
-        }
-        listaEnvios = new ListaEnvios(nave.getFilas() * nave.getColumnas());
+        // Inicializamos los huecos con las filas y las columnas
+        this.huecos = new boolean[this.nave.getFilas()][this.nave.getColumnas()];
+        // Inicializamos la lista envios multiplicando el numero de filas * columnas
+        this.listaEnvios = new ListaEnvios(this.nave.getFilas() * this.nave.getColumnas());
     }
 
     /**
@@ -459,21 +455,26 @@ public class Porte {
      * @return Devuelve el envío que se acaba de crear
      */
     public static Porte altaPorte(Scanner teclado, Random rand, ListaPuertosEspaciales puertosEspaciales, ListaNaves naves, ListaPortes portes) {
-
-        PuertoEspacial puertoOrigen = null, puertoDestino = null;
+        boolean porteCorrecto = false;
+        boolean fechaCorrecta;
+        Fecha fechaLlegada;
+        Fecha fechaSalida;
+        PuertoEspacial puertoOrigen = null;
+        PuertoEspacial puertoDestino = null;
 
         while(puertoOrigen == null){
-            System.out.print("Ingrese código de puerto Origen: ");
+            System.out.print("Ingrese código de puerto Origen:");
             String codigo = teclado.next();
             puertoOrigen = puertosEspaciales.buscarPuertoEspacial(codigo);
             if(puertoOrigen == null){
                 System.out.println("\t Código de puerto no encontrado.");
             }
         }
+
         int muelleOrigen = Utilidades.leerNumero(teclado, "Ingrese el muelle de Origen (1 - " + puertoOrigen.getMuelles() + "): ",1, puertoOrigen.getMuelles());
 
         while(puertoDestino == null){
-            System.out.print("Ingrese código de puerto Destino: ");
+            System.out.print("Ingrese código de puerto Destino:");
             String codigo = teclado.next();
             puertoDestino = puertosEspaciales.buscarPuertoEspacial(codigo);
             if(puertoDestino == null){
@@ -481,75 +482,38 @@ public class Porte {
             }
         }
 
-        int terminalDestino = Utilidades.leerNumero(teclado, "Ingrese Terminal Destino (1 - " + puertoDestino.getMuelles() + "): ",1, puertoDestino.getMuelles());
+        int muelleDestino = Utilidades.leerNumero(teclado, "Ingrese Terminal Destino (1 - " + puertoDestino.getMuelles() + "): ",1, puertoDestino.getMuelles());
+
+        //Mostramos naves
         naves.mostrarNaves();
-        Nave nave = naves.seleccionarNave(teclado,"Ingrese matrícula de la nave: ", 1);
-        String identificador;
-        do{
-            identificador = generarID(rand);
-        }while(identificador != null);
-        Fecha salida = Utilidades.leerFechaHora(teclado,"Introduzca la fecha de salida:" );
-        Fecha llegada;
-        do {
-            llegada = Utilidades.leerFechaHora(teclado,"Introduzca la fecha de llegada:");
-            if (!llegada.anterior(salida)) {
-                System.out.println("Fecha de llegada debe ser posterior a la fecha de salida.");
-            }
-        } while (!llegada.anterior(salida));
-        double precio = Utilidades.leerNumero(teclado,"Ingrese precio de pasaje: ", 0,1000000);
-        Porte nuevoPorte = new Porte(identificador, nave, puertoOrigen, muelleOrigen, salida, puertoDestino, terminalDestino, llegada, precio);
-        portes.insertarPorte(nuevoPorte);
-        return nuevoPorte;
 
-        /*
-
-        boolean envioCorrecto = false;
-        boolean fechaCorrecta;
-        Fecha fechaLlegada;
-        Fecha fechaSalida;
-
-        //Información de los Puertos Espaciales
-        PuertoEspacial origen = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Origen: ");
-        String primerMensaje = "Ingrese el muelle de Origen (1 - " + origen.getMuelles() + "): ";
-        int muelleOrigen = Utilidades.leerNumero(teclado, primerMensaje, 1, origen.getMuelles());
-
-        PuertoEspacial destino = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Destino: ");
-        String segundoMensaje = "Ingrese el muelle de Destino (1 - " + destino.getMuelles() + "): ";
-        int muelleDestino = Utilidades.leerNumero(teclado, segundoMensaje, 1, destino.getMuelles());
-
-        //Información de la nave
-        double distancia = origen.distancia(destino);
-        Nave nave = naves.seleccionarNave(teclado, "Ingrese matrícula de la nave: ", distancia);
+        double distancia = puertoOrigen.distancia(puertoDestino);
+        Nave nave = naves.seleccionarNave(teclado,"Ingrese matrícula de la nave: ", distancia);
 
         //Comprobamos la fecha
+        fechaSalida = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de salida: ");
+
         do {
-            fechaSalida = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de salida: ");
-            fechaLlegada = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de llegada: ");
-
-            if (fechaSalida.anterior(fechaLlegada))
-                fechaCorrecta = true;
-            else {
-                System.out.println("Llegada debe ser posterior a salida.");
-                fechaCorrecta = false;
+            fechaLlegada = Utilidades.leerFechaHora(teclado,"Introduzca la fecha de llegada: ");
+            if (fechaLlegada.anterior(fechaSalida)) {
+                System.out.println("\n\nLlegada debe ser posterior a la salida.");
             }
-        } while (!fechaCorrecta);
+        } while (fechaLlegada.anterior(fechaSalida));
 
-        //Información de ID
-        String porteID;
-        do {
-            porteID = generarID(rand);
-            for (int i = 0; i < portes.getOcupacion(); i++) {
-                if (porteID.equals(portes.getPorte(i + 1).getID())) envioCorrecto = true;
-            }
-        } while (envioCorrecto);
+        // ID del porte (Debe de ser único)
+        String idenPorte;
+        if (portes.getOcupacion() != 0)
+            do {
+                idenPorte = generarID(rand);
+            } while (portes.buscarPorte(idenPorte) != null);
+        else
+            idenPorte = generarID(rand);
 
-        double precio;
-        precio = Utilidades.leerNumero(teclado, "Ingrese precio del porte:", 0, (double) 999);
-        Porte porteNuevo = new Porte(porteID, nave, origen, muelleOrigen,fechaSalida, destino, muelleDestino, fechaLlegada, precio);
+        double precio = Utilidades.leerNumero(teclado, "Ingrese precio del porte:", 0, (double) 99999.99);
+        Porte porteNuevo = new Porte(idenPorte, nave, puertoOrigen, muelleOrigen,fechaSalida, puertoDestino, muelleDestino, fechaLlegada, precio);
 
-        System.out.println("Porte " + porteID + " creado correctamente");
+        System.out.println("\t  Porte " + idenPorte + " creado correctamente");
         portes.insertarPorte(porteNuevo);
         return porteNuevo;
-        */
     }
 }

@@ -87,25 +87,12 @@ public class ListaPortes {
      * @return Devuelve el objeto Porte que encontramos o null si no existe
      */
     public Porte buscarPorte(String id) {
-        /*
-        Porte resul = null;
-
-        for (int i = 0; i < portes.length; i++) {
-            if (portes[i].getID().equals(id)){
-                resul = portes[i];
-            }
+        Porte resultado = null;
+        for (int i = 0; i < ocupacion; i ++){
+            if (portes[i].getID().equals(id))
+            resultado = portes[i];
         }
-        return resul;
-        */
-        int i = 0;
-        Porte result = null;
-        do {
-            if(portes[i].getID().equals(id)) {
-                result = portes[i];
-            }
-            i++;
-        } while(result == null && i <= portes.length);
-        return result;
+        return resultado;
     }
 
     /**
@@ -147,21 +134,19 @@ public class ListaPortes {
      * @return Devuelve el porte seleccionado y si cumple los requisitos (exista y que tenga ID correspondiente)
      */
     public Porte seleccionarPorte(Scanner teclado, String mensaje, String cancelar) {
-        listarPortes();
         Porte porte = null;
+        String pantalla;
         boolean pararDePreguntar = false;
+        listarPortes();
 
         do {
-            System.out.println(mensaje);
-            String pantalla = teclado.nextLine();
-
-            if (pantalla.equalsIgnoreCase(cancelar)) pararDePreguntar = true;
-            else {
-                porte =  buscarPorte(pantalla);
-                if (porte == null) System.out.println("Porte no encontrado");
-                else pararDePreguntar = true;
-            }
-        } while(!pararDePreguntar);
+            System.out.print(mensaje);
+            pantalla = teclado.next();
+            if (buscarPorte(pantalla) == null)
+                System.out.println("\tPorte no encontrado.");
+            else
+                pararDePreguntar = true;
+        } while(buscarPorte(pantalla) == null && !pantalla.equals(cancelar));
 
         return porte;
     }
@@ -182,9 +167,9 @@ public class ListaPortes {
             for (int i = 0; i < ocupacion; i++) {
                 porte = portes[i];
                 pw.print(porte.getID() + ";" + porte.getNave().getMatricula() + ";" + porte.getOrigen().getCodigo() + ";" + porte.getMuelleOrigen()
-                        + ";" + porte.getSalida().toString() + ";" + porte.getDestino().getCodigo() + ";" + porte.getMuelleDestino() + ";" + porte.getLlegada().toString()
-                        + ";" + porte.getPrecio());
-                if (i != ocupacion - 1) pw.println();
+                        + ";" + porte.getSalida().toString() + ";" + porte.getDestino().getCodigo() + ";" + porte.getMuelleDestino() + ";" +
+                        porte.getLlegada().toString() + ";" + porte.getPrecio());
+                //if (i != ocupacion - 1) pw.println();
             }
         } catch (FileNotFoundException fileNotFoundException) {
             System.out.println("Fichero " + fichero + " no encontrado.");
@@ -211,6 +196,22 @@ public class ListaPortes {
      */
     public static ListaPortes leerPortesCsv(String fichero, int capacidad, ListaPuertosEspaciales puertosEspaciales, ListaNaves naves) {
         ListaPortes listaPortes = new ListaPortes(capacidad);
+        try (Scanner sc = new Scanner(new FileReader(fichero))) {
+            String line;
+            String[] values;
+            while (sc.hasNextLine()) {
+                line = sc.nextLine();
+                values = line.split(";");
+                listaPortes.insertarPorte(new Porte(values[0], naves.buscarNave(values[1]), puertosEspaciales.buscarPuertoEspacial(values[2]),
+                        Integer.parseInt(values[3]), Fecha.fromString(values[4]), puertosEspaciales.buscarPuertoEspacial(values[5]),
+                        Integer.parseInt(values[6]), Fecha.fromString(values[7]), Double.parseDouble(values[8])));
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.printf("Fichero %s no encontrado.\n", fichero);
+        }
+        return listaPortes;
+        /*
+        ListaPortes listaPortes = new ListaPortes(capacidad);
         Scanner sc = null;
         Porte porte;
         String arrayPortes[];
@@ -223,7 +224,7 @@ public class ListaPortes {
                         Fecha.fromString(arrayPortes[4]), puertosEspaciales.buscarPuertoEspacial(arrayPortes[5]), Integer.parseInt(arrayPortes[6]), Fecha.fromString(arrayPortes[7]),
                         Double.parseDouble(arrayPortes[8]));
                 listaPortes.insertarPorte(porte);
-            } while (sc.hasNext());
+            } while (sc.hasNextLine());
         } catch (FileNotFoundException fileNotFoundException) {
             System.out.println("Fichero " + fichero + " no encontrado.");
         } catch (IOException IOException) {
@@ -233,6 +234,6 @@ public class ListaPortes {
                 sc.close();
             }
         }
-        return listaPortes;
+         */
     }
 }

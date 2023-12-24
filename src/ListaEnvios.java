@@ -89,13 +89,12 @@ public class ListaEnvios {
      * @return el envio que encontramos o null si no existe
      */
     public Envio buscarEnvio(String localizador) {
-        Envio resul = null;
-        for (int i = 0; i < ocupacion; i ++){
-            if (envios[i].getLocalizador().equals(localizador)){
-                resul = envios[i];
-            }
-        }
-        return resul;
+        Envio resultado = null;
+        int i = 0;
+        if (envios[i].getLocalizador().equals(localizador))
+            resultado = envios[i];
+        i ++;
+        return resultado;
     }
 
     /**
@@ -158,11 +157,10 @@ public class ListaEnvios {
         Envio envio = null;
         do {
             System.out.print(mensaje);
-            String localizador = teclado.nextLine();
-            if (envio == null){
-                envio = buscarEnvio(localizador);
-                System.out.println("\tLocalizador incorrecto");
-            }
+            String localizador = teclado.next();
+            envio = buscarEnvio(localizador);
+            if (envio == null)
+                System.out.println("\t  Localizador incorrecto");
         }while (envio == null);
         return envio;
     }

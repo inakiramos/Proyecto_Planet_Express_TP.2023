@@ -188,9 +188,9 @@ public class Cliente {
         Cliente nuevoCliente = null;
 
         System.out.print("Nombre: ");
-        String nombre = teclado.nextLine();
+        String nombre = teclado.next();
         System.out.print("Apellidos: ");
-        String apellidos = teclado.nextLine();
+        String apellidos = teclado.next();
 
         boolean emailIncorrecto;
         String email;
@@ -198,7 +198,7 @@ public class Cliente {
         do {
             emailIncorrecto = false;
             System.out.print("Email: ");
-            email = teclado.nextLine();
+            email = teclado.next();
             if (clientes.buscarClienteEmail(email) != null){
                 emailIncorrecto = true;
                 System.out.println("Email ya existe.");
@@ -220,9 +220,11 @@ public class Cliente {
      * @return Devuelve true sie el email es correcto y false si no lo es (no cumple los requisitos o es erróneo)
      */
     public static boolean correctoEmail(String email) {
+
         String[] emailCompleto = email.split("@");
         String primeraParte = emailCompleto[0];
         String segundaParte = emailCompleto[1];
+
         int longitud = primeraParte.length();
         boolean correcto = true;
 
@@ -243,14 +245,15 @@ public class Cliente {
             correcto = false;
         }
         return correcto;
+
     }
 
     /**
-     * Función que comprueba la ocupación de un billete dentro del array listaBilletesPasajero
+     * Función que comprueba la ocupación de un envío dentro del array listaEnvios
      *
-     * @return Devuelve la ocupación del billete comprado por un pasajero dentro del array listaBilletesPasajero
+     * @return Devuelve la ocupación del envío hecho por un pasajero dentro del array listaEnvios
      */
-    public int numBilletesComprado() {
+    public int numEnviosRealizados() {
         return listaEnvios.getOcupacion();
     }
 }

@@ -208,11 +208,10 @@ public class Envio {
         }
 
         //Si la factura se genera correctamente
-        /*
         if (facturaGenerada){
-            System.out.print("Factura de Envio " + localizador);
+            System.out.print("Factura de Envío " + localizador);
         }
-        */
+
         return facturaGenerada;
     }
 
@@ -246,23 +245,16 @@ public class Envio {
      * @return Envio para el porte y cliente especificados
      */
     public static Envio altaEnvio(Scanner teclado, Random rand, Porte porte, Cliente cliente) {
-        /*
-        String hueco;
-        char columna;
-        int codOrigen, codDestino;
-        char letraColumna;
-        */
-        Envio nuevoEnvio = null;
+        int fila, columna;
+        double precioEnvio;
 
-        nuevoEnvio = new Envio(generarLocalizador(rand, porte.getID()), porte, cliente, nuevoEnvio.getFila(), nuevoEnvio.getColumna(), nuevoEnvio.getPrecio());
+        // Hueco ocupado en la matriz
+        fila = Utilidades.leerNumero(teclado,"Fila del hueco: ",0, porte.getNave().getFilas());
+        columna = Utilidades.leerNumero(teclado,"Columna del hueco: ",0, porte.getNave().getColumnas());
 
-        //Ocupamos el hueco
-        porte.ocuparHueco(nuevoEnvio);
+        // Precio del envio en concreto
+        precioEnvio = Utilidades.leerNumero(teclado, "Precio del envío: ",0,1000000);
 
-        //Insertamos el hueco en las listas
-        cliente.getListaEnvios().insertarEnvio(nuevoEnvio);
-        porte.getListaEnvios().insertarEnvio(nuevoEnvio);
-
-        return nuevoEnvio;
+        return new Envio(generarLocalizador(rand, porte.getID()),porte,cliente,fila,columna,precioEnvio);
     }
 }

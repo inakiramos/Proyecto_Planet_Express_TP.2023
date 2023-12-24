@@ -22,7 +22,7 @@ public class Utilidades {
 
         do {
             System.out.print(mensaje);
-            numero = Integer.parseInt(String.valueOf(teclado.nextInt()));
+            numero = teclado.nextInt();
         }while (numero < minimo || numero > maximo);
         return numero;
     }
@@ -57,8 +57,8 @@ public class Utilidades {
         double numero;
 
         do {
-            System.out.println(mensaje);
-            numero = Double.parseDouble(teclado.nextLine().replace(',', '.'));
+            System.out.print(mensaje);
+            numero = teclado.nextDouble();
         }while (numero < minimo || numero > maximo);
         return numero;
     }
@@ -75,8 +75,8 @@ public class Utilidades {
         char letra;
 
         do {
-            System.out.println(mensaje);
-            letra = teclado.nextLine().charAt(0);
+            System.out.print(mensaje);
+            letra = teclado.next().charAt(0);
         }while (letra < minimo || letra > maximo);
         return letra;
     }
@@ -112,21 +112,17 @@ public class Utilidades {
     public static Fecha leerFechaHora(Scanner teclado, String mensaje) {
         int dia, mes, anio, hora, minuto, segundo;
         System.out.println(mensaje);
-
         do {
-            dia = leerNumero(teclado, "Ingrese día:", 1, 31);
-            mes = leerNumero(teclado, "Ingrese mes:", 1, 12);
-            anio = leerNumero(teclado, "Ingrese año:", 1900, 3000);
+            dia = leerNumero(teclado,"Ingrese día:",1,31);
+            mes = leerNumero(teclado,"Ingrese mes:",1,12);
+            anio = leerNumero(teclado,"Ingrese año:",1900,3000);
 
-            hora = leerNumero(teclado, "Ingrese hora:", 0, 23);
-            minuto = leerNumero(teclado, "Ingrese minuto:", 0, 59);
-            segundo = leerNumero(teclado, "Ingrese segundo:", 0, 59);
+            hora = leerNumero(teclado,"Ingrese hora:",0,23);
+            minuto = leerNumero(teclado,"Ingrese minuto:",0,59);
+            segundo = leerNumero(teclado,"Ingrese segundo:",0,59);
 
-            if (!Fecha.comprobarFecha(dia, mes, anio) || !Fecha.comprobarHora(hora, minuto, segundo)) {
-                System.out.println("Fecha u hora introducida incorrecta.");
-            }
+        } while(!Fecha.comprobarFecha(dia,mes,anio) || !Fecha.comprobarHora(hora,minuto,segundo));
 
-        }while(!Fecha.comprobarFecha(dia, mes, anio) || !Fecha.comprobarHora(hora, minuto, segundo));
         return new Fecha(dia, mes, anio, hora, minuto, segundo);
     }
 

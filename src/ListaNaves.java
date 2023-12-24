@@ -1,4 +1,5 @@
 import javax.lang.model.util.ElementFilter;
+import javax.naming.event.ObjectChangeListener;
 import java.io.*;
 import java.util.Objects;
 import java.util.Scanner;
@@ -92,8 +93,9 @@ public class ListaNaves {
     public Nave buscarNave(String matricula) {
         Nave resul = null;
         for (int i = 0; i < ocupacion; i++) {
-            if (Objects.equals(naves[i].getMatricula(), matricula));
-            resul = naves[i];
+            if (Objects.equals(naves[i].getMatricula(), matricula)){
+                resul = naves[i];
+            }
         }
         return resul;
     }
@@ -104,7 +106,7 @@ public class ListaNaves {
     public void mostrarNaves() {
         for (int i = 0; i < ocupacion; i ++){
             if (naves[i] != null){
-                System.out.println("\n" + naves[i].toString());
+                System.out.println("\t  " + naves[i].toString());
             }
         }
     }
@@ -122,23 +124,25 @@ public class ListaNaves {
     public Nave seleccionarNave(Scanner teclado, String mensaje, double alcance) {
         Nave nave = null;
         String matricula = "";
-        boolean stop = false;
+        boolean stop = true;
 
         do {
-            System.out.println(mensaje);
-            matricula = teclado.nextLine();
+            System.out.print(mensaje);
+            matricula = teclado.next();
             nave = buscarNave(matricula);
 
-            // Comprobar el alcance de la nave VER
-            if (nave == null){
-                System.out.println("Matrícula de nave no encontrada.");
-            } else if (nave.getAlcance() < alcance){
-                System.out.printf(String.format("Nave seleccionada con alcance insuficiente.", alcance).replace(',', '.'));
-            } else {
+            // Comprobar el alcance de la nave
+            if (nave == null) {
+                System.out.println("\t  Matrícula de nave no encontrada.");
+                stop = false;
+            }else if (nave.getAlcance() < alcance) {
+                System.out.println("\t  Nave seleccionada con alcance insuficiente.\n");
+                stop = false;
+            }else {
                 stop = true;
             }
-        } while (!stop);
-        //} while (nave == null || !stop);
+        } while(!stop);
+
         return nave;
     }
 
