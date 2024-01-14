@@ -106,7 +106,7 @@ public class Cliente {
      */
     // TODO: Devuelve un envío en función de su posición
     public Envio getEnvio(int i) {
-        return listaEnvios.getEnvio(i);
+        return listaEnvios.getEnvio(i - 1);
     }
 
     /**
@@ -245,7 +245,6 @@ public class Cliente {
             correcto = false;
         }
         return correcto;
-
     }
 
     /**

@@ -142,7 +142,7 @@ public class ListaPuertosEspaciales {
         boolean ficheroEscrito = true;
 
         try {
-            pw = new PrintWriter(nombre);
+            pw = new PrintWriter(new FileWriter(nombre));
             for (int i = 0; i < ocupacion; i ++){
                 //Cogemos el puerto espacial de la posición i, luego imprimimos
                 puertoEspacial = lista[i];
@@ -185,14 +185,14 @@ public class ListaPuertosEspaciales {
             do {
                 arrayPuertosEspaciales = scanner.nextLine().split(";");
                 // Posiciones del array del puerto espacial con sus atributos
-                PuertoEspacial puertoEspacial = new PuertoEspacial(arrayPuertosEspaciales[0], arrayPuertosEspaciales[1], Double.parseDouble(arrayPuertosEspaciales[2]), Double.parseDouble(arrayPuertosEspaciales[3]), Double.parseDouble(arrayPuertosEspaciales[4]), Integer.parseInt(arrayPuertosEspaciales[5]));
+                PuertoEspacial puertoEspacial = new PuertoEspacial(arrayPuertosEspaciales[0], arrayPuertosEspaciales[1], Double.parseDouble(arrayPuertosEspaciales[2]),
+                        Double.parseDouble(arrayPuertosEspaciales[3]), Double.parseDouble(arrayPuertosEspaciales[4]), Integer.parseInt(arrayPuertosEspaciales[5]));
                 // Insertar el puerto espacial en la lista
                 listaPuertosEspaciales.insertarPuertoEspacial(puertoEspacial);
             }while (scanner.hasNextLine());
 
         } catch (FileNotFoundException fileNotFoundException) {
             System.out.println("Fichero " + fichero + " no encontrado.");
-
         } catch (java.io.IOException IOException){
             System.out.println("Error de lectura en fichero " + fichero + ".");
         } finally {

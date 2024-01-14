@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -187,17 +188,38 @@ public class PlanetExpress {
      * @param porte de el cual se va a hacer un envío (crear el envío)
      */
     public void contratarEnvio(Scanner teclado, Random rand, Porte porte) {
-        if (porte != null) {
-            char letra = Utilidades.leerLetra(teclado, "¿Comprar billete para un nuevo pasajero (n), o para uno ya existente (e)?: ", 'n', 'e');
-            if (letra == 'n') {
-                // vacío
-            } else if (letra == 'e'){
-                Cliente clienteSeleccion = listaClientes.seleccionarCliente(teclado, "Email del cliente: ");
-                Envio envioNuevo = Envio.altaEnvio(teclado, rand, porte, clienteSeleccion);
-                System.out.println("Envío " + envioNuevo.getLocalizador() + " creado correctamente");
-            } else {
-                System.out.println("\t  El valor de entrada debe ser 'n' o 'e'");
-            }
+        char letra;
+        Porte porteExistente = null;
+        Cliente clienteSeleccion;
+
+        if (porte.porteLleno()) {
+            System.out.println("El porte " + porte.getID() + " está lleno, no se pueden hacer mas portes");
+        } else {
+
+                do {
+                    do {
+                        System.out.print("¿Comprar billete para un nuevo pasajero (n), o para uno ya existente (e)?:");
+                        letra = Character.toLowerCase(teclado.next().charAt(0));
+                    }while(letra < 'a' || letra > 'z');
+
+                    if (letra != 'n' || letra != 'e') {
+                        System.out.println("\t  El valor de entrada debe ser 'n' o 'e'");
+                    }
+
+                    if (letra == 'n') {
+                        clienteSeleccion = Cliente.altaCliente(teclado, listaClientes, maxEnviosPorCliente);
+                    }
+
+                    if (letra == 'e') {
+                        clienteSeleccion = listaClientes.seleccionarCliente(teclado, "Email del cliente: ");
+                        if (clienteSeleccion.maxEnviosAlcanzado()){
+                            System.out.println("El Pasajero seleccionado no puede realizar mas envíos.");
+                        }else{
+                            Envio envioNuevo = Envio.altaEnvio(teclado, rand, porte, clienteSeleccion);
+                            System.out.println("\t Envío " + envioNuevo.getLocalizador() + " creado correctamente");
+                        }
+                    }
+                }while (letra != 'n' && letra != 'e');
         }
     }
 
@@ -209,7 +231,7 @@ public class PlanetExpress {
      */
     public static int menu(Scanner teclado) {
         int opcion;
-        System.out.println("1. Alta de Porte");
+        System.out.println("\n1. Alta de Porte");
         System.out.println("2. Alta de Cliente");
         System.out.println("3. Buscar Porte");
         System.out.println("4. Mostrar envíos de un cliente");
@@ -278,9 +300,10 @@ public class PlanetExpress {
                         boolean porteEncontrado = false;
                         do {
                             listaPortes = planetExpress.buscarPorte(teclado);
+                            System.out.print("\t ");
                             listaPortes.listarPortes();
                             porte = listaPortes.seleccionarPorte(teclado, "Seleccione un porte: ", "CANCELAR");
-                            if (porte != null && !porte.porteLleno())
+                            if (porte != null)
                                 planetExpress.contratarEnvio(teclado,rand, porte);
                         }while(!porteEncontrado);
                     }
@@ -316,6 +339,8 @@ public class PlanetExpress {
                         planetExpress.listaClientes.getCliente(i).listarEnvios();
                     }
                     break;
+                case 0:
+
             }
         } while (opcion != 0);
         planetExpress.guardarDatos(args[5], args[6], args[7], args[8], args[9]);

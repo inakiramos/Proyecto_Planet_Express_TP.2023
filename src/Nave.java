@@ -115,7 +115,7 @@ public class Nave {
      * @return Ejemplo del formato -> "Planet Express One (EP-245732X): 40 contenedores, hasta 1.57 UA"
      */
     public String toString() {
-        return this.marca + this.modelo + "(" + this.matricula + "): " + this.filas * this.columnas +
+        return this.marca + " " + this.modelo + " (" + this.matricula + "): " + this.filas * this.columnas +
                 " contenedores, hasta " + this.alcance + " UA";
     }
 

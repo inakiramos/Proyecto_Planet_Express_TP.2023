@@ -1,7 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
@@ -143,7 +140,7 @@ public class ListaClientes {
         boolean ficheroEscrito = true;
 
         try {
-            pw = new PrintWriter(fichero);
+            pw = new PrintWriter(new File(fichero));
             for (int i = 0; i < ocupacion; i ++){
                 Cliente cliente1 = clientes[i];
                 pw.write(cliente1.getNombre() + ";" + cliente1.getApellidos() + ";" + cliente1.getEmail());

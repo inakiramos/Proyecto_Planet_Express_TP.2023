@@ -242,6 +242,7 @@ public class Envio {
     public static Envio altaEnvio(Scanner teclado, Random rand, Porte porte, Cliente cliente) {
         int fila, columna;
         double precioEnvio;
+        Envio nuevoEnvio;
 
         // Hueco ocupado en la matriz
         fila = Utilidades.leerNumero(teclado,"Fila del hueco: ",0, porte.getNave().getFilas());
@@ -249,7 +250,8 @@ public class Envio {
 
         // Precio del envio en concreto
         precioEnvio = Utilidades.leerNumero(teclado, "Precio del envío: ",0,1000000);
+        nuevoEnvio = new Envio(generarLocalizador(rand, porte.getID()),porte,cliente,fila,columna,precioEnvio);
 
-        return new Envio(generarLocalizador(rand, porte.getID()),porte,cliente,fila,columna,precioEnvio);
+        return nuevoEnvio;
     }
 }

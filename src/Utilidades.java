@@ -79,7 +79,7 @@ public class Utilidades {
 
         do {
             System.out.print(mensaje);
-            letra = teclado.next().charAt(0);
+            letra = teclado.nextLine().charAt(0);
         }while (letra < minimo || letra > maximo);
         return letra;
     }
@@ -124,6 +124,10 @@ public class Utilidades {
             minuto = leerNumero(teclado,"Ingrese minuto:",0,59);
             segundo = leerNumero(teclado,"Ingrese segundo:",0,59);
 
+            if (!Fecha.comprobarFecha(dia,mes,anio) || !Fecha.comprobarHora(hora,minuto,segundo)){
+                System.out.println("Fecha u hora introducida incorrecta.");
+                System.out.println("Fecha de Salida:");
+            }
         } while(!Fecha.comprobarFecha(dia,mes,anio) || !Fecha.comprobarHora(hora,minuto,segundo));
 
         return new Fecha(dia, mes, anio, hora, minuto, segundo);

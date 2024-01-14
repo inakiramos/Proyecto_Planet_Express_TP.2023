@@ -69,7 +69,7 @@ public class ListaPortes {
      */
 	//TODO: devuelve un porte dado un indice
     public Porte getPorte(int i) {
-        return portes[i];
+        return portes[i - 1];
     }
 
     /**
@@ -124,7 +124,7 @@ public class ListaPortes {
      */
     public void listarPortes() {
         for (int i = 0; i < this.ocupacion; i++) {
-            System.out.println(portes[i].toStringSimple());
+            System.out.println(portes[i].toString());
         }
     }
 
@@ -138,15 +138,23 @@ public class ListaPortes {
      * @return Devuelve el porte seleccionado y si cumple los requisitos (exista y que tenga ID correspondiente)
      */
     public Porte seleccionarPorte(Scanner teclado, String mensaje, String cancelar) {
-        String porteID;
-        boolean existe;
+        Porte porteID = null;
+        boolean pararDePreguntar = false;
         do {
-            porteID = Utilidades.leerCadena(teclado, "Seleccione un porte: ");
-            existe = buscarPorte(porteID) != null;
-            if (!Porte.correctoID(porteID) || !existe)
-                System.out.println("\t  Porte no encontrado.");
-        } while (!Porte.correctoID(porteID) || !existe);
-        return buscarPorte(porteID);
+            String respuesta = Utilidades.leerCadena(teclado, "Seleccione un porte: ");
+            //existe = buscarPorte(porteID) != null;
+            if (respuesta.equals(cancelar) || respuesta.equalsIgnoreCase(cancelar)) {
+                pararDePreguntar = true;
+            }else {
+                porteID = buscarPorte(respuesta);
+                if (porteID == null){
+                    System.out.println("\t  Porte no encontrado.");
+                }else{
+                    pararDePreguntar = true;
+                }
+            }
+        } while (!pararDePreguntar);
+        return porteID;
     }
 
     /**
@@ -194,7 +202,8 @@ public class ListaPortes {
      */
     public static ListaPortes leerPortesCsv(String fichero, int capacidad, ListaPuertosEspaciales puertosEspaciales, ListaNaves naves) {
         ListaPortes listaPortes = new ListaPortes(capacidad);
-        try (Scanner teclado = new Scanner(new FileReader(fichero))) {
+        try {
+            Scanner teclado = new Scanner(new FileReader(fichero));
             String lineaTexto;
             String[] arrayPortesFich;
             while (teclado.hasNextLine()) {

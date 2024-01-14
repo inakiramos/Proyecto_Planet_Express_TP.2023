@@ -159,7 +159,7 @@ public class ListaNaves {
         boolean ficheroEscrito = true;
 
         try {
-            pw = new PrintWriter(nombre);
+            pw = new PrintWriter(new FileWriter(nombre));
             for (int i = 0; i < ocupacion; i++) {
                 nave = naves[i];
                 pw.print(nave.getMarca() + ";" + nave.getModelo() + ";" + nave.getMatricula() + ";" + nave.getFilas() + ";" + nave.getColumnas() + ";" + nave.getAlcance());

@@ -231,7 +231,6 @@ public class Porte {
             huecoOcupado = true;
         }
         return huecoOcupado;
-        // huecos[fila - 1][columna - 1];
     }
 
     /**
@@ -515,8 +514,7 @@ public class Porte {
             do {
                 idenPorte = generarID(rand);
             } while (portes.buscarPorte(idenPorte) != null);
-        else
-            idenPorte = generarID(rand);
+        else idenPorte = generarID(rand);
 
         double precio = Utilidades.leerNumero(teclado, "Ingrese precio del porte:", 0, (double) 99999.99);
         Porte porteNuevo = new Porte(idenPorte, nave, puertoOrigen, muelleOrigen,fechaSalida, puertoDestino, muelleDestino, fechaLlegada, precio);
