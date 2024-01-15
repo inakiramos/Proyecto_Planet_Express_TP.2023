@@ -175,7 +175,7 @@ public class ListaPortes {
                 pw.print(porte.getID() + ";" + porte.getNave().getMatricula() + ";" + porte.getOrigen().getCodigo() + ";" + porte.getMuelleOrigen()
                         + ";" + porte.getSalida().toString() + ";" + porte.getDestino().getCodigo() + ";" + porte.getMuelleDestino() + ";" +
                         porte.getLlegada().toString() + ";" + porte.getPrecio());
-                //if (i != ocupacion - 1) pw.println();
+                if (i != ocupacion - 1) pw.println();
             }
         } catch (FileNotFoundException fileNotFoundException) {
             System.out.println("Fichero " + fichero + " no encontrado.");

@@ -405,9 +405,9 @@ public class Porte {
 
         try {
             printW = new PrintWriter(fichero);
-            printW.write("--------------------------------------------------");
-            printW.write("-------- Lista de envíos del porte " + this.id + " --------");
-            printW.write("--------------------------------------------------");
+            printW.write("--------------------------------------------------\n");
+            printW.write("-------- Lista de envíos del porte " + this.id + " --------\n");
+            printW.write("--------------------------------------------------\n");
             printW.write("Hueco\tCliente\n");
 
             for (int i = 0; i < nave.getFilas(); i++) {
@@ -416,7 +416,7 @@ public class Porte {
                     printW.write(String.valueOf(i + 1) + ((char) (j + 65)) + "\t\t");
 
                     if (envio != null) {
-                        printW.write(envio.getCliente().getNombre() + "\t");
+                        printW.write(envio.getCliente().getNombre() + ", " + envio.getCliente().getEmail() + "\t");
 
                     }
 

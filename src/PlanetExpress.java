@@ -207,14 +207,11 @@ public class PlanetExpress {
             } else {
 
                 do {
+
                     do {
                         System.out.print("¿Comprar billete para un nuevo pasajero (n), o para uno ya existente (e)?:");
                         letra = Character.toLowerCase(teclado.next().charAt(0));
                     } while (letra < 'a' || letra > 'z');
-
-                    if (letra != 'n' || letra != 'e') {
-                        System.out.println("\t  El valor de entrada debe ser 'n' o 'e'");
-                    }
 
                     if (letra == 'n') {
                         clienteSeleccion = Cliente.altaCliente(teclado, listaClientes, maxEnviosPorCliente);
@@ -231,6 +228,11 @@ public class PlanetExpress {
                             System.out.println("\t Envío " + envioNuevo.getLocalizador() + " creado correctamente");
                         }
                     }
+
+                    if (letra != 'n' && letra != 'e') {
+                        System.out.println("\t  El valor de entrada debe ser 'n' o 'e'");
+                    }
+
                 } while (letra != 'n' && letra != 'e');
             }
         }
@@ -283,7 +285,7 @@ public class PlanetExpress {
         planetExpress.cargarDatos(args[5], args[6], args[7], args[8], args[9]);
 
         Random rand = new Random();
-        ListaPortes listaPortes;
+        ListaPortes listaPortes = null;
         Porte porte;
 
         int opcion;
@@ -343,7 +345,7 @@ public class PlanetExpress {
                             System.out.print("Nombre del fichero: ");
                             String rutaFichero = teclado.next();
                             envio.generarFactura(rutaFichero);
-                            System.out.println("\t  Factura generada en correctamente");
+                            System.out.println("\t  Factura generada correctamente");
                         } else if (character == 'c') {
                             String localizadorEnvio = envio.getLocalizador();
                             if (envio.cancelar()) System.out.println("Envío " + localizadorEnvio + " cancelado.");
@@ -353,22 +355,18 @@ public class PlanetExpress {
                     break;
 
                 case 5:
-                    Porte porte2 = null;
-                    do {
-
-                        for (int i = 0; i < planetExpress.maxPortes; i++) {
-                            planetExpress.listaPortes.getPorte(i).toStringSimple();
-                        }
-                        porte2 = planetExpress.listaPortes.seleccionarPorte(teclado, "Ingrese ID del porte:", "CANCELAR");
+                    planetExpress.listaPortes.listarPortes();
+                    Porte porte2 = planetExpress.listaPortes.seleccionarPorte(teclado, "Ingrese ID del porte:", "CANCELAR");
                         if (porte2 != null) {
                             System.out.print("Nombre del fichero: ");
-                            String rutaPorte = teclado.nextLine();
+                            String rutaPorte = teclado.next();
+
                             if (porte2.generarListaEnvios(rutaPorte)) {
                                 System.out.println("Lista de pasajeros del Porte " + porte2.getID() + " generada en " + rutaPorte);
                             }
+
                         } else System.out.println("No se ha encontrado ningún porte.");
-                    }while(porte2 == null);
-                    break;
+                        break;
             }
         } while (opcion != 0);
     }

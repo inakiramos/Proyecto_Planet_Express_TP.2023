@@ -125,6 +125,7 @@ public class Utilidades {
             segundo = leerNumero(teclado,"Ingrese segundo:",0,59);
 
             if (!Fecha.comprobarFecha(dia,mes,anio) || !Fecha.comprobarHora(hora,minuto,segundo)){
+                System.out.println();
                 System.out.println("Fecha u hora introducida incorrecta.");
                 System.out.println("Fecha de Salida:");
             }
