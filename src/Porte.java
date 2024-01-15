@@ -429,6 +429,7 @@ public class Porte {
             ficheroEnvios = false;
         } catch (IOException ex2) {
             System.out.println("Error de escritura en fichero " + fichero + ".");
+            ficheroEnvios = false;
         } finally {
             if (printW != null) {
                 printW.close();

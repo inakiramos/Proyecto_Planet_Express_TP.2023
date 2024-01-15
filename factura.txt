@@ -1,0 +1,11 @@
+-----------------------------------------------------
+--------- Factura del envío PM1234HSNCJAUQE ---------
+-----------------------------------------------------
+Porte: PM1234
+Origen: Mercury StationTerminal (MS-1) (M1)
+Destino: Venus StationTerminal (VS-1) M2
+Salida: 15/01/2023
+Llegada: 16/01/2023
+Cliente: Hermes Conrad, hermes@planetexpress.com
+Hueco: 1A
+Precio: 1456,32SSD

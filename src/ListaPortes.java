@@ -69,7 +69,7 @@ public class ListaPortes {
      */
 	//TODO: devuelve un porte dado un indice
     public Porte getPorte(int i) {
-        return portes[i - 1];
+        return portes[i];
     }
 
     /**

@@ -196,11 +196,21 @@ public class PlanetExpress {
             System.out.println("El porte " + porte.getID() + " está lleno, no se pueden hacer mas portes");
         } else {
 
+            if (listaClientes.estaLlena()) {
+                 clienteSeleccion = listaClientes.seleccionarCliente(teclado, "Email del cliente:");
+                if (clienteSeleccion.maxEnviosAlcanzado()) {
+                    System.out.println("El Pasajero seleccionado no puede realizar más envìos.");
+                } else {
+                    Envio envioNuevo = Envio.altaEnvio(teclado, rand, porte, clienteSeleccion);
+                    System.out.println("\t Envío " + envioNuevo.getLocalizador() + " creado correctamente");
+                }
+            } else {
+
                 do {
                     do {
                         System.out.print("¿Comprar billete para un nuevo pasajero (n), o para uno ya existente (e)?:");
                         letra = Character.toLowerCase(teclado.next().charAt(0));
-                    }while(letra < 'a' || letra > 'z');
+                    } while (letra < 'a' || letra > 'z');
 
                     if (letra != 'n' || letra != 'e') {
                         System.out.println("\t  El valor de entrada debe ser 'n' o 'e'");
@@ -208,18 +218,21 @@ public class PlanetExpress {
 
                     if (letra == 'n') {
                         clienteSeleccion = Cliente.altaCliente(teclado, listaClientes, maxEnviosPorCliente);
+                        Envio envioNuevo = Envio.altaEnvio(teclado, rand, porte, clienteSeleccion);
+                        System.out.println("\t Envío " + envioNuevo.getLocalizador() + " creado correctamente");
                     }
 
                     if (letra == 'e') {
                         clienteSeleccion = listaClientes.seleccionarCliente(teclado, "Email del cliente: ");
-                        if (clienteSeleccion.maxEnviosAlcanzado()){
-                            System.out.println("El Pasajero seleccionado no puede realizar mas envíos.");
-                        }else{
+                        if (clienteSeleccion.maxEnviosAlcanzado()) {
+                            System.out.println("El Pasajero seleccionado no puede realizar màs envíos.");
+                        } else {
                             Envio envioNuevo = Envio.altaEnvio(teclado, rand, porte, clienteSeleccion);
                             System.out.println("\t Envío " + envioNuevo.getLocalizador() + " creado correctamente");
                         }
                     }
-                }while (letra != 'n' && letra != 'e');
+                } while (letra != 'n' && letra != 'e');
+            }
         }
     }
 
@@ -278,6 +291,10 @@ public class PlanetExpress {
         do {
             opcion = menu(teclado);
             switch (opcion) {
+                case 0:
+                    planetExpress.guardarDatos(args[5], args[6], args[7], args[8], args[9]);
+                    break;
+
                 case 1:     // TODO: Alta de Cliente
                     if (!planetExpress.maxPortesAlcanzado())
                         porte = Porte.altaPorte(teclado, rand, planetExpress.listaPuertosEspaciales, planetExpress.listaNaves, planetExpress.listaPortes);
@@ -296,16 +313,16 @@ public class PlanetExpress {
                     break;
 
                 case 3:     // TODO: Listado de envíos de un cliente
+                    listaPortes = planetExpress.buscarPorte(teclado);
                     if (planetExpress.listaPortes.getOcupacion() != 0){
-                        boolean porteEncontrado = false;
-                        do {
-                            listaPortes = planetExpress.buscarPorte(teclado);
-                            System.out.print("\t ");
-                            listaPortes.listarPortes();
-                            porte = listaPortes.seleccionarPorte(teclado, "Seleccione un porte: ", "CANCELAR");
-                            if (porte != null)
-                                planetExpress.contratarEnvio(teclado,rand, porte);
-                        }while(!porteEncontrado);
+
+                        System.out.print("\t ");
+                        listaPortes.listarPortes();
+                        porte = listaPortes.seleccionarPorte(teclado, "Seleccione un porte: ", "CANCELAR");
+
+                        if (porte != null){
+                            planetExpress.contratarEnvio(teclado, rand, porte);
+                        }else System.out.println("No se ha encontrado ningùn envìo.");
                     }
                     break;
 
@@ -316,7 +333,8 @@ public class PlanetExpress {
 
                         char character;
                         do {
-                            character = Utilidades.leerLetra(teclado, "¿Cancelar envío (c), o generar factura (f)?", 'a', 'z');
+                            System.out.print("¿Cancelar envío (c), o generar factura (f)? ");
+                            character = Character.toLowerCase(teclado.next().charAt(0));
 
                             if (character != 'f' && character != 'c') System.out.println("El valor de entrada debe ser 'f', 'c' ");
                         } while (character != 'f' && character != 'c');
@@ -335,14 +353,23 @@ public class PlanetExpress {
                     break;
 
                 case 5:
-                    for(int i = 0; i < planetExpress.maxClientes; i ++){
-                        planetExpress.listaClientes.getCliente(i).listarEnvios();
-                    }
-                    break;
-                case 0:
+                    Porte porte2 = null;
+                    do {
 
+                        for (int i = 0; i < planetExpress.maxPortes; i++) {
+                            planetExpress.listaPortes.getPorte(i).toStringSimple();
+                        }
+                        porte2 = planetExpress.listaPortes.seleccionarPorte(teclado, "Ingrese ID del porte:", "CANCELAR");
+                        if (porte2 != null) {
+                            System.out.print("Nombre del fichero: ");
+                            String rutaPorte = teclado.nextLine();
+                            if (porte2.generarListaEnvios(rutaPorte)) {
+                                System.out.println("Lista de pasajeros del Porte " + porte2.getID() + " generada en " + rutaPorte);
+                            }
+                        } else System.out.println("No se ha encontrado ningún porte.");
+                    }while(porte2 == null);
+                    break;
             }
         } while (opcion != 0);
-        planetExpress.guardarDatos(args[5], args[6], args[7], args[8], args[9]);
     }
 }

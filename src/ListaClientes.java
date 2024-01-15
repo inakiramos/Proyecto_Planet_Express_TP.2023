@@ -124,7 +124,12 @@ public class ListaClientes {
         String emailCorrecto;
         do {
             emailCorrecto = Utilidades.leerCadena(teclado, mensaje);
-        }while(!Cliente.correctoEmail(emailCorrecto));
+
+            if(buscarClienteEmail(emailCorrecto) == null){
+                System.out.println("Email no encontrado.");
+            }
+        }while(buscarClienteEmail(emailCorrecto) == null);
+
         return buscarClienteEmail(emailCorrecto);
     }
 
