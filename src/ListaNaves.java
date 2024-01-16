@@ -138,7 +138,7 @@ public class ListaNaves {
                 System.out.println("\t  Matrícula de nave no encontrada.");
                 stop = false;
             }else if (nave.getAlcance() < alcance) {
-                System.out.println("\t  Nave seleccionada con alcance insuficiente.\n");
+                System.out.println("\t  Nave seleccionada con alcance insuficiente.");
                 stop = false;
             }else {
                 stop = true;

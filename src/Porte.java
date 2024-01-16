@@ -1,6 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -329,15 +327,6 @@ public class Porte {
     }
 
     /**
-     * Método para comprobar el correcto funcionamiento de los ID de los portes
-     * @param id del puerto el cual se quiere buscar
-     * @return Devuelve true si el ID de puerto es correcto con el cual se quiere comparar
-     */
-    public static boolean correctoID(String id) {
-        return id.matches("^PM\\d{4}$");
-    }
-
-    /**
      * TODO: Muestra la matriz de huecos del porte, ejemplo:
      *    A  B  C  D  E  F
      *   1[ ][X][ ][ ][ ][ ]
@@ -404,7 +393,7 @@ public class Porte {
         char[] letrasHuecos = {'A', 'B', 'C', 'D', 'E', 'F'};
 
         try {
-            printW = new PrintWriter(fichero);
+            printW = new PrintWriter(new FileWriter(fichero));
             printW.write("--------------------------------------------------\n");
             printW.write("-------- Lista de envíos del porte " + this.id + " --------\n");
             printW.write("--------------------------------------------------\n");
@@ -417,7 +406,6 @@ public class Porte {
 
                     if (envio != null) {
                         printW.write(envio.getCliente().getNombre() + ", " + envio.getCliente().getEmail() + "\t");
-
                     }
 
                     if ((i + 1) != listaEnvios.getOcupacion() - 1) printW.write("\n");

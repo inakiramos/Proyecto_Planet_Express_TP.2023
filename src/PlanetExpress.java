@@ -324,7 +324,7 @@ public class PlanetExpress {
 
                         if (porte != null){
                             planetExpress.contratarEnvio(teclado, rand, porte);
-                        }else System.out.println("No se ha encontrado ningùn envìo.");
+                        }else System.out.println("No se ha encontrado ningún envìo.");
                     }
                     break;
 
@@ -362,7 +362,8 @@ public class PlanetExpress {
                             String rutaPorte = teclado.next();
 
                             if (porte2.generarListaEnvios(rutaPorte)) {
-                                System.out.println("Lista de pasajeros del Porte " + porte2.getID() + " generada en " + rutaPorte);
+                                System.out.println("Lista de envios del Porte " + porte2.getID() + " generada en " + rutaPorte);
+                                System.out.println("Fichero creado correctamente.");
                             }
 
                         } else System.out.println("No se ha encontrado ningún porte.");

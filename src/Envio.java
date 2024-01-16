@@ -234,9 +234,9 @@ public class Envio {
      *  necesarios al usuario en el orden y con los textos indicados en los ejemplos de ejecución del enunciado
      *  La función solicita repetidamente los parámetros hasta que sean correctos
      * @param teclado
-     * @param rand
-     * @param porte
-     * @param cliente
+     * @param rand numero random
+     * @param porte por donde se va a comenzar el pedido
+     * @param cliente que ha pedido o hecho un envío
      * @return Envio para el porte y cliente especificados
      */
     public static Envio altaEnvio(Scanner teclado, Random rand, Porte porte, Cliente cliente) {
